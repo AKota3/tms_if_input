@@ -1,0 +1,4834 @@
+{
+  "status": "passed",
+  "verified_at_utc": "2026-10-14T09:20:51.092164+00:00",
+  "client_date": "2026-10-14",
+  "client_timezone": "Asia/Tokyo",
+  "source_sha256": {
+    "system_topics.py": "982cd0a0c9f54a7443a24df10c22ad30cf0e6180ae2aeaa1b179b2809597037a",
+    "system_topics_data.py": "2c43caba3e6c6a191441b0b705f1d99bbe1c33766c4ed9dfc8debcfcd15ed2f1",
+    "system_topics_protocol.py": "01d051ecf7738dbd03af281c52577b8e797faca086103aca9ae7a78044e3ab2a"
+  },
+  "summary": {
+    "unit_tests_passed": 238,
+    "contract_checks_passed": 189,
+    "raw_input_replacement_cases": 8,
+    "real_mongodb_ros_checks_passed": 28,
+    "ros_boundary_cases_passed": 32,
+    "maximum_mongo_update_to_ros_latency_ms": 99.031,
+    "runtime_mongodb_reads": 75,
+    "runtime_mongodb_writes": 0,
+    "production_database": "rostmsdb",
+    "production_collections": 10,
+    "production_documents": 757,
+    "production_all_raw_bson_hashes_unchanged": true,
+    "own_fixture_database_removed": true,
+    "issues_found": []
+  },
+  "current_requirements": {
+    "response_topic": "/system/MessageReport",
+    "response_type": "machinery_task_msgs/msg/TaskReport",
+    "state_topic": "/system/LevelingStateReport",
+    "state_type": "machinery_task_msgs/msg/LevelingStateReport",
+    "state_field": "RELEACED_BLOCK",
+    "true_means": "dumped block",
+    "order": "XML leveling block_center order",
+    "ids_and_model_source": "XML leveling task ID, machine alias, machine type",
+    "finish_message_id": "TaskFinish",
+    "finish_match": "task_id and machine_id must both match the XML task",
+    "multi_task_finish": "only the matching task stops; all finished tasks stop all publication and polling",
+    "finish_during_database_read": "guard state publication after the read under the report-handling lock",
+    "finished_node_lifecycle": "alive with publication timers cancelled; Ctrl+C closes the node"
+  },
+  "scope": {
+    "legacy_program_unchanged": true,
+    "source_matches_installed": true,
+    "code_changes_during_this_verification": false,
+    "partner_transport": "actual ROS2 localhost DDS with a simulated partner; Unity and physical machinery were not connected",
+    "mongo_validation": "actual MongoDB with an owned isolated fixture database, plus production read-only hash verification",
+    "test_artifacts": "historical verification artifacts retained; this is a new report"
+  },
+  "production_before": {
+    "default": {
+      "count": 18,
+      "sha256_raw_bson": "be3dcd1d27a1ef6d77a4da87f98f2b43c6dae51f13dc8469390f0314d528f8f2"
+    },
+    "fs.chunks": {
+      "count": 486,
+      "sha256_raw_bson": "a2f0c784b02a697bbbdb75fa4213ab493a4f43558217fd3196782db8b651e530"
+    },
+    "fs.files": {
+      "count": 18,
+      "sha256_raw_bson": "3b4c32b94ad3768f7975c4ead009b63ae70ef3b8f744155724d25b753ba063d5"
+    },
+    "machine": {
+      "count": 72,
+      "sha256_raw_bson": "127af5ac737b02d8c103dc00120c318d72120f730d4da8b53d54eea66f640e99"
+    },
+    "now": {
+      "count": 78,
+      "sha256_raw_bson": "b2feca11ca1427173ee9fb4c37a4663cbc65b18aed0e94ccde0fc92eafe01d54"
+    },
+    "official_subtask_parameters": {
+      "count": 8,
+      "sha256_raw_bson": "1c4836f45dc804547969abeaf8f8302079c9d39015a264866e9b4ac434c37a2b"
+    },
+    "official_subtasks": {
+      "count": 14,
+      "sha256_raw_bson": "7f604fb09466459de5bcaa49d8ee2690cccde57778dd27cdb215bcc45ebd80b5"
+    },
+    "parameter": {
+      "count": 55,
+      "sha256_raw_bson": "d2178c9eb8982693e4b1672b10a6be8b2834114b5fe83ed5e3932b079ea15c52"
+    },
+    "sensor": {
+      "count": 4,
+      "sha256_raw_bson": "ec9af2e5016fb9c57c5971cc6443eed19108c05a2123ecc090efc226f8088181"
+    },
+    "task": {
+      "count": 4,
+      "sha256_raw_bson": "2a9ed6eeb2f6efb6addad83cf54b173ca8ae2220e1994dee5521ab76f6d2618e"
+    }
+  },
+  "production_after": {
+    "default": {
+      "count": 18,
+      "sha256_raw_bson": "be3dcd1d27a1ef6d77a4da87f98f2b43c6dae51f13dc8469390f0314d528f8f2"
+    },
+    "fs.chunks": {
+      "count": 486,
+      "sha256_raw_bson": "a2f0c784b02a697bbbdb75fa4213ab493a4f43558217fd3196782db8b651e530"
+    },
+    "fs.files": {
+      "count": 18,
+      "sha256_raw_bson": "3b4c32b94ad3768f7975c4ead009b63ae70ef3b8f744155724d25b753ba063d5"
+    },
+    "machine": {
+      "count": 72,
+      "sha256_raw_bson": "127af5ac737b02d8c103dc00120c318d72120f730d4da8b53d54eea66f640e99"
+    },
+    "now": {
+      "count": 78,
+      "sha256_raw_bson": "b2feca11ca1427173ee9fb4c37a4663cbc65b18aed0e94ccde0fc92eafe01d54"
+    },
+    "official_subtask_parameters": {
+      "count": 8,
+      "sha256_raw_bson": "1c4836f45dc804547969abeaf8f8302079c9d39015a264866e9b4ac434c37a2b"
+    },
+    "official_subtasks": {
+      "count": 14,
+      "sha256_raw_bson": "7f604fb09466459de5bcaa49d8ee2690cccde57778dd27cdb215bcc45ebd80b5"
+    },
+    "parameter": {
+      "count": 55,
+      "sha256_raw_bson": "d2178c9eb8982693e4b1672b10a6be8b2834114b5fe83ed5e3932b079ea15c52"
+    },
+    "sensor": {
+      "count": 4,
+      "sha256_raw_bson": "ec9af2e5016fb9c57c5971cc6443eed19108c05a2123ecc090efc226f8088181"
+    },
+    "task": {
+      "count": 4,
+      "sha256_raw_bson": "2a9ed6eeb2f6efb6addad83cf54b173ca8ae2220e1994dee5521ab76f6d2618e"
+    }
+  },
+  "independent_contract_audit": {
+    "unit_tests": {
+      "command": "python3 -m pytest test -q",
+      "passed": 238,
+      "exit_code": 0,
+      "elapsed_seconds": 0.72
+    },
+    "checks": [
+      {
+        "name": "schema_matches_supplied:Node",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "schema_matches_installed:Node",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "schema_matches_supplied:NodeGroup",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "schema_matches_installed:NodeGroup",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "schema_matches_supplied:LevelingTaskParam",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "schema_matches_installed:LevelingTaskParam",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "schema_matches_supplied:LevelingStateReport",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "schema_matches_installed:LevelingStateReport",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "schema_matches_supplied:TaskReport",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "schema_matches_installed:TaskReport",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "installed_equals_source:tms_if_input/system_topics.py",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "installed_equals_source:tms_if_input/system_topics_data.py",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "installed_equals_source:tms_if_input/system_topics_protocol.py",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "installed_equals_source:tms_if_input/model.py",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "installed_equals_source:tms_if_input/parameters.py",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "installed_equals_source:tms_if_input/compiler.py",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "installed_equals_source:tms_if_input/database.py",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "installed_equals_source:tms_if_input/routes.py",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "installed_equals_source:tms_if_input/behavior_tree.py",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "installed_equals_source:tms_if_input/importer.py",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "installed_equals_source:tms_if_input/cli.py",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "installed_equals_source:launch/system_topics.launch.py",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "installed_equals_source:json_samples/261008-kyoto.geojson",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "installed_equals_source:json_samples/261008-kyoto.xml",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "all_original_code_launch_tests_packaging_preserved",
+        "passed": true,
+        "detail": {
+          "file_count": 23
+        }
+      },
+      {
+        "name": "historical_artifacts_preserved",
+        "passed": true,
+        "detail": {
+          "file_count": 15
+        }
+      },
+      {
+        "name": "legacy_code_absent_from_git_diff",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "old_topic_name_absent_from_current_code_docs_tests",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "sample_task_machine_ids_not_hardcoded",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "additional_node_mongodb_read_only",
+        "passed": true,
+        "detail": [
+          "find_one"
+        ]
+      },
+      {
+        "name": "completion_race_guard_present",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "261004-kyoto:entire_graph_all_fields",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "261004-kyoto:leveling_task_count",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "261004-kyoto:leveling_entire_message:2600159710",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "261004-kyoto:derived_metadata:2600159710",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "261004-kyoto:released_order_duplicate_unknown:2600159710",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "261004-kyoto:input_files_read_only",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "261008-kyoto:entire_graph_all_fields",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "261008-kyoto:leveling_task_count",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "261008-kyoto:leveling_entire_message:2600159710",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "261008-kyoto:derived_metadata:2600159710",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "261008-kyoto:released_order_duplicate_unknown:2600159710",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "261008-kyoto:input_files_read_only",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_1_blocks_1_tasks_1_machines:entire_graph_all_fields",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_1_blocks_1_tasks_1_machines:leveling_task_count",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_1_blocks_1_tasks_1_machines:leveling_entire_message:work:leveling:36893488147419103232",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_1_blocks_1_tasks_1_machines:derived_metadata:work:leveling:36893488147419103232",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_1_blocks_1_tasks_1_machines:released_order_duplicate_unknown:work:leveling:36893488147419103232",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_1_blocks_1_tasks_1_machines:input_files_read_only",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_1_blocks_1_tasks_1_machines:early_finish_rejected",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_1_blocks_1_tasks_1_machines:graph_ack:機械:alias:0",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_1_blocks_1_tasks_1_machines:parameters_phase",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_1_blocks_1_tasks_1_machines:task_ack:work:leveling:36893488147419103232",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_1_blocks_1_tasks_1_machines:state_phase",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_1_blocks_1_tasks_1_machines:wrong_finish_machine:work:leveling:36893488147419103232",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_1_blocks_1_tasks_1_machines:finish_accept:work:leveling:36893488147419103232",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_1_blocks_1_tasks_1_machines:only_unfinished_tasks:work:leveling:36893488147419103232",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_1_blocks_1_tasks_1_machines:duplicate_finish_rejected:work:leveling:36893488147419103232",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_1_blocks_1_tasks_1_machines:finished_cannot_restart",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_2_blocks_1_tasks_1_machines:entire_graph_all_fields",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_2_blocks_1_tasks_1_machines:leveling_task_count",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_2_blocks_1_tasks_1_machines:leveling_entire_message:work:leveling:36893488147419103232",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_2_blocks_1_tasks_1_machines:derived_metadata:work:leveling:36893488147419103232",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_2_blocks_1_tasks_1_machines:released_order_duplicate_unknown:work:leveling:36893488147419103232",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_2_blocks_1_tasks_1_machines:input_files_read_only",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_2_blocks_1_tasks_1_machines:early_finish_rejected",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_2_blocks_1_tasks_1_machines:graph_ack:機械:alias:0",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_2_blocks_1_tasks_1_machines:parameters_phase",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_2_blocks_1_tasks_1_machines:task_ack:work:leveling:36893488147419103232",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_2_blocks_1_tasks_1_machines:state_phase",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_2_blocks_1_tasks_1_machines:wrong_finish_machine:work:leveling:36893488147419103232",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_2_blocks_1_tasks_1_machines:finish_accept:work:leveling:36893488147419103232",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_2_blocks_1_tasks_1_machines:only_unfinished_tasks:work:leveling:36893488147419103232",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_2_blocks_1_tasks_1_machines:duplicate_finish_rejected:work:leveling:36893488147419103232",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_2_blocks_1_tasks_1_machines:finished_cannot_restart",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_1_tasks_1_machines:entire_graph_all_fields",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_1_tasks_1_machines:leveling_task_count",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_1_tasks_1_machines:leveling_entire_message:work:leveling:36893488147419103232",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_1_tasks_1_machines:derived_metadata:work:leveling:36893488147419103232",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_1_tasks_1_machines:released_order_duplicate_unknown:work:leveling:36893488147419103232",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_1_tasks_1_machines:input_files_read_only",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_1_tasks_1_machines:early_finish_rejected",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_1_tasks_1_machines:graph_ack:機械:alias:0",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_1_tasks_1_machines:parameters_phase",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_1_tasks_1_machines:task_ack:work:leveling:36893488147419103232",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_1_tasks_1_machines:state_phase",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_1_tasks_1_machines:wrong_finish_machine:work:leveling:36893488147419103232",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_1_tasks_1_machines:finish_accept:work:leveling:36893488147419103232",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_1_tasks_1_machines:only_unfinished_tasks:work:leveling:36893488147419103232",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_1_tasks_1_machines:duplicate_finish_rejected:work:leveling:36893488147419103232",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_1_tasks_1_machines:finished_cannot_restart",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_17_blocks_1_tasks_1_machines:entire_graph_all_fields",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_17_blocks_1_tasks_1_machines:leveling_task_count",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_17_blocks_1_tasks_1_machines:leveling_entire_message:work:leveling:36893488147419103232",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_17_blocks_1_tasks_1_machines:derived_metadata:work:leveling:36893488147419103232",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_17_blocks_1_tasks_1_machines:released_order_duplicate_unknown:work:leveling:36893488147419103232",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_17_blocks_1_tasks_1_machines:input_files_read_only",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_17_blocks_1_tasks_1_machines:early_finish_rejected",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_17_blocks_1_tasks_1_machines:graph_ack:機械:alias:0",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_17_blocks_1_tasks_1_machines:parameters_phase",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_17_blocks_1_tasks_1_machines:task_ack:work:leveling:36893488147419103232",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_17_blocks_1_tasks_1_machines:state_phase",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_17_blocks_1_tasks_1_machines:wrong_finish_machine:work:leveling:36893488147419103232",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_17_blocks_1_tasks_1_machines:finish_accept:work:leveling:36893488147419103232",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_17_blocks_1_tasks_1_machines:only_unfinished_tasks:work:leveling:36893488147419103232",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_17_blocks_1_tasks_1_machines:duplicate_finish_rejected:work:leveling:36893488147419103232",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_17_blocks_1_tasks_1_machines:finished_cannot_restart",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_1_machines:entire_graph_all_fields",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_1_machines:leveling_task_count",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_1_machines:leveling_entire_message:work:leveling:36893488147419103232",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_1_machines:derived_metadata:work:leveling:36893488147419103232",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_1_machines:released_order_duplicate_unknown:work:leveling:36893488147419103232",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_1_machines:leveling_entire_message:work:leveling:36893488147419103233",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_1_machines:derived_metadata:work:leveling:36893488147419103233",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_1_machines:released_order_duplicate_unknown:work:leveling:36893488147419103233",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_1_machines:leveling_entire_message:work:leveling:36893488147419103234",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_1_machines:derived_metadata:work:leveling:36893488147419103234",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_1_machines:released_order_duplicate_unknown:work:leveling:36893488147419103234",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_1_machines:input_files_read_only",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_1_machines:early_finish_rejected",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_1_machines:graph_ack:機械:alias:0",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_1_machines:parameters_phase",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_1_machines:task_ack:work:leveling:36893488147419103232",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_1_machines:task_ack:work:leveling:36893488147419103233",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_1_machines:task_ack:work:leveling:36893488147419103234",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_1_machines:state_phase",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_1_machines:wrong_finish_machine:work:leveling:36893488147419103234",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_1_machines:finish_accept:work:leveling:36893488147419103234",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_1_machines:only_unfinished_tasks:work:leveling:36893488147419103234",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_1_machines:duplicate_finish_rejected:work:leveling:36893488147419103234",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_1_machines:wrong_finish_machine:work:leveling:36893488147419103233",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_1_machines:finish_accept:work:leveling:36893488147419103233",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_1_machines:only_unfinished_tasks:work:leveling:36893488147419103233",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_1_machines:duplicate_finish_rejected:work:leveling:36893488147419103233",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_1_machines:wrong_finish_machine:work:leveling:36893488147419103232",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_1_machines:finish_accept:work:leveling:36893488147419103232",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_1_machines:only_unfinished_tasks:work:leveling:36893488147419103232",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_1_machines:duplicate_finish_rejected:work:leveling:36893488147419103232",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_1_machines:finished_cannot_restart",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_2_machines:entire_graph_all_fields",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_2_machines:leveling_task_count",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_2_machines:leveling_entire_message:work:leveling:36893488147419103232",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_2_machines:derived_metadata:work:leveling:36893488147419103232",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_2_machines:released_order_duplicate_unknown:work:leveling:36893488147419103232",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_2_machines:leveling_entire_message:work:leveling:36893488147419103233",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_2_machines:derived_metadata:work:leveling:36893488147419103233",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_2_machines:released_order_duplicate_unknown:work:leveling:36893488147419103233",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_2_machines:leveling_entire_message:work:leveling:36893488147419103234",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_2_machines:derived_metadata:work:leveling:36893488147419103234",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_2_machines:released_order_duplicate_unknown:work:leveling:36893488147419103234",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_2_machines:input_files_read_only",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_2_machines:early_finish_rejected",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_2_machines:graph_ack:機械:alias:0",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_2_machines:graph_ack:機械:alias:1",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_2_machines:parameters_phase",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_2_machines:task_ack:work:leveling:36893488147419103232",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_2_machines:task_ack:work:leveling:36893488147419103233",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_2_machines:task_ack:work:leveling:36893488147419103234",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_2_machines:state_phase",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_2_machines:wrong_finish_machine:work:leveling:36893488147419103234",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_2_machines:finish_accept:work:leveling:36893488147419103234",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_2_machines:only_unfinished_tasks:work:leveling:36893488147419103234",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_2_machines:duplicate_finish_rejected:work:leveling:36893488147419103234",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_2_machines:wrong_finish_machine:work:leveling:36893488147419103233",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_2_machines:finish_accept:work:leveling:36893488147419103233",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_2_machines:only_unfinished_tasks:work:leveling:36893488147419103233",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_2_machines:duplicate_finish_rejected:work:leveling:36893488147419103233",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_2_machines:wrong_finish_machine:work:leveling:36893488147419103232",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_2_machines:finish_accept:work:leveling:36893488147419103232",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_2_machines:only_unfinished_tasks:work:leveling:36893488147419103232",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_2_machines:duplicate_finish_rejected:work:leveling:36893488147419103232",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "synthetic_7_blocks_3_tasks_2_machines:finished_cannot_restart",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "mongo_conflicting_leveled_ignored",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "mongo_only_leveled_change_ignored",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "mongo_released_append_reflects",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "mongo_released_removal_reflects",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "mongo_missing_field_no_leveled_fallback",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "mongo_exact_query_projection_sort",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "mongo_invalid_released_rejected:None",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "mongo_invalid_released_rejected:'block_1'",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "mongo_invalid_released_rejected:{'block_1': True}",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "mongo_invalid_released_rejected:[1]",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "mongo_invalid_released_rejected:[True]",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "mongo_invalid_released_rejected:[None]",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "readme_command_input_ids:FirstSetGraph",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "readme_command_input_ids:TaskGet",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "readme_command_input_ids:TaskFinish",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "readme_mongo_example_state_exact",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "docs_latest_semantics",
+        "passed": true,
+        "detail": null
+      }
+    ],
+    "source_mapping_cases": [
+      {
+        "case": "261004-kyoto",
+        "points": 42,
+        "graph_connections": 90,
+        "tasks": 1,
+        "block_counts": [
+          9
+        ]
+      },
+      {
+        "case": "261008-kyoto",
+        "points": 42,
+        "graph_connections": 90,
+        "tasks": 1,
+        "block_counts": [
+          9
+        ]
+      },
+      {
+        "case": "synthetic_1_blocks_1_tasks_1_machines",
+        "points": 6,
+        "graph_connections": 2,
+        "tasks": 1,
+        "block_counts": [
+          1
+        ]
+      },
+      {
+        "case": "synthetic_2_blocks_1_tasks_1_machines",
+        "points": 8,
+        "graph_connections": 6,
+        "tasks": 1,
+        "block_counts": [
+          2
+        ]
+      },
+      {
+        "case": "synthetic_7_blocks_1_tasks_1_machines",
+        "points": 18,
+        "graph_connections": 26,
+        "tasks": 1,
+        "block_counts": [
+          7
+        ]
+      },
+      {
+        "case": "synthetic_17_blocks_1_tasks_1_machines",
+        "points": 38,
+        "graph_connections": 66,
+        "tasks": 1,
+        "block_counts": [
+          17
+        ]
+      },
+      {
+        "case": "synthetic_7_blocks_3_tasks_1_machines",
+        "points": 18,
+        "graph_connections": 26,
+        "tasks": 3,
+        "block_counts": [
+          7,
+          7,
+          7
+        ]
+      },
+      {
+        "case": "synthetic_7_blocks_3_tasks_2_machines",
+        "points": 18,
+        "graph_connections": 26,
+        "tasks": 3,
+        "block_counts": [
+          7,
+          7,
+          7
+        ]
+      }
+    ],
+    "issues": [],
+    "schemas": {
+      "Node": [
+        "string node_id",
+        "string[] connect_node",
+        "float32 x",
+        "float32 y",
+        "float32 z",
+        "float32 size"
+      ],
+      "NodeGroup": [
+        "string message_id",
+        "Node[] node_ids"
+      ],
+      "LevelingTaskParam": [
+        "string task_id",
+        "string machinery_id",
+        "float32 leveling_height",
+        "float32 block_size_x",
+        "float32 block_size_y",
+        "float32 block_vector_x",
+        "float32 block_vector_y",
+        "float32 block_vector_z",
+        "Node[] block_center",
+        "float32[] soil_volume",
+        "NodeGroup dump_node",
+        "NodeGroup bulldozer_node"
+      ],
+      "LevelingStateReport": [
+        "string task_id",
+        "string machinery_id",
+        "bool[] block_state"
+      ],
+      "TaskReport": [
+        "string message_id",
+        "string task_id",
+        "string machine_id"
+      ]
+    },
+    "source_install_hashes": {
+      "tms_if_input/system_topics.py": {
+        "source": "982cd0a0c9f54a7443a24df10c22ad30cf0e6180ae2aeaa1b179b2809597037a",
+        "installed": "982cd0a0c9f54a7443a24df10c22ad30cf0e6180ae2aeaa1b179b2809597037a"
+      },
+      "tms_if_input/system_topics_data.py": {
+        "source": "2c43caba3e6c6a191441b0b705f1d99bbe1c33766c4ed9dfc8debcfcd15ed2f1",
+        "installed": "2c43caba3e6c6a191441b0b705f1d99bbe1c33766c4ed9dfc8debcfcd15ed2f1"
+      },
+      "tms_if_input/system_topics_protocol.py": {
+        "source": "01d051ecf7738dbd03af281c52577b8e797faca086103aca9ae7a78044e3ab2a",
+        "installed": "01d051ecf7738dbd03af281c52577b8e797faca086103aca9ae7a78044e3ab2a"
+      },
+      "tms_if_input/model.py": {
+        "source": "9ef37f8b39eea41b45e34c37472c966ba2048c0a64a17f9e2d7e7481d87802b2",
+        "installed": "9ef37f8b39eea41b45e34c37472c966ba2048c0a64a17f9e2d7e7481d87802b2"
+      },
+      "tms_if_input/parameters.py": {
+        "source": "781c488cd6d0ba5dd98984f1ac53ebf1ac2d02059f609b24dd6fe1d5783fcf88",
+        "installed": "781c488cd6d0ba5dd98984f1ac53ebf1ac2d02059f609b24dd6fe1d5783fcf88"
+      },
+      "tms_if_input/compiler.py": {
+        "source": "8cb4faa7d2a5e762e636c3d2c029fcb526a5a244f51e52e3cc19240356fd5ad1",
+        "installed": "8cb4faa7d2a5e762e636c3d2c029fcb526a5a244f51e52e3cc19240356fd5ad1"
+      },
+      "tms_if_input/database.py": {
+        "source": "4ab17d304c9b5b6148653d6052fffa2b418420d447d797df12ba6797185b750f",
+        "installed": "4ab17d304c9b5b6148653d6052fffa2b418420d447d797df12ba6797185b750f"
+      },
+      "tms_if_input/routes.py": {
+        "source": "84ca4d419cb6d86039454981c9f24b68d5e715457ca57e51a59504c287078be6",
+        "installed": "84ca4d419cb6d86039454981c9f24b68d5e715457ca57e51a59504c287078be6"
+      },
+      "tms_if_input/behavior_tree.py": {
+        "source": "e22b2049bcd0674e15d6b37b2774c6f91fe6eaf161436c79d74042243827fcc8",
+        "installed": "e22b2049bcd0674e15d6b37b2774c6f91fe6eaf161436c79d74042243827fcc8"
+      },
+      "tms_if_input/importer.py": {
+        "source": "e312ac3b6cb795504ec6e6943b759ce41b41c4040ce093a3218d75833a9900eb",
+        "installed": "e312ac3b6cb795504ec6e6943b759ce41b41c4040ce093a3218d75833a9900eb"
+      },
+      "tms_if_input/cli.py": {
+        "source": "b128a2dbd0b2b384a88f2df59756e686cd3b690633d47d96cacaabda2a45521c",
+        "installed": "b128a2dbd0b2b384a88f2df59756e686cd3b690633d47d96cacaabda2a45521c"
+      },
+      "launch/system_topics.launch.py": {
+        "source": "c3f503d27bf3c4ca6605c4cafd417b957ab03bdc675f767e20e3194bbc0c966a",
+        "installed": "c3f503d27bf3c4ca6605c4cafd417b957ab03bdc675f767e20e3194bbc0c966a"
+      },
+      "json_samples/261008-kyoto.geojson": {
+        "source": "90a0e6daf142da0d1d4843ee00d5075d72cca9f1db14910a1d5c3b8a8390eeee",
+        "installed": "90a0e6daf142da0d1d4843ee00d5075d72cca9f1db14910a1d5c3b8a8390eeee"
+      },
+      "json_samples/261008-kyoto.xml": {
+        "source": "dce4e7f7e31916d7d915defbe69ece32399147a3dae36e896e4cf1db63fb35b1",
+        "installed": "dce4e7f7e31916d7d915defbe69ece32399147a3dae36e896e4cf1db63fb35b1"
+      }
+    },
+    "original_baseline_changed_files": [
+      "README.md"
+    ],
+    "git_diff_files": [
+      "README.md",
+      "SYSTEM_TOPICS.rst",
+      "test/test_system_topics.py",
+      "tms_if_input/system_topics.py",
+      "tms_if_input/system_topics_data.py",
+      "tms_if_input/system_topics_protocol.py"
+    ],
+    "protocol_constants": {
+      "source": "message IDs are notification kinds; not task/machine data",
+      "values": [
+        "FirstSetGraph",
+        "TaskGet",
+        "TaskFinish"
+      ]
+    },
+    "limitations": [
+      "No real MongoDB or ROS communication in this contract audit; separate assigned audit covers those.",
+      "Existing fixed initial_move_pose values and specified z=0 defaults are intentional legacy behavior."
+    ],
+    "summary": {
+      "check_count": 189,
+      "all_passed": true,
+      "source_mapping_case_count": 8
+    }
+  },
+  "real_mongodb_ros_audit": {
+    "status": "passed",
+    "started_utc": "2026-10-14T09:13:41.003371+00:00",
+    "test_database": "tms_if_input_latest_audit_be6cbe2f4ee6454db6f25ba593b1a007",
+    "production_database": "rostmsdb",
+    "oracle_from_current_xml": {
+      "task_id": "2600159710",
+      "machine_id": "machine_4",
+      "model_name": "d37pxi",
+      "blackboard_record_name": "SAMPLE_BLACKBOARD_d37pxi",
+      "block_count": 9,
+      "block_names": [
+        "block_1",
+        "block_2",
+        "block_3",
+        "block_4",
+        "block_5",
+        "block_6",
+        "block_7",
+        "block_8",
+        "block_9"
+      ]
+    },
+    "ros_domain_id": 227,
+    "checks": [
+      {
+        "label": "wrong_and_premature_reports_do_not_advance_graph_phase",
+        "passed": true
+      },
+      {
+        "label": "no_Mongo_poll_during_graph_phase",
+        "passed": true
+      },
+      {
+        "label": "wrong_and_premature_reports_do_not_advance_parameters_phase_or_poll_Mongo",
+        "passed": true
+      },
+      {
+        "label": "RELEACED_selected_over_different_LEVELED_wrong_model_and_newer_static",
+        "passed": true,
+        "RELEACED_BLOCK": [
+          "block_1",
+          "block_2"
+        ],
+        "published_block_state": [
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "latency_seconds": 0.0914479959756136,
+        "actual_message": {
+          "at": 1024430.900943619,
+          "task_id": "2600159710",
+          "machine_id": "machine_4",
+          "block_state": [
+            true,
+            true,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        }
+      },
+      {
+        "label": "LEVELED_only_change_has_no_effect",
+        "passed": true,
+        "state_messages": 4,
+        "published_block_state": [
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      {
+        "label": "valid_TaskGet_stops_graph_and_parameter_publication",
+        "passed": true
+      },
+      {
+        "label": "RELEACED_addition_reflected",
+        "passed": true,
+        "RELEACED_BLOCK": [
+          "block_1",
+          "block_9"
+        ],
+        "published_block_state": [
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          true
+        ],
+        "latency_seconds": 0.03584006696473807,
+        "actual_message": {
+          "at": 1024431.800177897,
+          "task_id": "2600159710",
+          "machine_id": "machine_4",
+          "block_state": [
+            true,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            true
+          ]
+        }
+      },
+      {
+        "label": "RELEACED_removal_replaces_previous_state",
+        "passed": true,
+        "RELEACED_BLOCK": [
+          "block_2"
+        ],
+        "published_block_state": [
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "latency_seconds": 0.09879236004780978,
+        "actual_message": {
+          "at": 1024431.904109635,
+          "task_id": "2600159710",
+          "machine_id": "machine_4",
+          "block_state": [
+            false,
+            true,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        }
+      },
+      {
+        "label": "empty_RELEACED_all_false",
+        "passed": true,
+        "RELEACED_BLOCK": [],
+        "published_block_state": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "latency_seconds": 0.09298409102484584,
+        "actual_message": {
+          "at": 1024432.000262786,
+          "task_id": "2600159710",
+          "machine_id": "machine_4",
+          "block_state": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        }
+      },
+      {
+        "label": "missing_RELEACED_field_ignores_populated_LEVELED",
+        "passed": true,
+        "RELEACED_BLOCK": [],
+        "published_block_state": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "latency_seconds": 0.09260406601242721,
+        "actual_message": {
+          "at": 1024432.104130336,
+          "task_id": "2600159710",
+          "machine_id": "machine_4",
+          "block_state": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        }
+      },
+      {
+        "label": "RELEACED_field_reappearance_uses_XML_block_order",
+        "passed": true,
+        "RELEACED_BLOCK": [
+          "block_1",
+          "block_3",
+          "block_5",
+          "block_7",
+          "block_9"
+        ],
+        "published_block_state": [
+          true,
+          false,
+          true,
+          false,
+          true,
+          false,
+          true,
+          false,
+          true
+        ],
+        "latency_seconds": 0.09055808500852436,
+        "actual_message": {
+          "at": 1024432.204309312,
+          "task_id": "2600159710",
+          "machine_id": "machine_4",
+          "block_state": [
+            true,
+            false,
+            true,
+            false,
+            true,
+            false,
+            true,
+            false,
+            true
+          ]
+        }
+      },
+      {
+        "label": "duplicate_unknown_and_out_of_range_names_ignore_membership_without_reordering",
+        "passed": true,
+        "RELEACED_BLOCK": [
+          "block_9",
+          "block_9",
+          "block_0",
+          "block_10",
+          "unknown_foreign_block",
+          "block_1"
+        ],
+        "published_block_state": [
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          true
+        ],
+        "latency_seconds": 0.08573986205738038,
+        "actual_message": {
+          "at": 1024432.304393223,
+          "task_id": "2600159710",
+          "machine_id": "machine_4",
+          "block_state": [
+            true,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            true
+          ]
+        }
+      },
+      {
+        "label": "older_matching_duplicate_blackboard_ignored",
+        "passed": true,
+        "state_messages": 4,
+        "published_block_state": [
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          true
+        ]
+      },
+      {
+        "label": "newest_matching_timestamp_blackboard_selected",
+        "passed": true,
+        "RELEACED_BLOCK": [
+          "block_2"
+        ],
+        "published_block_state": [
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "latency_seconds": 0.07398950308561325,
+        "actual_message": {
+          "at": 1024433.000217059,
+          "task_id": "2600159710",
+          "machine_id": "machine_4",
+          "block_state": [
+            false,
+            true,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        }
+      },
+      {
+        "label": "equal_timestamp_selects_latest_id",
+        "passed": true,
+        "RELEACED_BLOCK": [
+          "block_1",
+          "block_9"
+        ],
+        "published_block_state": [
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          true
+        ],
+        "latency_seconds": 0.09208757791202515,
+        "actual_message": {
+          "at": 1024433.100279087,
+          "task_id": "2600159710",
+          "machine_id": "machine_4",
+          "block_state": [
+            true,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            true
+          ]
+        }
+      },
+      {
+        "label": "malformed_RELEACED_string_rejects_publication_node_remains_alive",
+        "passed": true,
+        "silence_seconds": 0.35
+      },
+      {
+        "label": "recovery_after_malformed_string",
+        "passed": true,
+        "RELEACED_BLOCK": [
+          "block_2"
+        ],
+        "published_block_state": [
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "latency_seconds": 0.09012577298562974,
+        "actual_message": {
+          "at": 1024433.800138155,
+          "task_id": "2600159710",
+          "machine_id": "machine_4",
+          "block_state": [
+            false,
+            true,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        }
+      },
+      {
+        "label": "malformed_RELEACED_nonstring_member_rejects_publication_node_remains_alive",
+        "passed": true,
+        "silence_seconds": 0.35
+      },
+      {
+        "label": "recovery_after_malformed_nonstring_member",
+        "passed": true,
+        "RELEACED_BLOCK": [
+          "block_2"
+        ],
+        "published_block_state": [
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "latency_seconds": 0.0878254669951275,
+        "actual_message": {
+          "at": 1024434.500385734,
+          "task_id": "2600159710",
+          "machine_id": "machine_4",
+          "block_state": [
+            false,
+            true,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        }
+      },
+      {
+        "label": "malformed_RELEACED_null_rejects_publication_node_remains_alive",
+        "passed": true,
+        "silence_seconds": 0.35
+      },
+      {
+        "label": "recovery_after_malformed_null",
+        "passed": true,
+        "RELEACED_BLOCK": [
+          "block_2"
+        ],
+        "published_block_state": [
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "latency_seconds": 0.08497450000140816,
+        "actual_message": {
+          "at": 1024435.200136732,
+          "task_id": "2600159710",
+          "machine_id": "machine_4",
+          "block_state": [
+            false,
+            true,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        }
+      },
+      {
+        "label": "malformed_RELEACED_object_rejects_publication_node_remains_alive",
+        "passed": true,
+        "silence_seconds": 0.35
+      },
+      {
+        "label": "recovery_after_malformed_object",
+        "passed": true,
+        "RELEACED_BLOCK": [
+          "block_2"
+        ],
+        "published_block_state": [
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "latency_seconds": 0.08225495694205165,
+        "actual_message": {
+          "at": 1024435.900173286,
+          "task_id": "2600159710",
+          "machine_id": "machine_4",
+          "block_state": [
+            false,
+            true,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        }
+      },
+      {
+        "label": "missing_matching_dynamic_blackboard_all_false",
+        "passed": true,
+        "RELEACED_BLOCK": [],
+        "published_block_state": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "latency_seconds": 0.09903064800892025,
+        "actual_message": {
+          "at": 1024436.000144376,
+          "task_id": "2600159710",
+          "machine_id": "machine_4",
+          "block_state": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        }
+      },
+      {
+        "label": "new_dynamic_blackboard_after_absence_detected",
+        "passed": true,
+        "RELEACED_BLOCK": [
+          "block_1",
+          "block_9"
+        ],
+        "published_block_state": [
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          true
+        ],
+        "latency_seconds": 0.09763786394614726,
+        "actual_message": {
+          "at": 1024436.100255089,
+          "task_id": "2600159710",
+          "machine_id": "machine_4",
+          "block_state": [
+            true,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            true
+          ]
+        }
+      },
+      {
+        "label": "wrong_TaskFinish_and_duplicate_prior_ACKs_do_not_stop_state",
+        "passed": true,
+        "state_messages": 4,
+        "published_block_state": [
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          true
+        ]
+      },
+      {
+        "label": "continuous_reporting_before_TaskFinish",
+        "passed": true,
+        "received_state_messages": 12,
+        "observed_seconds": 1.2003120438894257,
+        "average_interval_seconds": 0.09995061844925988,
+        "minimum_interval_seconds": 0.09530732489656657,
+        "maximum_interval_seconds": 0.10386783408466727
+      },
+      {
+        "label": "matching_TaskFinish_stops_all_publication_and_Mongo_polling_no_resurrection",
+        "passed": true,
+        "finish_accept_latency_seconds": 0.02075818902812898,
+        "quiet_duration_seconds": 0.9,
+        "unchanged_received_counts": [
+          7,
+          7,
+          51
+        ],
+        "runtime_read_count_before": 75,
+        "runtime_read_count_after": 75
+      }
+    ],
+    "fixture_driver_operations": [
+      {
+        "op": "insert",
+        "_id": "6acf47c55e5fb2c0629dfd6a"
+      },
+      {
+        "op": "insert",
+        "_id": "6acf47c65e5fb2c0629dfd6b"
+      },
+      {
+        "op": "insert",
+        "_id": "6acf47c65e5fb2c0629dfd6c"
+      },
+      {
+        "op": "update",
+        "_id": "6acf47c55e5fb2c0629dfd6a",
+        "command": {
+          "$set": {
+            "LEVELED_BLOCK": [
+              "block_1",
+              "block_2",
+              "block_3",
+              "block_4",
+              "block_5",
+              "block_6",
+              "block_7",
+              "block_8",
+              "block_9"
+            ]
+          }
+        }
+      },
+      {
+        "op": "update",
+        "_id": "6acf47c55e5fb2c0629dfd6a",
+        "command": {
+          "$set": {
+            "RELEACED_BLOCK": [
+              "block_1",
+              "block_9"
+            ]
+          }
+        }
+      },
+      {
+        "op": "update",
+        "_id": "6acf47c55e5fb2c0629dfd6a",
+        "command": {
+          "$set": {
+            "RELEACED_BLOCK": [
+              "block_2"
+            ]
+          }
+        }
+      },
+      {
+        "op": "update",
+        "_id": "6acf47c55e5fb2c0629dfd6a",
+        "command": {
+          "$set": {
+            "RELEACED_BLOCK": []
+          }
+        }
+      },
+      {
+        "op": "update",
+        "_id": "6acf47c55e5fb2c0629dfd6a",
+        "command": {
+          "$unset": {
+            "RELEACED_BLOCK": ""
+          }
+        }
+      },
+      {
+        "op": "update",
+        "_id": "6acf47c55e5fb2c0629dfd6a",
+        "command": {
+          "$set": {
+            "RELEACED_BLOCK": [
+              "block_1",
+              "block_3",
+              "block_5",
+              "block_7",
+              "block_9"
+            ]
+          }
+        }
+      },
+      {
+        "op": "update",
+        "_id": "6acf47c55e5fb2c0629dfd6a",
+        "command": {
+          "$set": {
+            "RELEACED_BLOCK": [
+              "block_9",
+              "block_9",
+              "block_0",
+              "block_10",
+              "unknown_foreign_block",
+              "block_1"
+            ]
+          }
+        }
+      },
+      {
+        "op": "insert",
+        "_id": "6acf47c95e5fb2c0629dfd6d"
+      },
+      {
+        "op": "update",
+        "_id": "6acf47c95e5fb2c0629dfd6d",
+        "command": {
+          "$set": {
+            "timestamps": {
+              "$date": "2026-10-14T09:14:41.822Z"
+            },
+            "RELEACED_BLOCK": [
+              "block_2"
+            ]
+          }
+        }
+      },
+      {
+        "op": "insert",
+        "_id": "6acf47ca5e5fb2c0629dfd6e"
+      },
+      {
+        "op": "update",
+        "_id": "6acf47ca5e5fb2c0629dfd6e",
+        "command": {
+          "$set": {
+            "RELEACED_BLOCK": "not-array"
+          }
+        }
+      },
+      {
+        "op": "update",
+        "_id": "6acf47ca5e5fb2c0629dfd6e",
+        "command": {
+          "$set": {
+            "RELEACED_BLOCK": [
+              "block_2"
+            ]
+          }
+        }
+      },
+      {
+        "op": "update",
+        "_id": "6acf47ca5e5fb2c0629dfd6e",
+        "command": {
+          "$set": {
+            "RELEACED_BLOCK": [
+              "block_1",
+              42
+            ]
+          }
+        }
+      },
+      {
+        "op": "update",
+        "_id": "6acf47ca5e5fb2c0629dfd6e",
+        "command": {
+          "$set": {
+            "RELEACED_BLOCK": [
+              "block_2"
+            ]
+          }
+        }
+      },
+      {
+        "op": "update",
+        "_id": "6acf47ca5e5fb2c0629dfd6e",
+        "command": {
+          "$set": {
+            "RELEACED_BLOCK": null
+          }
+        }
+      },
+      {
+        "op": "update",
+        "_id": "6acf47ca5e5fb2c0629dfd6e",
+        "command": {
+          "$set": {
+            "RELEACED_BLOCK": [
+              "block_2"
+            ]
+          }
+        }
+      },
+      {
+        "op": "update",
+        "_id": "6acf47ca5e5fb2c0629dfd6e",
+        "command": {
+          "$set": {
+            "RELEACED_BLOCK": {}
+          }
+        }
+      },
+      {
+        "op": "update",
+        "_id": "6acf47ca5e5fb2c0629dfd6e",
+        "command": {
+          "$set": {
+            "RELEACED_BLOCK": [
+              "block_2"
+            ]
+          }
+        }
+      },
+      {
+        "op": "delete",
+        "count": 3,
+        "ids": [
+          "6acf47c55e5fb2c0629dfd6a",
+          "6acf47c95e5fb2c0629dfd6d",
+          "6acf47ca5e5fb2c0629dfd6e"
+        ]
+      },
+      {
+        "op": "insert",
+        "_id": "6acf47cd5e5fb2c0629dfd6f"
+      },
+      {
+        "op": "update",
+        "_id": "6acf47cd5e5fb2c0629dfd6f",
+        "command": {
+          "$set": {
+            "RELEACED_BLOCK": [
+              "block_1",
+              "block_2",
+              "block_3",
+              "block_4",
+              "block_5",
+              "block_6",
+              "block_7",
+              "block_8",
+              "block_9"
+            ],
+            "LEVELED_BLOCK": []
+          }
+        }
+      }
+    ],
+    "installed_code": {
+      "system_topics.py": {
+        "path": "/home/kasahara/SIP_PROJECTS/ros2_tms_ws/install/tms_if_input/lib/python3.10/site-packages/tms_if_input/system_topics.py",
+        "sha256": "982cd0a0c9f54a7443a24df10c22ad30cf0e6180ae2aeaa1b179b2809597037a",
+        "source_matches_installed": true
+      },
+      "system_topics_data.py": {
+        "path": "/home/kasahara/SIP_PROJECTS/ros2_tms_ws/install/tms_if_input/lib/python3.10/site-packages/tms_if_input/system_topics_data.py",
+        "sha256": "2c43caba3e6c6a191441b0b705f1d99bbe1c33766c4ed9dfc8debcfcd15ed2f1",
+        "source_matches_installed": true
+      },
+      "system_topics_protocol.py": {
+        "path": "/home/kasahara/SIP_PROJECTS/ros2_tms_ws/install/tms_if_input/lib/python3.10/site-packages/tms_if_input/system_topics_protocol.py",
+        "sha256": "01d051ecf7738dbd03af281c52577b8e797faca086103aca9ae7a78044e3ab2a",
+        "source_matches_installed": true
+      }
+    },
+    "actual_launch_command": [
+      "ros2",
+      "launch",
+      "tms_if_input",
+      "system_topics.launch.py",
+      "geojson_path:=261008-kyoto.geojson",
+      "xml_path:=261008-kyoto.xml",
+      "mongo_db:=tms_if_input_latest_audit_be6cbe2f4ee6454db6f25ba593b1a007",
+      "publish_period:=0.1",
+      "state_poll_period:=0.1"
+    ],
+    "launch_exit_code": 0,
+    "mongo_profiler": {
+      "runtime_read_count": 75,
+      "runtime_write_count": 0,
+      "fixture_write_count": 24,
+      "fixture_app_name": "latest_released_audit_fixture_driver_ed57cbd75a23424998d528854ec35694",
+      "all_runtime_projection_is_RELEACED_BLOCK": true
+    },
+    "own_fixture_database_removed": true,
+    "production_unchanged": true,
+    "production_collection_count": 10,
+    "production_document_count": 757,
+    "checks_passed": 28,
+    "maximum_update_latency_seconds": 0.09903064800892025,
+    "finished_utc": "2026-10-14T09:13:53.260009+00:00"
+  },
+  "ros_boundary_audit": {
+    "status": "passed",
+    "transport": "actual ROS2 DDS, localhost only",
+    "mongo": "read-only mock with mutable documents; no actual DB access or writes",
+    "cases": [
+      {
+        "name": "count_1",
+        "count": 1,
+        "areas": 1,
+        "machines": 1,
+        "status": "passed",
+        "invalid_graph_reports_ignored": 4,
+        "all_transmitted_payloads_match_raw_files": true,
+        "state_dynamically_matches_ordered_blocks": true,
+        "all_machine_and_task_acks_required": true,
+        "stopped_graph_and_acknowledged_parameters": true,
+        "all_finished_stops_all_topics_and_polling": true,
+        "duplicate_does_not_restart": true,
+        "shutdown": {
+          "elapsed_seconds": 0.21388249506708235,
+          "exit_code": 0,
+          "signals_sent": 1,
+          "second_signal_delay_seconds": null
+        },
+        "child_clean_exit": true,
+        "received_counts": {
+          "graph": 6,
+          "parameters": 9,
+          "state": 16
+        },
+        "read_queries": [
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024480.033290838,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024480.113131237,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024480.195157778,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024480.273422141,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024480.354608969,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024480.434469142,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024480.513268327,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024480.593711315,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024480.67628963,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024480.755464538,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024480.833222139,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024480.915643062,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024480.995290169,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024481.075779258,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024481.155602164,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024481.235385307,
+            "fixture_tag": null
+          }
+        ],
+        "read_query_models_match_xml": true,
+        "no_orphan_children": true
+      },
+      {
+        "name": "count_4",
+        "count": 4,
+        "areas": 1,
+        "machines": 1,
+        "status": "passed",
+        "invalid_graph_reports_ignored": 4,
+        "all_transmitted_payloads_match_raw_files": true,
+        "state_dynamically_matches_ordered_blocks": true,
+        "all_machine_and_task_acks_required": true,
+        "stopped_graph_and_acknowledged_parameters": true,
+        "all_finished_stops_all_topics_and_polling": true,
+        "duplicate_does_not_restart": true,
+        "shutdown": {
+          "elapsed_seconds": 0.21369227999821305,
+          "exit_code": 0,
+          "signals_sent": 1,
+          "second_signal_delay_seconds": null
+        },
+        "child_clean_exit": true,
+        "received_counts": {
+          "graph": 6,
+          "parameters": 9,
+          "state": 16
+        },
+        "read_queries": [
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024484.136777845,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024484.216911925,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024484.29676962,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024484.37712193,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024484.456927865,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024484.536953961,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024484.61739683,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024484.697659679,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024484.779218355,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024484.856836734,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024484.938921494,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024485.016830291,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024485.097277853,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024485.176953655,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024485.258881814,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024485.336787225,
+            "fixture_tag": null
+          }
+        ],
+        "read_query_models_match_xml": true,
+        "no_orphan_children": true
+      },
+      {
+        "name": "count_12",
+        "count": 12,
+        "areas": 1,
+        "machines": 1,
+        "status": "passed",
+        "invalid_graph_reports_ignored": 4,
+        "all_transmitted_payloads_match_raw_files": true,
+        "state_dynamically_matches_ordered_blocks": true,
+        "all_machine_and_task_acks_required": true,
+        "stopped_graph_and_acknowledged_parameters": true,
+        "all_finished_stops_all_topics_and_polling": true,
+        "duplicate_does_not_restart": true,
+        "shutdown": {
+          "elapsed_seconds": 0.1639242690289393,
+          "exit_code": 0,
+          "signals_sent": 1,
+          "second_signal_delay_seconds": null
+        },
+        "child_clean_exit": true,
+        "received_counts": {
+          "graph": 6,
+          "parameters": 9,
+          "state": 16
+        },
+        "read_queries": [
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024488.327073511,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024488.404761978,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024488.487311589,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024488.56675051,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024488.646639238,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024488.724448983,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024488.806380561,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024488.88771947,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024488.964544035,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024489.04590691,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024489.126417451,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024489.20663514,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024489.287250942,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024489.366367344,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024489.444476219,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024489.5244445,
+            "fixture_tag": null
+          }
+        ],
+        "read_query_models_match_xml": true,
+        "no_orphan_children": true
+      },
+      {
+        "name": "quoted_paths",
+        "count": 2,
+        "areas": 1,
+        "machines": 1,
+        "status": "passed",
+        "invalid_graph_reports_ignored": 4,
+        "all_transmitted_payloads_match_raw_files": true,
+        "state_dynamically_matches_ordered_blocks": true,
+        "all_machine_and_task_acks_required": true,
+        "stopped_graph_and_acknowledged_parameters": true,
+        "all_finished_stops_all_topics_and_polling": true,
+        "duplicate_does_not_restart": true,
+        "shutdown": {
+          "elapsed_seconds": 0.2645040260395035,
+          "exit_code": 0,
+          "signals_sent": 1,
+          "second_signal_delay_seconds": null
+        },
+        "child_clean_exit": true,
+        "received_counts": {
+          "graph": 6,
+          "parameters": 9,
+          "state": 16
+        },
+        "read_queries": [
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024492.44369625,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024492.523591798,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024492.604513539,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024492.681704283,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024492.761642151,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024492.841539717,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024492.923593698,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024493.00438852,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024493.08366221,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024493.161671687,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024493.243567789,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024493.321521397,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024493.404378777,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024493.481588235,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024493.561601771,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024493.641547201,
+            "fixture_tag": null
+          }
+        ],
+        "read_query_models_match_xml": true,
+        "no_orphan_children": true
+      },
+      {
+        "name": "numeric_paths",
+        "count": 12,
+        "areas": 1,
+        "machines": 1,
+        "status": "passed",
+        "invalid_graph_reports_ignored": 4,
+        "all_transmitted_payloads_match_raw_files": true,
+        "state_dynamically_matches_ordered_blocks": true,
+        "all_machine_and_task_acks_required": true,
+        "stopped_graph_and_acknowledged_parameters": true,
+        "all_finished_stops_all_topics_and_polling": true,
+        "duplicate_does_not_restart": true,
+        "shutdown": {
+          "elapsed_seconds": 0.21409521403256804,
+          "exit_code": 0,
+          "signals_sent": 1,
+          "second_signal_delay_seconds": null
+        },
+        "child_clean_exit": true,
+        "received_counts": {
+          "graph": 6,
+          "parameters": 9,
+          "state": 17
+        },
+        "read_queries": [
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024549.482695827,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024549.563442788,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024549.642600233,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024549.722709041,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024549.826227633,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024549.882532459,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024549.963361004,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024550.042401172,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024550.122340371,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024550.201414674,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024550.281465644,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024550.362258171,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024550.44415391,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024550.521956186,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024550.6019074,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024550.683360769,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024550.761929871,
+            "fixture_tag": null
+          }
+        ],
+        "read_query_models_match_xml": true,
+        "no_orphan_children": true
+      },
+      {
+        "name": "two_areas_same_alias",
+        "count": 4,
+        "areas": 2,
+        "machines": 1,
+        "status": "passed",
+        "invalid_graph_reports_ignored": 4,
+        "all_transmitted_payloads_match_raw_files": true,
+        "state_dynamically_matches_ordered_blocks": true,
+        "all_machine_and_task_acks_required": true,
+        "stopped_graph_and_acknowledged_parameters": true,
+        "per_task_finish_only_stops_matching_identity": true,
+        "all_finished_stops_all_topics_and_polling": true,
+        "duplicate_does_not_restart": true,
+        "shutdown": {
+          "elapsed_seconds": 0.16381105803884566,
+          "exit_code": 0,
+          "signals_sent": 1,
+          "second_signal_delay_seconds": null
+        },
+        "child_clean_exit": true,
+        "received_counts": {
+          "graph": 6,
+          "parameters": 22,
+          "state": 40
+        },
+        "read_queries": [
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024554.063242166,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024554.145267602,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024554.223215678,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024554.303272448,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024554.38333826,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024554.463333472,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024554.543281778,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024554.623242305,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024554.703316216,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024554.78327116,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024554.863251029,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024554.943197987,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024555.023321893,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024555.103507089,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024555.185441885,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024555.263101705,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024555.343227977,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024555.423247207,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024555.503338533,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024555.583354584,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024555.663270403,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024555.743250922,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024555.82568868,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024555.903262726,
+            "fixture_tag": null
+          }
+        ],
+        "read_query_models_match_xml": true,
+        "no_orphan_children": true
+      },
+      {
+        "name": "two_areas_two_aliases",
+        "count": 4,
+        "areas": 2,
+        "machines": 2,
+        "status": "passed",
+        "invalid_graph_reports_ignored": 4,
+        "all_transmitted_payloads_match_raw_files": true,
+        "state_dynamically_matches_ordered_blocks": true,
+        "all_machine_and_task_acks_required": true,
+        "stopped_graph_and_acknowledged_parameters": true,
+        "per_task_finish_only_stops_matching_identity": true,
+        "all_finished_stops_all_topics_and_polling": true,
+        "duplicate_does_not_restart": true,
+        "shutdown": {
+          "elapsed_seconds": 0.21408199099823833,
+          "exit_code": 0,
+          "signals_sent": 1,
+          "second_signal_delay_seconds": null
+        },
+        "child_clean_exit": true,
+        "received_counts": {
+          "graph": 8,
+          "parameters": 22,
+          "state": 40
+        },
+        "read_queries": [
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024559.451397168,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_another-custom-model",
+            "model_name": "another-custom-model",
+            "type": "dynamic",
+            "at": 1024559.45216854,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024559.529965348,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_another-custom-model",
+            "model_name": "another-custom-model",
+            "type": "dynamic",
+            "at": 1024559.530166121,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024559.609997466,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_another-custom-model",
+            "model_name": "another-custom-model",
+            "type": "dynamic",
+            "at": 1024559.610198571,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024559.689966417,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_another-custom-model",
+            "model_name": "another-custom-model",
+            "type": "dynamic",
+            "at": 1024559.690165209,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024559.770080401,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_another-custom-model",
+            "model_name": "another-custom-model",
+            "type": "dynamic",
+            "at": 1024559.770349853,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024559.849962252,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_another-custom-model",
+            "model_name": "another-custom-model",
+            "type": "dynamic",
+            "at": 1024559.850168935,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024559.92999402,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_another-custom-model",
+            "model_name": "another-custom-model",
+            "type": "dynamic",
+            "at": 1024559.93019205,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024560.010264,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_another-custom-model",
+            "model_name": "another-custom-model",
+            "type": "dynamic",
+            "at": 1024560.010487308,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024560.091311321,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_another-custom-model",
+            "model_name": "another-custom-model",
+            "type": "dynamic",
+            "at": 1024560.092027398,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024560.17017784,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_another-custom-model",
+            "model_name": "another-custom-model",
+            "type": "dynamic",
+            "at": 1024560.170365559,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024560.250068409,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_another-custom-model",
+            "model_name": "another-custom-model",
+            "type": "dynamic",
+            "at": 1024560.250268618,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024560.330133645,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_another-custom-model",
+            "model_name": "another-custom-model",
+            "type": "dynamic",
+            "at": 1024560.330318972,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024560.410131105,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_another-custom-model",
+            "model_name": "another-custom-model",
+            "type": "dynamic",
+            "at": 1024560.41033729,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024560.489970832,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_another-custom-model",
+            "model_name": "another-custom-model",
+            "type": "dynamic",
+            "at": 1024560.490152347,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024560.570224351,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_another-custom-model",
+            "model_name": "another-custom-model",
+            "type": "dynamic",
+            "at": 1024560.570436354,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024560.65015054,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_another-custom-model",
+            "model_name": "another-custom-model",
+            "type": "dynamic",
+            "at": 1024560.65034293,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024560.731557244,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024560.812613262,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024560.89026492,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024560.971609025,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024561.050546352,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024561.132871176,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024561.211124118,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024561.290304206,
+            "fixture_tag": null
+          }
+        ],
+        "read_query_models_match_xml": true,
+        "no_orphan_children": true
+      },
+      {
+        "name": "shutdown_graph",
+        "count": 1,
+        "areas": 1,
+        "machines": 1,
+        "status": "passed",
+        "invalid_graph_reports_ignored": 4,
+        "shutdown": {
+          "elapsed_seconds": 0.16381322406232357,
+          "exit_code": 0,
+          "signals_sent": 1,
+          "second_signal_delay_seconds": null
+        },
+        "child_clean_exit": true,
+        "received_counts": {
+          "graph": 6,
+          "parameters": 0,
+          "state": 0
+        },
+        "read_queries": [],
+        "read_query_models_match_xml": true,
+        "no_orphan_children": true
+      },
+      {
+        "name": "shutdown_parameters",
+        "count": 1,
+        "areas": 1,
+        "machines": 1,
+        "status": "passed",
+        "invalid_graph_reports_ignored": 4,
+        "shutdown": {
+          "elapsed_seconds": 0.21377541299443692,
+          "exit_code": 0,
+          "signals_sent": 1,
+          "second_signal_delay_seconds": null
+        },
+        "child_clean_exit": true,
+        "received_counts": {
+          "graph": 6,
+          "parameters": 9,
+          "state": 0
+        },
+        "read_queries": [],
+        "read_query_models_match_xml": true,
+        "no_orphan_children": true
+      },
+      {
+        "name": "shutdown_state",
+        "count": 1,
+        "areas": 1,
+        "machines": 1,
+        "status": "passed",
+        "invalid_graph_reports_ignored": 4,
+        "all_transmitted_payloads_match_raw_files": true,
+        "state_dynamically_matches_ordered_blocks": true,
+        "all_machine_and_task_acks_required": true,
+        "stopped_graph_and_acknowledged_parameters": true,
+        "shutdown": {
+          "elapsed_seconds": 0.16370900091715157,
+          "exit_code": 0,
+          "signals_sent": 1,
+          "second_signal_delay_seconds": null
+        },
+        "child_clean_exit": true,
+        "received_counts": {
+          "graph": 6,
+          "parameters": 9,
+          "state": 13
+        },
+        "read_queries": [
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024567.861099919,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024567.941048462,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024568.021021383,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024568.101169454,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024568.181056801,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024568.261074891,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024568.341066699,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024568.421021495,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024568.501551258,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024568.581134459,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024568.661128286,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024568.743235635,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024568.820999684,
+            "fixture_tag": null
+          }
+        ],
+        "read_query_models_match_xml": true,
+        "no_orphan_children": true
+      },
+      {
+        "name": "shutdown_finished",
+        "count": 1,
+        "areas": 1,
+        "machines": 1,
+        "status": "passed",
+        "invalid_graph_reports_ignored": 4,
+        "all_transmitted_payloads_match_raw_files": true,
+        "state_dynamically_matches_ordered_blocks": true,
+        "all_machine_and_task_acks_required": true,
+        "stopped_graph_and_acknowledged_parameters": true,
+        "all_finished_stops_all_topics_and_polling": true,
+        "duplicate_does_not_restart": true,
+        "shutdown": {
+          "elapsed_seconds": 0.21375517104752362,
+          "exit_code": 0,
+          "signals_sent": 1,
+          "second_signal_delay_seconds": null
+        },
+        "child_clean_exit": true,
+        "received_counts": {
+          "graph": 6,
+          "parameters": 9,
+          "state": 16
+        },
+        "read_queries": [
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024570.990090064,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024571.070063912,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024571.150164314,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024571.230261142,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024571.310215571,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024571.390052587,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024571.470041524,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024571.549996858,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024571.630162384,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024571.71008658,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024571.790096011,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024571.870151118,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024571.949993454,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024572.030305257,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024572.11008302,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024572.19011343,
+            "fixture_tag": null
+          }
+        ],
+        "read_query_models_match_xml": true,
+        "no_orphan_children": true
+      },
+      {
+        "name": "shutdown_mongo_error",
+        "count": 1,
+        "areas": 1,
+        "machines": 1,
+        "status": "passed",
+        "invalid_graph_reports_ignored": 4,
+        "all_transmitted_payloads_match_raw_files": true,
+        "state_dynamically_matches_ordered_blocks": true,
+        "all_machine_and_task_acks_required": true,
+        "stopped_graph_and_acknowledged_parameters": true,
+        "shutdown": {
+          "elapsed_seconds": 0.16390407201834023,
+          "exit_code": 0,
+          "signals_sent": 1,
+          "second_signal_delay_seconds": null
+        },
+        "child_clean_exit": true,
+        "received_counts": {
+          "graph": 6,
+          "parameters": 9,
+          "state": 13
+        },
+        "read_queries": [
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024575.155050547,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024575.235054926,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024575.315260826,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024575.395063896,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024575.47510036,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024575.555074557,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024575.634993824,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024575.715170955,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024575.795084448,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024575.875140878,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024575.955168983,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024576.035030995,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024576.115276916,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024576.195051292,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024576.275143141,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024576.355038996,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024576.435016365,
+            "fixture_tag": null
+          }
+        ],
+        "read_query_models_match_xml": true,
+        "no_orphan_children": true
+      },
+      {
+        "name": "shutdown_mongo_slow",
+        "count": 1,
+        "areas": 1,
+        "machines": 1,
+        "status": "passed",
+        "invalid_graph_reports_ignored": 4,
+        "all_transmitted_payloads_match_raw_files": true,
+        "state_dynamically_matches_ordered_blocks": true,
+        "all_machine_and_task_acks_required": true,
+        "stopped_graph_and_acknowledged_parameters": true,
+        "shutdown": {
+          "elapsed_seconds": 1.8668618979863822,
+          "exit_code": 0,
+          "signals_sent": 1,
+          "second_signal_delay_seconds": null
+        },
+        "child_clean_exit": true,
+        "received_counts": {
+          "graph": 6,
+          "parameters": 9,
+          "state": 13
+        },
+        "read_queries": [
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024578.663878554,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024578.743857124,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024578.823784628,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024578.903816238,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024578.983824725,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024579.063817461,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024579.143785117,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024579.223679973,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024579.303894363,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024579.383791747,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024579.463887779,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024579.543821743,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024579.62370046,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024579.703912454,
+            "fixture_tag": null
+          }
+        ],
+        "read_query_models_match_xml": true,
+        "no_orphan_children": true
+      },
+      {
+        "name": "shutdown_sigterm",
+        "count": 1,
+        "areas": 1,
+        "machines": 1,
+        "status": "passed",
+        "invalid_graph_reports_ignored": 4,
+        "all_transmitted_payloads_match_raw_files": true,
+        "state_dynamically_matches_ordered_blocks": true,
+        "all_machine_and_task_acks_required": true,
+        "stopped_graph_and_acknowledged_parameters": true,
+        "shutdown": {
+          "elapsed_seconds": 0.003175314050167799,
+          "exit_code": -15,
+          "signals_sent": 1,
+          "second_signal_delay_seconds": null
+        },
+        "child_clean_exit": true,
+        "received_counts": {
+          "graph": 6,
+          "parameters": 9,
+          "state": 13
+        },
+        "read_queries": [
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024583.670305434,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024583.749794777,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024583.830302818,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024583.910810116,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024583.988059191,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024584.06792644,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024584.148009533,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024584.229235863,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024584.310352533,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024584.388144603,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024584.46812472,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024584.547879842,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024584.627952888,
+            "fixture_tag": null
+          }
+        ],
+        "read_query_models_match_xml": true,
+        "no_orphan_children": true
+      },
+      {
+        "name": "double_sigint_0_01",
+        "count": 1,
+        "areas": 1,
+        "machines": 1,
+        "status": "passed",
+        "invalid_graph_reports_ignored": 4,
+        "all_transmitted_payloads_match_raw_files": true,
+        "state_dynamically_matches_ordered_blocks": true,
+        "all_machine_and_task_acks_required": true,
+        "stopped_graph_and_acknowledged_parameters": true,
+        "shutdown": {
+          "elapsed_seconds": 0.17391745990607888,
+          "exit_code": 0,
+          "signals_sent": 2,
+          "second_signal_delay_seconds": 0.01
+        },
+        "child_clean_exit": true,
+        "received_counts": {
+          "graph": 6,
+          "parameters": 9,
+          "state": 13
+        },
+        "read_queries": [
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024586.768653168,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024586.848641332,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024586.928479419,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024587.008642166,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024587.088534063,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024587.168530265,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024587.248633691,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024587.328518258,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024587.408594369,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024587.488605075,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024587.568740029,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024587.648549583,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024587.728443985,
+            "fixture_tag": null
+          }
+        ],
+        "read_query_models_match_xml": true,
+        "no_orphan_children": true
+      },
+      {
+        "name": "double_sigint_0_08",
+        "count": 1,
+        "areas": 1,
+        "machines": 1,
+        "status": "passed",
+        "invalid_graph_reports_ignored": 4,
+        "all_transmitted_payloads_match_raw_files": true,
+        "state_dynamically_matches_ordered_blocks": true,
+        "all_machine_and_task_acks_required": true,
+        "stopped_graph_and_acknowledged_parameters": true,
+        "shutdown": {
+          "elapsed_seconds": 0.1937237890670076,
+          "exit_code": 0,
+          "signals_sent": 2,
+          "second_signal_delay_seconds": 0.08
+        },
+        "child_clean_exit": true,
+        "received_counts": {
+          "graph": 6,
+          "parameters": 9,
+          "state": 13
+        },
+        "read_queries": [
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024589.985070489,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024590.065156175,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024590.145165684,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024590.225079163,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024590.305211585,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024590.385114125,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024590.465106062,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024590.545403799,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024590.625073547,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024590.705075609,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024590.785186381,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024590.86509284,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024590.945291564,
+            "fixture_tag": null
+          }
+        ],
+        "read_query_models_match_xml": true,
+        "no_orphan_children": true
+      },
+      {
+        "name": "double_sigint_0_2",
+        "count": 1,
+        "areas": 1,
+        "machines": 1,
+        "status": "passed",
+        "invalid_graph_reports_ignored": 4,
+        "all_transmitted_payloads_match_raw_files": true,
+        "state_dynamically_matches_ordered_blocks": true,
+        "all_machine_and_task_acks_required": true,
+        "stopped_graph_and_acknowledged_parameters": true,
+        "shutdown": {
+          "elapsed_seconds": 0.20046519103925675,
+          "exit_code": 0,
+          "signals_sent": 1,
+          "second_signal_delay_seconds": 0.2
+        },
+        "child_clean_exit": true,
+        "received_counts": {
+          "graph": 6,
+          "parameters": 9,
+          "state": 15
+        },
+        "read_queries": [
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024593.152995296,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024593.23292826,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024593.312550359,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024593.39361897,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024593.626543394,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024593.630294813,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024593.633695339,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024593.712641167,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024593.793595892,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024593.872763147,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024593.952235101,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024594.030783529,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024594.110812446,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024594.193679193,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024594.272572729,
+            "fixture_tag": null
+          }
+        ],
+        "read_query_models_match_xml": true,
+        "no_orphan_children": true
+      },
+      {
+        "name": "finish_during_first_db_read",
+        "mode": "first",
+        "status": "passed",
+        "finish_callback_latency_seconds": 0.02652725705411285,
+        "no_publication_after_finish": true,
+        "no_poll_after_finish": true,
+        "state_messages": 0,
+        "queries": 1,
+        "duplicate_does_not_restart": true,
+        "shutdown": {
+          "elapsed_seconds": 0.21401757397688925,
+          "exit_code": 0,
+          "signals_sent": 1,
+          "second_signal_delay_seconds": null
+        },
+        "no_orphan_children": true
+      },
+      {
+        "name": "finish_during_later_db_read",
+        "mode": "later",
+        "status": "passed",
+        "finish_callback_latency_seconds": 0.0254537349101156,
+        "no_publication_after_finish": true,
+        "no_poll_after_finish": true,
+        "state_messages": 3,
+        "queries": 4,
+        "duplicate_does_not_restart": true,
+        "shutdown": {
+          "elapsed_seconds": 0.16371247498318553,
+          "exit_code": 0,
+          "signals_sent": 1,
+          "second_signal_delay_seconds": null
+        },
+        "no_orphan_children": true
+      },
+      {
+        "name": "finish_during_mongo_error",
+        "mode": "error",
+        "status": "passed",
+        "finish_callback_latency_seconds": 0.02536777697969228,
+        "no_publication_after_finish": true,
+        "no_poll_after_finish": true,
+        "state_messages": 0,
+        "queries": 1,
+        "duplicate_does_not_restart": true,
+        "shutdown": {
+          "elapsed_seconds": 0.2139045010553673,
+          "exit_code": 0,
+          "signals_sent": 1,
+          "second_signal_delay_seconds": null
+        },
+        "no_orphan_children": true
+      },
+      {
+        "name": "invalid_publish_period_zero",
+        "status": "passed",
+        "child_exit_code": 1,
+        "launch_exit_code": 0,
+        "no_publishing_started": true,
+        "log": "/tmp/tms_if_input-latest-audit/ros/invalid_publish_period_zero/launch.log"
+      },
+      {
+        "name": "invalid_publish_period_negative",
+        "status": "passed",
+        "child_exit_code": 1,
+        "launch_exit_code": 0,
+        "no_publishing_started": true,
+        "log": "/tmp/tms_if_input-latest-audit/ros/invalid_publish_period_negative/launch.log"
+      },
+      {
+        "name": "invalid_publish_period_nan",
+        "status": "passed",
+        "child_exit_code": 1,
+        "launch_exit_code": 0,
+        "no_publishing_started": true,
+        "log": "/tmp/tms_if_input-latest-audit/ros/invalid_publish_period_nan/launch.log"
+      },
+      {
+        "name": "invalid_publish_period_inf",
+        "status": "passed",
+        "child_exit_code": 1,
+        "launch_exit_code": 0,
+        "no_publishing_started": true,
+        "log": "/tmp/tms_if_input-latest-audit/ros/invalid_publish_period_inf/launch.log"
+      },
+      {
+        "name": "invalid_state_poll_period_zero",
+        "status": "passed",
+        "child_exit_code": 1,
+        "launch_exit_code": 0,
+        "no_publishing_started": true,
+        "log": "/tmp/tms_if_input-latest-audit/ros/invalid_state_poll_period_zero/launch.log"
+      },
+      {
+        "name": "invalid_state_poll_period_negative",
+        "status": "passed",
+        "child_exit_code": 1,
+        "launch_exit_code": 0,
+        "no_publishing_started": true,
+        "log": "/tmp/tms_if_input-latest-audit/ros/invalid_state_poll_period_negative/launch.log"
+      },
+      {
+        "name": "invalid_mongo_timeout_ms_zero",
+        "status": "passed",
+        "child_exit_code": 1,
+        "launch_exit_code": 0,
+        "no_publishing_started": true,
+        "log": "/tmp/tms_if_input-latest-audit/ros/invalid_mongo_timeout_ms_zero/launch.log"
+      },
+      {
+        "name": "invalid_mongo_timeout_ms_negative",
+        "status": "passed",
+        "child_exit_code": 1,
+        "launch_exit_code": 0,
+        "no_publishing_started": true,
+        "log": "/tmp/tms_if_input-latest-audit/ros/invalid_mongo_timeout_ms_negative/launch.log"
+      },
+      {
+        "name": "missing_geo",
+        "status": "passed",
+        "child_exit_code": 1,
+        "launch_exit_code": 0,
+        "no_publishing_started": true,
+        "log": "/tmp/tms_if_input-latest-audit/ros/missing_geo/launch.log"
+      },
+      {
+        "name": "missing_xml",
+        "status": "passed",
+        "child_exit_code": 1,
+        "launch_exit_code": 0,
+        "no_publishing_started": true,
+        "log": "/tmp/tms_if_input-latest-audit/ros/missing_xml/launch.log"
+      },
+      {
+        "name": "malformed_xml",
+        "status": "passed",
+        "child_exit_code": 1,
+        "launch_exit_code": 0,
+        "no_publishing_started": true,
+        "log": "/tmp/tms_if_input-latest-audit/ros/malformed_xml/launch.log"
+      },
+      {
+        "name": "double_sigint_0_2_during_slow_read",
+        "count": 1,
+        "areas": 1,
+        "machines": 1,
+        "status": "passed",
+        "invalid_graph_reports_ignored": 4,
+        "all_transmitted_payloads_match_raw_files": true,
+        "state_dynamically_matches_ordered_blocks": true,
+        "all_machine_and_task_acks_required": true,
+        "stopped_graph_and_acknowledged_parameters": true,
+        "shutdown": {
+          "elapsed_seconds": 1.8680215280037373,
+          "exit_code": 0,
+          "signals_sent": 2,
+          "second_signal_delay_seconds": 0.2
+        },
+        "child_clean_exit": true,
+        "received_counts": {
+          "graph": 6,
+          "parameters": 9,
+          "state": 13
+        },
+        "read_queries": [
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024682.409654129,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024682.489736049,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024682.569608746,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024682.649643837,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024682.729645094,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024682.809617028,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024682.889578318,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024682.969582439,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024683.049783285,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024683.129652108,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024683.209622811,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024683.28965359,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024683.369629083,
+            "fixture_tag": null
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic",
+            "at": 1024683.449638996,
+            "fixture_tag": null
+          }
+        ],
+        "read_query_models_match_xml": true,
+        "no_orphan_children": true
+      }
+    ],
+    "ros_domain_id": 228,
+    "source_matches_installed": true,
+    "source_sha256": {
+      "system_topics.py": "982cd0a0c9f54a7443a24df10c22ad30cf0e6180ae2aeaa1b179b2809597037a",
+      "system_topics_data.py": "2c43caba3e6c6a191441b0b705f1d99bbe1c33766c4ed9dfc8debcfcd15ed2f1",
+      "system_topics_protocol.py": "01d051ecf7738dbd03af281c52577b8e797faca086103aca9ae7a78044e3ab2a"
+    },
+    "latest_source_matches_all_tested_hashes": true,
+    "actual_database_connections": 0,
+    "actual_database_write_operations": 0,
+    "fixture_adjustments": [
+      "Numeric-basename temporary ament launch dir copied instead of directory symlink, because ros2 launch file discovery does not follow that symlink. Previously passing cases were retained without repetition."
+    ]
+  }
+}

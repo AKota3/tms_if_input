@@ -40,13 +40,13 @@ def _task_message(data, types):
     return message
 
 
-def read_completed_block_names(collection, task):
-    """Read the latest machine blackboard without inserting or updating data."""
+def read_released_block_names(collection, task):
+    """Read dumped blocks from the latest machine blackboard without DB writes."""
     document = collection.find_one(
         {"record_name": task.blackboard_record_name, "model_name": task.model_name,
          "type": "dynamic"},
-        {"LEVELED_BLOCK": 1}, sort=[("timestamps", -1), ("_id", -1)])
-    return [] if document is None else document.get("LEVELED_BLOCK", [])
+        {"RELEACED_BLOCK": 1}, sort=[("timestamps", -1), ("_id", -1)])
+    return [] if document is None else document.get("RELEACED_BLOCK", [])
 
 
 def main(args=None) -> int:
@@ -135,11 +135,16 @@ def main(args=None) -> int:
                 previous = self._protocol.phase
                 accepted = self._protocol.accept_report(report.message_id, report.task_id, report.machine_id)
                 phase = self._protocol.phase
+            if accepted and report.message_id == "TaskFinish":
+                self.get_logger().info(
+                    f"Task finished: {report.task_id} / {report.machine_id}; state publication stopped")
             if accepted and phase != previous:
                 self.get_logger().info(f"Acknowledgements received; phase: {phase}")
-                self._publish_transfer()
-                if phase == "state":
-                    self._publish_states()
+                if phase == "finished":
+                    self._transfer_timer.cancel()
+                    self._state_timer.cancel()
+                else:
+                    self._publish_transfer()
 
         def _publish_states(self):
             with self._lock:
@@ -147,15 +152,18 @@ def main(args=None) -> int:
             if not tasks or not self._state_lock.acquire(blocking=False):
                 return
             try:
-                completed_by_machine = {}
+                released_by_machine = {}
                 for task in tasks:
                     if not rclpy.ok():
                         return
+                    with self._lock:
+                        if task not in self._protocol.reporting_tasks:
+                            continue
                     key = (task.blackboard_record_name, task.model_name)
                     try:
-                        if key not in completed_by_machine:
-                            completed_by_machine[key] = read_completed_block_names(self._collection, task)
-                        states = build_block_state(task, completed_by_machine[key])
+                        if key not in released_by_machine:
+                            released_by_machine[key] = read_released_block_names(self._collection, task)
+                        states = build_block_state(task, released_by_machine[key])
                     except (PyMongoError, ValueError) as exc:
                         error = str(exc)
                         if error != self._last_error:
@@ -167,7 +175,11 @@ def main(args=None) -> int:
                     message.task_id = task.task_id
                     message.machinery_id = task.machinery_id
                     message.block_state = states
-                    self._state_publisher.publish(message)
+                    # A TaskFinish may arrive while MongoDB is being read. Check
+                    # again and publish under the same lock as report handling.
+                    with self._lock:
+                        if task in self._protocol.reporting_tasks:
+                            self._state_publisher.publish(message)
             finally:
                 self._state_lock.release()
 

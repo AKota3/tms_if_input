@@ -5,7 +5,7 @@ from .system_topics_data import TopicScenario
 
 
 class TopicProtocol:
-    """Graph acknowledgement, task acknowledgements, then ongoing state reports."""
+    """Graph/task acknowledgements, then state reports until each task finishes."""
 
     def __init__(self, scenario: TopicScenario):
         if not scenario.leveling_tasks:
@@ -15,6 +15,7 @@ class TopicProtocol:
         self._task_pending = {(task.task_id, task.machinery_id) for task in self._tasks}
         if len(self._task_pending) != len(self._tasks):
             raise ValueError("Duplicate leveling task/machinery identities")
+        self._reporting_pending = self._task_pending.copy()
 
     @property
     def phase(self) -> str:
@@ -22,7 +23,7 @@ class TopicProtocol:
             return "graph"
         if self._task_pending:
             return "parameters"
-        return "state"
+        return "state" if self._reporting_pending else "finished"
 
     @property
     def pending_tasks(self):
@@ -33,7 +34,10 @@ class TopicProtocol:
 
     @property
     def reporting_tasks(self):
-        return self._tasks if self.phase == "state" else ()
+        if self.phase != "state":
+            return ()
+        return tuple(task for task in self._tasks
+                     if (task.task_id, task.machinery_id) in self._reporting_pending)
 
     def accept_report(self, message_id: str, task_id: str, machine_id: str) -> bool:
         if (self.phase == "graph" and message_id == "FirstSetGraph" and task_id == ""
@@ -44,5 +48,9 @@ class TopicProtocol:
         if (self.phase == "parameters" and message_id == "TaskGet"
                 and identity in self._task_pending):
             self._task_pending.remove(identity)
+            return True
+        if (self.phase == "state" and message_id == "TaskFinish"
+                and identity in self._reporting_pending):
+            self._reporting_pending.remove(identity)
             return True
         return False

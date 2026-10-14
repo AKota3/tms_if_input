@@ -225,24 +225,25 @@ def test_multiple_areas_use_qualified_block_names_and_keep_states_separate(tmp_p
     scenario = load_topic_scenario(*write_inputs(tmp_path, geojson, root))
     assert_source_messages(scenario, geojson, root)
     first, second_data = scenario.leveling_tasks
-    completed = [first.block_record_names[0], second_data.block_record_names[2], "block_2"]
-    assert build_block_state(first, completed) == [True, False, False, False]
-    assert build_block_state(second_data, completed) == [False, False, True, False]
+    released = [first.block_record_names[0], second_data.block_record_names[2], "block_2"]
+    assert build_block_state(first, released) == [True, False, False, False]
+    assert build_block_state(second_data, released) == [False, False, True, False]
 
 
 def test_state_array_follows_centers_and_changes_with_each_read(tmp_path):
     task = load_topic_scenario(*write_inputs(tmp_path, *independent_inputs(12))).leveling_tasks[0]
     assert build_block_state(task, []) == [False] * 12
-    completed = ["block_12", "block_2", "block_2", "block_99", "another_area"]
-    assert build_block_state(task, completed) == [False, True] + [False] * 9 + [True]
+    released = ["block_12", "block_2", "block_2", "block_99", "another_area"]
+    assert build_block_state(task, released) == [False, True] + [False] * 9 + [True]
     assert build_block_state(task, ["block_1"]) == [True] + [False] * 11
-    assert completed == ["block_12", "block_2", "block_2", "block_99", "another_area"]
+    assert build_block_state(task, []) == [False] * 12
+    assert released == ["block_12", "block_2", "block_2", "block_99", "another_area"]
 
 
 @pytest.mark.parametrize("invalid", [None, "block_1", {"block_1": True}, [1], [True], [None]])
 def test_invalid_mongo_state_is_rejected(tmp_path, invalid):
     task = load_topic_scenario(*write_inputs(tmp_path, *independent_inputs())).leveling_tasks[0]
-    with pytest.raises(ValueError, match="LEVELED_BLOCK"):
+    with pytest.raises(ValueError, match="RELEACED_BLOCK"):
         build_block_state(task, invalid)
 
 
@@ -418,14 +419,86 @@ def test_protocol_waits_for_every_input_task_and_distinct_machine(tmp_path, sepa
     assert protocol.reporting_tasks == (first, second)
 
 
-def test_mongo_reader_uses_xml_model_and_rereads_completed_blocks(tmp_path):
-    from tms_if_input.system_topics import read_completed_block_names
+def test_task_finish_requires_state_phase_and_both_xml_identifiers(tmp_path):
+    from tms_if_input.system_topics_protocol import TopicProtocol
+
+    scenario = load_topic_scenario(*write_inputs(tmp_path, *independent_inputs(12)))
+    task = scenario.leveling_tasks[0]
+    protocol = TopicProtocol(scenario)
+    finish = ("TaskFinish", task.task_id, task.machinery_id)
+    assert protocol.accept_report(*finish) is False
+    assert protocol.phase == "graph"
+    assert protocol.accept_report("FirstSetGraph", "", task.machinery_id) is True
+    assert protocol.accept_report(*finish) is False
+    assert protocol.phase == "parameters"
+    assert protocol.pending_tasks == (task,)
+    assert protocol.accept_report("TaskGet", task.task_id, task.machinery_id) is True
+
+    for report in [("TaskFinish", "not-from-this-xml", task.machinery_id),
+                   ("TaskFinish", task.task_id, "not-from-this-xml"),
+                   ("TaskFinish", "", task.machinery_id),
+                   ("TaskFinish", task.task_id, ""),
+                   ("SomeOtherMessage", task.task_id, task.machinery_id)]:
+        assert protocol.accept_report(*report) is False
+        assert protocol.phase == "state"
+        assert protocol.reporting_tasks == (task,)
+
+    assert protocol.accept_report(*finish) is True
+    assert protocol.phase == "finished"
+    assert protocol.pending_tasks == ()
+    assert protocol.reporting_tasks == ()
+    for report in [finish,
+                   ("FirstSetGraph", "", task.machinery_id),
+                   ("TaskGet", task.task_id, task.machinery_id)]:
+        assert protocol.accept_report(*report) is False
+        assert protocol.phase == "finished"
+        assert protocol.pending_tasks == ()
+        assert protocol.reporting_tasks == ()
+
+
+@pytest.mark.parametrize("separate_machines", [False, True])
+@pytest.mark.parametrize("first_finished_index", [0, 1])
+def test_task_finish_stops_only_matching_task_until_all_finish(
+        tmp_path, separate_machines, first_finished_index):
+    from tms_if_input.system_topics_protocol import TopicProtocol
+
+    scenario = multiple_task_scenario(tmp_path, separate_machines)
+    protocol = TopicProtocol(scenario)
+    for machine_id in dict.fromkeys(task.machinery_id for task in scenario.leveling_tasks):
+        assert protocol.accept_report("FirstSetGraph", "", machine_id) is True
+    for task in scenario.leveling_tasks:
+        assert protocol.accept_report("TaskGet", task.task_id, task.machinery_id) is True
+    assert protocol.phase == "state"
+    assert protocol.reporting_tasks == scenario.leveling_tasks
+    finished = scenario.leveling_tasks[first_finished_index]
+    remaining = scenario.leveling_tasks[1 - first_finished_index]
+
+    if separate_machines:
+        assert protocol.accept_report(
+            "TaskFinish", finished.task_id, remaining.machinery_id) is False
+        assert protocol.reporting_tasks == scenario.leveling_tasks
+    assert protocol.accept_report("TaskFinish", finished.task_id, finished.machinery_id) is True
+    assert protocol.phase == "state"
+    assert protocol.pending_tasks == ()
+    assert protocol.reporting_tasks == (remaining,)
+    assert protocol.accept_report("TaskFinish", finished.task_id, finished.machinery_id) is False
+    assert protocol.accept_report("TaskGet", finished.task_id, finished.machinery_id) is False
+    assert protocol.reporting_tasks == (remaining,)
+    assert protocol.accept_report("TaskFinish", remaining.task_id, remaining.machinery_id) is True
+    assert protocol.phase == "finished"
+    assert protocol.pending_tasks == ()
+    assert protocol.reporting_tasks == ()
+
+
+def test_mongo_reader_uses_only_released_blocks_and_rereads_every_update(tmp_path):
+    from tms_if_input.system_topics import read_released_block_names
 
     task = load_topic_scenario(*write_inputs(tmp_path, *independent_inputs(3))).leveling_tasks[0]
 
     class ReadOnlyCollection:
         def __init__(self):
-            self.document = {"LEVELED_BLOCK": ["block_2"], "RELEACED_BLOCK": ["block_1"]}
+            self.document = {"LEVELED_BLOCK": ["block_2"], "RELEACED_BLOCK": ["block_1"],
+                             "LATEST_RELEACED_BLOCK": "block_3", "LATEST_LEVELED_BLOCK": "block_3"}
             self.calls = []
 
         def find_one(self, query, projection, *, sort):
@@ -433,21 +506,28 @@ def test_mongo_reader_uses_xml_model_and_rereads_completed_blocks(tmp_path):
             return copy.deepcopy(self.document)
 
     collection = ReadOnlyCollection()
-    first = build_block_state(task, read_completed_block_names(collection, task))
-    assert first == [False, True, False]
+    first = build_block_state(task, read_released_block_names(collection, task))
+    assert first == [True, False, False]
     collection.document["LEVELED_BLOCK"] = ["block_1", "block_3"]
-    second = build_block_state(task, read_completed_block_names(collection, task))
-    assert second == [True, False, True]
-    assert first == [False, True, False]
-    assert collection.calls == [({"record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
-                                  "model_name": "custom-grader-v42", "type": "dynamic"},
-                                 {"LEVELED_BLOCK": 1}, [("timestamps", -1), ("_id", -1)])] * 2
+    assert build_block_state(task, read_released_block_names(collection, task)) == first
+    collection.document["RELEACED_BLOCK"].append("block_3")
+    assert build_block_state(task, read_released_block_names(collection, task)) == [True, False, True]
+    collection.document["RELEACED_BLOCK"].remove("block_1")
+    assert build_block_state(task, read_released_block_names(collection, task)) == [False, False, True]
+    collection.document["RELEACED_BLOCK"] = []
+    assert build_block_state(task, read_released_block_names(collection, task)) == [False] * 3
+    del collection.document["RELEACED_BLOCK"]
+    assert build_block_state(task, read_released_block_names(collection, task)) == [False] * 3
+    assert first == [True, False, False]
+    assert collection.calls == [({"record_name": task.blackboard_record_name,
+                                  "model_name": task.model_name, "type": "dynamic"},
+                                 {"RELEACED_BLOCK": 1}, [("timestamps", -1), ("_id", -1)])] * 6
     assert collection.document["LEVELED_BLOCK"] == ["block_1", "block_3"]
 
 
-@pytest.mark.parametrize("document", [None, {}, {"RELEACED_BLOCK": ["block_1"]}])
-def test_missing_mongo_state_reports_all_blocks_incomplete(tmp_path, document):
-    from tms_if_input.system_topics import read_completed_block_names
+@pytest.mark.parametrize("document", [None, {}, {"LEVELED_BLOCK": ["block_1"]}])
+def test_missing_released_state_reports_all_blocks_without_soil(tmp_path, document):
+    from tms_if_input.system_topics import read_released_block_names
 
     task = load_topic_scenario(*write_inputs(tmp_path, *independent_inputs(3))).leveling_tasks[0]
 
@@ -455,7 +535,24 @@ def test_missing_mongo_state_reports_all_blocks_incomplete(tmp_path, document):
         def find_one(self, query, projection, *, sort):
             return document
 
-    assert build_block_state(task, read_completed_block_names(ReadOnlyCollection(), task)) == [False] * 3
+    assert build_block_state(task, read_released_block_names(ReadOnlyCollection(), task)) == [False] * 3
+
+
+@pytest.mark.parametrize("invalid", [None, "block_1", {"block_1": True}, [1], [True], [None]])
+def test_invalid_released_state_does_not_fall_back_to_valid_leveled_state(tmp_path, invalid):
+    from tms_if_input.system_topics import read_released_block_names
+
+    task = load_topic_scenario(*write_inputs(tmp_path, *independent_inputs(3))).leveling_tasks[0]
+    document = {"LEVELED_BLOCK": ["block_1", "block_2", "block_3"],
+                "RELEACED_BLOCK": invalid}
+
+    class ReadOnlyCollection:
+        def find_one(self, query, projection, *, sort):
+            return copy.deepcopy(document)
+
+    with pytest.raises(ValueError, match="RELEACED_BLOCK"):
+        build_block_state(task, read_released_block_names(ReadOnlyCollection(), task))
+    assert document["LEVELED_BLOCK"] == ["block_1", "block_2", "block_3"]
 
 
 def test_source_replacement_cannot_mix_geometry_and_radius(tmp_path, monkeypatch):
@@ -485,16 +582,16 @@ def test_source_replacement_cannot_mix_geometry_and_radius(tmp_path, monkeypatch
 
 
 def test_newer_static_and_other_machine_records_do_not_replace_dynamic_state(tmp_path):
-    from tms_if_input.system_topics import read_completed_block_names
+    from tms_if_input.system_topics import read_released_block_names
 
     task = load_topic_scenario(*write_inputs(tmp_path, *independent_inputs(3))).leveling_tasks[0]
     common = {"record_name": task.blackboard_record_name, "model_name": task.model_name}
     records = [
-        {**common, "type": "dynamic", "timestamps": 1, "LEVELED_BLOCK": ["block_1"]},
-        {**common, "type": "dynamic", "timestamps": 2, "LEVELED_BLOCK": ["block_2"]},
-        {**common, "type": "static", "timestamps": 3, "LEVELED_BLOCK": ["block_3"]},
+        {**common, "type": "dynamic", "timestamps": 1, "RELEACED_BLOCK": ["block_1"]},
+        {**common, "type": "dynamic", "timestamps": 2, "RELEACED_BLOCK": ["block_2"]},
+        {**common, "type": "static", "timestamps": 3, "RELEACED_BLOCK": ["block_3"]},
         {**common, "type": "dynamic", "model_name": "another-machine",
-         "timestamps": 4, "LEVELED_BLOCK": ["block_3"]},
+         "timestamps": 4, "RELEACED_BLOCK": ["block_3"]},
     ]
 
     class ReadOnlyCollection:
@@ -504,5 +601,5 @@ def test_newer_static_and_other_machine_records_do_not_replace_dynamic_state(tmp
             newest = max(matching, key=lambda record: record["timestamps"])
             return {key: value for key, value in newest.items() if key in projection}
 
-    states = build_block_state(task, read_completed_block_names(ReadOnlyCollection(), task))
+    states = build_block_state(task, read_released_block_names(ReadOnlyCollection(), task))
     assert states == [False, True, False]

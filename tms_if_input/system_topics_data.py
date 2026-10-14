@@ -207,14 +207,14 @@ def load_topic_scenario(geojson_path, xml_path) -> TopicScenario:
     return TopicScenario(graph=graph_data, leveling_tasks=tuple(tasks))
 
 
-def build_block_state(task: LevelingTaskData, completed_block_names) -> list[bool]:
-    """Map MongoDB LEVELED_BLOCK records to the input's ordered block centers.
+def build_block_state(task: LevelingTaskData, released_block_names) -> list[bool]:
+    """Map MongoDB RELEACED_BLOCK records to the input's ordered block centers.
 
     Names from other tasks are ignored. Qualified names produced by the existing
     importer keep multiple leveling areas separate, even on the same machine.
     """
-    if not isinstance(completed_block_names, list) or not all(
-            isinstance(name, str) for name in completed_block_names):
-        raise ValueError('LEVELED_BLOCK must be an array of record name strings')
-    completed = set(completed_block_names)
-    return [record in completed for record in task.block_record_names]
+    if not isinstance(released_block_names, list) or not all(
+            isinstance(name, str) for name in released_block_names):
+        raise ValueError('RELEACED_BLOCK must be an array of record name strings')
+    released = set(released_block_names)
+    return [record in released for record in task.block_record_names]

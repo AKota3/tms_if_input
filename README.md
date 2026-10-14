@@ -1,7 +1,7 @@
 # tms_if_input
 
 GeoJSONと施工計画XMLから施工機械のタスク・パラメータを生成し、MongoDBの `rostmsdb.parameter` と `rostmsdb.task` に未登録データを追加します。
-追加機能では経路グラフと敷き均しパラメータをROS 2トピックで送り、MongoDBの敷き均し完了状態を継続送信します。
+追加機能では経路グラフと敷き均しパラメータをROS 2トピックで送り、完了通知を受けるまでMongoDBの放土状態を送信します。
 
 **ビルド**（入力ファイルやコードを変更した際も再実行）
 
@@ -34,9 +34,9 @@ ros2 launch tms_if_input system_topics.launch.py \
   xml_path:=261008-kyoto.xml
 ```
 
-受領応答に合わせて、`NodeGroup` → `LevelingTaskParam` → `LevelingStateReport` の順に送信します。MongoDBから状態を読み取り、`Ctrl+C` で終了します。
+受領応答に合わせて、`NodeGroup` → `LevelingTaskParam` → `LevelingStateReport` の順に送信します。`block_state` はXMLのブロック順に、MongoDBの `RELEACED_BLOCK` にあれば `true`、なければ `false` です。XMLのタスクID・機械aliasと一致する `TaskFinish` を受け取ると、そのタスクの状態送信を停止します。複数タスクの場合は未完了のタスクだけ送信を続けます。ノードは `Ctrl+C` で終了します。
 
-**相手システムの受領応答を模擬**（起動中に別ターミナルで順に実行）
+**相手システムの受領応答・完了通知を模擬**（起動中に別ターミナルで順に実行）
 
 ```bash
 source ~/SIP_PROJECTS/ros2_tms_ws/install/setup.bash
@@ -46,12 +46,19 @@ ros2 topic pub --once /system/MessageReport machinery_task_msgs/msg/TaskReport \
   "{message_id: 'TaskGet', task_id: '2600159710', machine_id: 'machine_4'}"
 ```
 
-1つ目でグラフの受領、2つ目でタスクパラメータの受領を通知します。上記IDは `261008-kyoto.xml` の例です。入力を替えた場合は敷き均しタスクのIDと機械aliasに合わせて変更してください。
+1つ目でグラフの受領、2つ目でタスクパラメータの受領を通知します。状態報告を確認した後、以下で敷き均し完了を通知すると送信が止まります。
+
+```bash
+ros2 topic pub --once /system/MessageReport machinery_task_msgs/msg/TaskReport \
+  "{message_id: 'TaskFinish', task_id: '2600159710', machine_id: 'machine_4'}"
+```
+
+上記IDは `261008-kyoto.xml` の例です。入力を替えた場合は `task_id` を敷き均しタスクのID、`machine_id` を機械aliasに合わせて変更してください。`message_id` は通知の種類を表す `FirstSetGraph` / `TaskGet` / `TaskFinish` です。
 
 
 
 
-榑林へ。MongoDbのrostmsbdデータベースのparameterコレクション直下に以下のデータを追加して。"LEVELED_BLOCKに記載のブロックが敷き均し完了を意味します。
+榑林へ。MongoDbのrostmsdbデータベースのparameterコレクション直下に以下のデータを追加して。`RELEACED_BLOCK` に記載のブロックがダンプによる放土済みを意味し、状態報告ではこのフィールドを参照します。
 
 
 /**
@@ -65,19 +72,11 @@ ros2 topic pub --once /system/MessageReport machinery_task_msgs/msg/TaskReport \
     "$date": "2026-10-12T16:28:11.571Z"
   },
   "LEVELED_BLOCK": [
-    "block_1",
-    "block_2",
-    "block_3",
-    "block_4",
-    "block_5",
-    "block_6",
-    "block_7",
-    "block_8",
-    "block_9"
+    "block_1"
   ],
-  "RELEACED_BLOCK": [],
-  "LATEST_RELEACED_BLOCK": "block_5",
-  "LATEST_LEVELED_BLOCK": "block_9",
+  "RELEACED_BLOCK": ["block_1", "block_2"],
+  "LATEST_RELEACED_BLOCK": "block_2",
+  "LATEST_LEVELED_BLOCK": "block_1",
   "w_blade": 3.2,
   "waypoints_record_name": [
     "bull_leveling_waypoint_1",
@@ -87,6 +86,8 @@ ros2 topic pub --once /system/MessageReport machinery_task_msgs/msg/TaskReport \
   "blade_offset": 2.5,
   "back_offset": 3.5
 }
+
+この9ブロックの例では `block_state` は `[true, true, false, false, false, false, false, false, false]` になります。
 
 
 mongodbを起動するにはsudo systemctl start mongodを実行。その上で、上述の通り実行すると検証可能。**MongoDBへの登録**については、榑林システムと関係ないので飛ばすこと。
