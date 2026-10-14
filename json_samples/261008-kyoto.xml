@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ConstructionPlan>
+  <machines>
+    <machine id="machine_1" type="zx200" />
+    <machine id="machine_2" type="mst110cr" />
+    <machine id="machine_3" type="mst2200vdr" />
+    <machine id="machine_4" type="d37pxi" />
+  </machines>
+  <procedure>
+    <tasks>
+      <task id="3413048689" name="start" />
+      <task id="3513181375" name="initialize">
+        <parameter name="machine" value="machine_1" />
+        <parameter name="target_node" value="3626199267" />
+        <parameter name="rotation" value="{x:0.0, y:0.0, z:0.8180996, w:0.5750766}" />
+        <parameter name="swing" value="4.411243" />
+        <parameter name="boom" value="-48.46141" />
+        <parameter name="arm" value="112.4842" />
+        <parameter name="bucket" value="85.42348" />
+      </task>
+      <task id="3049685658" name="initialize">
+        <parameter name="machine" value="machine_2" />
+        <parameter name="target_node" value="7609442" />
+        <parameter name="rotation" value="{x:0.0, y:0.0, z:-0.5821939, w:0.81305}" />
+        <parameter name="swing" value="0.4059037" />
+        <parameter name="vessel" value="0.0" />
+      </task>
+      <task id="3829337701" name="initialize">
+        <parameter name="machine" value="machine_3" />
+        <parameter name="target_node" value="2657600551" />
+        <parameter name="rotation" value="{x:0.0, y:0.0, z:-0.8101951, w:0.5861602}" />
+        <parameter name="swing" value="0.001003635" />
+        <parameter name="vessel" value="0.0" />
+      </task>
+      <task id="2368046638" name="initialize">
+        <parameter name="machine" value="machine_4" />
+        <parameter name="target_node" value="886636470" />
+        <parameter name="rotation" value="{x:0.0, y:0.0, z:0.8538176, w:0.5205724}" />
+      </task>
+      <task id="2318567684" name="excavation_loading">
+        <parameter name="machine" value="machine_1" />
+        <parameter name="block_size" value="{x:2.712584, y:8.379402, z:2.245142}" />
+        <parameter name="block_angle" value="40.0" />
+        <parameter name="block_center" value="[{x:83.25481, y:-97.21698, z:11.29403}, {x:84.16229, y:-99.77327, z:11.29403}, {x:85.06977, y:-102.3296, z:11.29403}, {x:85.97725, y:-104.8858, z:11.29403}]" />
+        <parameter name="block_vector" value="{x:-0.3345438, y:0.9423802, z:0.0}" />
+        <parameter name="backhoe_node" value="[3626199267, 3585519927, 819174456, 1414895479]" />
+        <parameter name="dump_node" value="[1924610930, 2504074034, 3948793107, 157687885]" />
+        <parameter name="rotation" value="[{x:0.0, y:0.0, z:0.8168671, w:0.5768259}, {x:0.0, y:0.0, z:0.8168671, w:0.5768259}, {x:0.0, y:0.0, z:0.8168671, w:0.5768259}, {x:0.0, y:0.0, z:0.8168671, w:0.5768259}]" />
+      </task>
+      <task id="3343055156" name="transport">
+        <parameter name="machine" value="machine_2" />
+        <parameter name="excavation_loading_task" value="2318567684" />
+        <parameter name="leveling_task" value="2600159710" />
+        <parameter name="main_node" value="[7609442, 1755144311, 365138918, 2943157174, 95297176, 3887281787, 1327926290, 2357889456, 758911660]" />
+        <parameter name="sub_node" value="[2657600551, 4025910820, 3813604511, 2995202696]" />
+      </task>
+      <task id="3142704754" name="transport">
+        <parameter name="machine" value="machine_3" />
+        <parameter name="excavation_loading_task" value="2318567684" />
+        <parameter name="leveling_task" value="2600159710" />
+        <parameter name="main_node" value="[7609442, 1755144311, 365138918, 2943157174, 95297176, 3887281787, 1327926290, 2357889456, 758911660]" />
+        <parameter name="sub_node" value="[2657600551, 4025910820, 3813604511, 2995202696]" />
+      </task>
+      <task id="2600159710" name="leveling">
+        <parameter name="machine" value="machine_4" />
+        <parameter name="leveling_height" value="9.896704" />
+        <parameter name="block_size" value="{x:2.0, y:4.0}" />
+        <parameter name="block_center" value="[{x:64.20224, y:-103.2308, z:9.896704}, {x:60.61319, y:-104.9968, z:9.896704}, {x:57.02414, y:-106.7628, z:9.896704}, {x:56.14114, y:-104.9682, z:9.896704}, {x:59.73019, y:-103.2022, z:9.896704}, {x:63.31924, y:-101.4362, z:9.896704}, {x:62.43624, y:-99.64173, z:9.896704}, {x:58.84719, y:-101.4077, z:9.896704}, {x:55.25814, y:-103.1737, z:9.896704}]" />
+        <parameter name="block_vector" value="{x:-0.4414998, y:0.8972613, z:0.0}" />
+        <parameter name="soil_volume" value="[5.646, 5.609, 5.806, 4.72, 4.655, 5.156, 4.239, 4.108, 3.608]" />
+        <parameter name="dump_node" value="[3981681196, 2481404470, 272230380, 3740191655, 642955239, 2263368759, 3884243094, 3049699515, 109347182]" />
+        <parameter name="bulldozer_node" value="[886636470, 648119329, 748349511, 396932051, 690344222, 26822985, 4193097645, 1984732214, 2129167972]" />
+        <parameter name="connection_node" value="[919561426, 1880652658, 575106410]" />
+      </task>
+      <task id="2421362126" name="end" />
+    </tasks>
+    <flow>
+      <edge from="3343055156" to="2421362126" />
+      <edge from="3142704754" to="2421362126" />
+      <edge from="3413048689" to="3513181375" />
+      <edge from="3413048689" to="3049685658" />
+      <edge from="3413048689" to="3829337701" />
+      <edge from="3413048689" to="2368046638" />
+      <edge from="3049685658" to="2318567684" />
+      <edge from="3049685658" to="3343055156" />
+      <edge from="3049685658" to="3142704754" />
+      <edge from="3049685658" to="2600159710" />
+      <edge from="3829337701" to="2318567684" />
+      <edge from="3829337701" to="3343055156" />
+      <edge from="3829337701" to="3142704754" />
+      <edge from="3829337701" to="2600159710" />
+      <edge from="2318567684" to="2421362126" />
+      <edge from="2600159710" to="2421362126" />
+      <edge from="2368046638" to="2318567684" />
+      <edge from="2368046638" to="3343055156" />
+      <edge from="2368046638" to="3142704754" />
+      <edge from="2368046638" to="2600159710" />
+      <edge from="3513181375" to="2318567684" />
+      <edge from="3513181375" to="3343055156" />
+      <edge from="3513181375" to="3142704754" />
+      <edge from="3513181375" to="2600159710" />
+    </flow>
+  </procedure>
+</ConstructionPlan>

@@ -1,0 +1,12 @@
+string task_id
+string machinery_id
+float32 leveling_height
+float32 block_size_x
+float32 block_size_y
+float32 block_vector_x
+float32 block_vector_y
+float32 block_vector_z
+Node[] block_center
+float32[] soil_volume
+NodeGroup dump_node
+NodeGroup bulldozer_node

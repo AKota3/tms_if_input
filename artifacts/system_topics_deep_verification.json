@@ -1,0 +1,2434 @@
+{
+  "status": "passed",
+  "verified_at_utc": "2026-10-13T08:33:19.671408+00:00",
+  "scope": "Additional ROS 2 topic interface; raw XML/GeoJSON, actual ROS transport, actual MongoDB reads and updates in owned test database",
+  "existing_original_files_verified_unchanged": 63,
+  "original_file_changes": [],
+  "existing_original_file_sha256": {
+    "README.md": "785e568806da3fcd3cfa7212f3749e2fcce6819629d038dc6e365143f703653c",
+    ".gitignore": "920f0675e7549016131d6829ceacb67127066a1cf446ed4220027b4498e6e6e1",
+    "setup.cfg": "cf5599d702e209387387f8cb402a93ba6a127323dd056b44fe2360d1b2426250",
+    "setup.py": "b7d9e353b493fa5b942ae53af8bf4f55a2974974801a6bd7ad5ee5e47c5b943e",
+    "package.xml": "dc6a39d6f9aaa9f79d4601466f2f067f810a22d5fd3fe1d9cd0e0ff8fc4b6f21",
+    "verification/mongodb_verification.json": "6a7ee047ae98b7fd6b82c207a92b1c174d5a01c98d7db8021ff83ef4bf5fefbd",
+    "tms_if_input.egg-info/SOURCES.txt": "1bc6bac45b6ab91aebf1ac2d6e159eb72eea8410c00b4930c75ffc9d15eb929f",
+    "tms_if_input.egg-info/top_level.txt": "0e0399f75a8bb656ef9f9a4f6a3b06263bb220a55aaa373be47f558464443b58",
+    "tms_if_input.egg-info/zip-safe": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "tms_if_input.egg-info/requires.txt": "90cb37f50b3410dc2f9173801119c19953cc02624f8c19f44edb4b56758a4cdd",
+    "tms_if_input.egg-info/entry_points.txt": "79629421e11276e2f56c28acb706b6f40e758d6527a6696696573667f0c3a344",
+    "tms_if_input.egg-info/dependency_links.txt": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "tms_if_input.egg-info/PKG-INFO": "e52949394358094d90718147514cf20c8ec9a78c71ad68200eabbba148a1e532",
+    ".vscode/settings.json": "1da4723afd4c11b74e479412ca77bc16470c5c56cc9bfbfa98f95ed75c0c7ffe",
+    ".vscode/c_cpp_properties.json": "d7b4e35ae828cd6cedaeada31d27ea952ed4aea56b1fff915a31237d9029f2fd",
+    "tms_if_input/behavior_tree.py": "e22b2049bcd0674e15d6b37b2774c6f91fe6eaf161436c79d74042243827fcc8",
+    "tms_if_input/parameters.py": "781c488cd6d0ba5dd98984f1ac53ebf1ac2d02059f609b24dd6fe1d5783fcf88",
+    "tms_if_input/database.py": "4ab17d304c9b5b6148653d6052fffa2b418420d447d797df12ba6797185b750f",
+    "tms_if_input/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tms_if_input/compiler.py": "8cb4faa7d2a5e762e636c3d2c029fcb526a5a244f51e52e3cc19240356fd5ad1",
+    "tms_if_input/routes.py": "84ca4d419cb6d86039454981c9f24b68d5e715457ca57e51a59504c287078be6",
+    "tms_if_input/cli.py": "b128a2dbd0b2b384a88f2df59756e686cd3b690633d47d96cacaabda2a45521c",
+    "tms_if_input/importer.py": "e312ac3b6cb795504ec6e6943b759ce41b41c4040ce093a3218d75833a9900eb",
+    "tms_if_input/model.py": "9ef37f8b39eea41b45e34c37472c966ba2048c0a64a17f9e2d7e7481d87802b2",
+    "resource/tms_if_input": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "launch/tms_if_input.launch.py": "3752abd79563e70363dc21a013d1a960fe3dfcca3a9b459ae9e880272040fd24",
+    "test/test_export.py": "67ca307950ddf8cf394650b81675e3c14bfb2b9ab3d09598e2d3d6572da6a199",
+    "test/test_database.py": "7101c7f38fc8bbfe7cb27cfd69db1fb33b76e0877da5df2d97f57e5857cb2864",
+    "test/test_behavior_tree.py": "ecb0ff92294ade51a9cd4f983531072066f6195991ac62205c10d87472029edd",
+    "test/test_grouped_database.py": "583b6f9313baaa6b7bb414d1a2e2b074844fa7c9d72fba699028eb35e1235c45",
+    "test/test_importer.py": "fc6b589417a2d6b9019f752ac2c12595face7e741cd4219d1b20ca7aaad35022",
+    "test/test_model.py": "3a9185fa87f932e294173191f1e785ef063e0cb570bb4b0a9adfa2990147a228",
+    "test/test_waypoint_spec.py": "3934e70684534c5fd68799964abf84a111590dbcbc385a1c42c3c0520a9e5d9c",
+    "test/test_routes.py": "0024ee5843b1a65682da3d278db73ed96e9c81c7efa52a0a40bff6677fd62ace",
+    "test/test_compilation.py": "cedef16b4136f27751a6896270d2951e0b0cd7f0abf7ccf6dea0a422560c9203",
+    "test/fixtures/requested_tasks.json": "95499258f12ec614dac5c9a2d60c68cb3dcdd75bc8db2c66b000dcfcff72d5c8",
+    "json_samples/261008-kyoto.geojson": "90a0e6daf142da0d1d4843ee00d5075d72cca9f1db14910a1d5c3b8a8390eeee",
+    "json_samples/261008-kyoto.xml": "dce4e7f7e31916d7d915defbe69ece32399147a3dae36e896e4cf1db63fb35b1",
+    "json_samples/261004-kyoto.xml": "e2288cd5018e62c7d80b3a324c8af304687b664b091e7e5bfb72433237778e29",
+    "json_samples/261004-kyoto.geojson": "a85b8abef83a9101f00d58d8a99a239a83db8142bcf12561bc6acf37d2bc1aed",
+    "build/lib/tms_if_input/behavior_tree.py": "418007c1ff104ee0993180eae3cc8ef2d24a4820e7b417f816c823173ac0a9b1",
+    "build/lib/tms_if_input/parameters.py": "01c0714d0e601c830fbaf72eb6210b743ff473da704996ab7943b94f5ddcbe5b",
+    "build/lib/tms_if_input/database.py": "d7fce3e2a53953830de791365c4d80a85a56bf5d5c3d9120ef8142012a052536",
+    "build/lib/tms_if_input/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "build/lib/tms_if_input/compiler.py": "8cb4faa7d2a5e762e636c3d2c029fcb526a5a244f51e52e3cc19240356fd5ad1",
+    "build/lib/tms_if_input/routes.py": "f365478858ee8c11c52168b80577343264cca616cdab42a2dbaa44d71105037d",
+    "build/lib/tms_if_input/cli.py": "57a2fb38583fc8e30103a6bfd68a1eb0a901c4093586937ae99afd1611229ef5",
+    "build/lib/tms_if_input/importer.py": "34f2bc894e59e626b6fa250016ac3531d08306c3d62a60e36682a757e84f1cdf",
+    "build/lib/tms_if_input/model.py": "8c219232340ec95843db91f7edc34c2c134980bd0b477ee6049a6e62ed1c3341",
+    "artifacts/final_verification.json": "fc8bec5bf7aafadb3ba279b0dfa813f2b0c854a3f13f851b0249cd65dbfc4dbf",
+    "artifacts/mongodb_routes.pdf": "31df567dce39cbccea6684dec080312451750f92f8170aa33439431d86733c53",
+    "artifacts/mongodb_primitive_verification.json": "86f9d44084605cf7231b2f5a4eb539cc244a6317b2fae57c0de378135c5020e3",
+    "artifacts/mongodb_execute_subtask_verification.json": "0299d9af52116e576188a786aa76577c1bb60c63abdea39c080f86e172ea5f1d",
+    "artifacts/joint_pose_verification.json": "fb2f06271cd287c5a037404119a2e96d01d36f230abb76b09d41e144ea2e870f",
+    "artifacts/mongodb_verified_task.json": "4be032a76beca636dbbaf91fa12bafa6d27424e1d0531c0b3cffed51cb3cdef2",
+    "artifacts/mongodb_input_type_verification.json": "46fd14d8403321d6c51da93d63c96e87acc01e90efdc3c43fea539a79f640a61",
+    "artifacts/leveling_block_vector_verification.json": "017cef653b75f4b77c0489b9c001bd5ac225a4c74e00e24102fa569865259bf7",
+    "artifacts/initial_move_pose_verification.json": "958c0b0ede43bc154acab03053dee0c955059efa09f45f5ace104c951ae83d78",
+    "artifacts/mongodb_store_verification.json": "f57c9a30bdd0669a012dacdfd9dedb90ae42ddb17b94ff645c52736c63c492df",
+    "artifacts/mongodb_verification.json": "fc8bec5bf7aafadb3ba279b0dfa813f2b0c854a3f13f851b0249cd65dbfc4dbf",
+    "artifacts/mongodb_routes_snapshot.json": "b3516971a9938905ce18fab46c753c4accca11c06c584b386d67cd8ede582e9a",
+    "artifacts/mongodb_verified_parameter.json": "fe2df59998c9caf26987d3f9a9c175f2f997ebcac4a2743eba7777af6b02c7c1",
+    "artifacts/mongodb_initial_position_array_verification.json": "ac553520c47c7a5b719530227d18e89c27e8cfd83cbac230e66103196a04f308"
+  },
+  "unit_tests_passed": 227,
+  "additional_feature_tests_passed": 39,
+  "resolved_defects": [
+    {
+      "issue": "Two GeoJSON reads could mix previous coordinates with replacement radii",
+      "fix": "Parse graph geometry and radius metadata from a single input snapshot",
+      "file": "tms_if_input/system_topics_data.py",
+      "regression_test": "test_source_replacement_cannot_mix_geometry_and_radius"
+    },
+    {
+      "issue": "A newer static record could replace the intended dynamic machine blackboard",
+      "fix": "Filter by type=dynamic as well as the input-derived model and record name",
+      "file": "tms_if_input/system_topics.py",
+      "regression_test": "test_newer_static_and_other_machine_records_do_not_replace_dynamic_state"
+    },
+    {
+      "issue": "Restoring SIGINT before interpreter teardown allowed a second Ctrl+C to terminate the child abnormally",
+      "fix": "Ignore repeated SIGINT throughout node cleanup and remaining process teardown",
+      "file": "tms_if_input/system_topics.py",
+      "regression_test": "Actual ROS double-SIGINT tests at 10, 80 and 200 milliseconds"
+    }
+  ],
+  "independent_specification_fields": {
+    "status": "passed",
+    "raw_xml_field_checks": 186,
+    "graph_nodes": 42,
+    "tasks": [
+      {
+        "task_id": "2600159710",
+        "machinery_id": "machine_4",
+        "model_name": "d37pxi",
+        "blocks": 9,
+        "dump_connection_column_counts": {
+          "919561426": 3,
+          "1880652658": 3,
+          "575106410": 3
+        }
+      }
+    ],
+    "phase_trace": [
+      "graph",
+      "parameters",
+      "state"
+    ],
+    "original_files_unchanged": 63,
+    "original_file_changes": [],
+    "schema_and_fixed_failure_reproducers": "/tmp/tms_if_input-topic-spec-audit/after_report.json"
+  },
+  "independent_defect_regression_audit": {
+    "supplied_message_fields": {
+      "Node": [
+        "string node_id",
+        "string[] connect_node",
+        "float32 x",
+        "float32 y",
+        "float32 z",
+        "float32 size"
+      ],
+      "NodeGroup": [
+        "string message_id",
+        "Node[] node_ids"
+      ],
+      "LevelingTaskParam": [
+        "string task_id",
+        "string machinery_id",
+        "float32 leveling_height",
+        "float32 block_size_x",
+        "float32 block_size_y",
+        "float32 block_vector_x",
+        "float32 block_vector_y",
+        "float32 block_vector_z",
+        "Node[] block_center",
+        "float32[] soil_volume",
+        "NodeGroup dump_node",
+        "NodeGroup bulldozer_node"
+      ],
+      "LevelingStateReport": [
+        "string task_id",
+        "string machinery_id",
+        "bool[] block_state"
+      ],
+      "TaskReport": [
+        "string message_id",
+        "string task_id",
+        "string machine_id"
+      ]
+    },
+    "baseline_type": "dict",
+    "baseline_keys": [
+      "README.md",
+      ".gitignore",
+      "setup.cfg",
+      "setup.py",
+      "package.xml"
+    ],
+    "raw_graph_check": {
+      "nodes": 42,
+      "undirected_adjacencies": 90,
+      "all_fields_match": true
+    },
+    "double_read_reproducer": {
+      "source": "system_topics_data.py:121-134,94-112",
+      "read_count": 1,
+      "point_id": "7609442",
+      "old_source_x": 87.5675,
+      "new_source_x": 1087.5675,
+      "old_source_radius": 2.0,
+      "new_source_radius": 3.0,
+      "mixed_message_x": 87.5675,
+      "mixed_message_size": 2.0,
+      "single_snapshot_consistent": true
+    },
+    "blackboard_type_reproducer": {
+      "record_fixture_count": 3,
+      "older_dynamic_ignored": true,
+      "source": "system_topics.py:45-48",
+      "query": {
+        "record_name": "SAMPLE_BLACKBOARD_d37pxi",
+        "model_name": "d37pxi",
+        "type": "dynamic"
+      },
+      "expected_dynamic_completed": [
+        "block_1"
+      ],
+      "actual_completed": [
+        "block_1"
+      ],
+      "actual_block_state": [
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "wrong_type_selected": false,
+      "dynamic_record_selected": true
+    }
+  },
+  "actual_ros_runtime_boundary_cases": {
+    "status": "passed",
+    "transport": "actual ROS2 DDS, localhost only",
+    "mongo": "read-only mock with mutable documents; no actual DB access or writes",
+    "cases": [
+      {
+        "name": "quoted_paths",
+        "count": 2,
+        "areas": 1,
+        "machines": 1,
+        "status": "passed",
+        "invalid_graph_reports_ignored": 3,
+        "all_transmitted_payloads_match_raw_files": true,
+        "state_dynamically_matches_ordered_blocks": true,
+        "all_machine_and_task_acks_required": true,
+        "stopped_graph_and_acknowledged_parameters": true,
+        "shutdown": {
+          "elapsed_seconds": 0.4566094509791583,
+          "exit_code": 0
+        },
+        "child_clean_exit": true,
+        "received_counts": {
+          "graph": 6,
+          "parameters": 7,
+          "state": 14
+        },
+        "read_queries": [
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          }
+        ],
+        "read_query_models_match_xml": true
+      },
+      {
+        "name": "two_areas_same_alias",
+        "count": 4,
+        "areas": 2,
+        "machines": 1,
+        "status": "passed",
+        "invalid_graph_reports_ignored": 3,
+        "all_transmitted_payloads_match_raw_files": true,
+        "state_dynamically_matches_ordered_blocks": true,
+        "all_machine_and_task_acks_required": true,
+        "stopped_graph_and_acknowledged_parameters": true,
+        "shutdown": {
+          "elapsed_seconds": 0.21414424397516996,
+          "exit_code": 0
+        },
+        "child_clean_exit": true,
+        "received_counts": {
+          "graph": 6,
+          "parameters": 19,
+          "state": 26
+        },
+        "read_queries": [
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          }
+        ],
+        "read_query_models_match_xml": true
+      },
+      {
+        "name": "two_areas_two_aliases",
+        "count": 4,
+        "areas": 2,
+        "machines": 2,
+        "status": "passed",
+        "invalid_graph_reports_ignored": 3,
+        "all_transmitted_payloads_match_raw_files": true,
+        "state_dynamically_matches_ordered_blocks": true,
+        "all_machine_and_task_acks_required": true,
+        "stopped_graph_and_acknowledged_parameters": true,
+        "shutdown": {
+          "elapsed_seconds": 0.21420760499313474,
+          "exit_code": 0
+        },
+        "child_clean_exit": true,
+        "received_counts": {
+          "graph": 8,
+          "parameters": 19,
+          "state": 28
+        },
+        "read_queries": [
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_another-custom-model",
+            "model_name": "another-custom-model",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_another-custom-model",
+            "model_name": "another-custom-model",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_another-custom-model",
+            "model_name": "another-custom-model",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_another-custom-model",
+            "model_name": "another-custom-model",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_another-custom-model",
+            "model_name": "another-custom-model",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_another-custom-model",
+            "model_name": "another-custom-model",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_another-custom-model",
+            "model_name": "another-custom-model",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_another-custom-model",
+            "model_name": "another-custom-model",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_another-custom-model",
+            "model_name": "another-custom-model",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_another-custom-model",
+            "model_name": "another-custom-model",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_another-custom-model",
+            "model_name": "another-custom-model",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_another-custom-model",
+            "model_name": "another-custom-model",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_another-custom-model",
+            "model_name": "another-custom-model",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_another-custom-model",
+            "model_name": "another-custom-model",
+            "type": "dynamic"
+          }
+        ],
+        "read_query_models_match_xml": true
+      },
+      {
+        "name": "shutdown_graph",
+        "count": 2,
+        "areas": 1,
+        "machines": 1,
+        "status": "passed",
+        "invalid_graph_reports_ignored": 3,
+        "shutdown": {
+          "elapsed_seconds": 0.21418839890975505,
+          "exit_code": 0
+        },
+        "child_clean_exit": true,
+        "received_counts": {
+          "graph": 6,
+          "parameters": 0,
+          "state": 0
+        },
+        "read_queries": [],
+        "read_query_models_match_xml": true
+      },
+      {
+        "name": "shutdown_parameters",
+        "count": 2,
+        "areas": 1,
+        "machines": 1,
+        "status": "passed",
+        "invalid_graph_reports_ignored": 3,
+        "shutdown": {
+          "elapsed_seconds": 0.16373487911187112,
+          "exit_code": 0
+        },
+        "child_clean_exit": true,
+        "received_counts": {
+          "graph": 6,
+          "parameters": 7,
+          "state": 0
+        },
+        "read_queries": [],
+        "read_query_models_match_xml": true
+      },
+      {
+        "name": "shutdown_mongo_error",
+        "count": 2,
+        "areas": 1,
+        "machines": 1,
+        "status": "passed",
+        "invalid_graph_reports_ignored": 3,
+        "all_transmitted_payloads_match_raw_files": true,
+        "state_dynamically_matches_ordered_blocks": true,
+        "all_machine_and_task_acks_required": true,
+        "stopped_graph_and_acknowledged_parameters": true,
+        "shutdown": {
+          "elapsed_seconds": 0.2138522749301046,
+          "exit_code": 0
+        },
+        "child_clean_exit": true,
+        "received_counts": {
+          "graph": 6,
+          "parameters": 7,
+          "state": 15
+        },
+        "read_queries": [
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          }
+        ],
+        "read_query_models_match_xml": true
+      },
+      {
+        "name": "shutdown_mongo_slow",
+        "count": 2,
+        "areas": 1,
+        "machines": 1,
+        "status": "passed",
+        "invalid_graph_reports_ignored": 3,
+        "all_transmitted_payloads_match_raw_files": true,
+        "state_dynamically_matches_ordered_blocks": true,
+        "all_machine_and_task_acks_required": true,
+        "stopped_graph_and_acknowledged_parameters": true,
+        "shutdown": {
+          "elapsed_seconds": 1.8683313980000094,
+          "exit_code": 0
+        },
+        "child_clean_exit": true,
+        "received_counts": {
+          "graph": 6,
+          "parameters": 7,
+          "state": 13
+        },
+        "read_queries": [
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          }
+        ],
+        "read_query_models_match_xml": true
+      },
+      {
+        "name": "shutdown_sigterm",
+        "count": 2,
+        "areas": 1,
+        "machines": 1,
+        "status": "passed",
+        "invalid_graph_reports_ignored": 3,
+        "all_transmitted_payloads_match_raw_files": true,
+        "state_dynamically_matches_ordered_blocks": true,
+        "all_machine_and_task_acks_required": true,
+        "stopped_graph_and_acknowledged_parameters": true,
+        "shutdown": {
+          "elapsed_seconds": 0.003213569987565279,
+          "exit_code": -15
+        },
+        "child_clean_exit": true,
+        "received_counts": {
+          "graph": 6,
+          "parameters": 7,
+          "state": 13
+        },
+        "read_queries": [
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          }
+        ],
+        "read_query_models_match_xml": true
+      },
+      {
+        "name": "invalid_publish_zero",
+        "status": "passed",
+        "child_exit_code": 1,
+        "launch_exit_code": 0,
+        "no_publishing_started": true,
+        "log": "/tmp/tms_if_input-topics-deep/edge_runtime/invalid_publish_zero/launch.log"
+      },
+      {
+        "name": "invalid_publish_negative",
+        "status": "passed",
+        "child_exit_code": 1,
+        "launch_exit_code": 0,
+        "no_publishing_started": true,
+        "log": "/tmp/tms_if_input-topics-deep/edge_runtime/invalid_publish_negative/launch.log"
+      },
+      {
+        "name": "invalid_publish_nan",
+        "status": "passed",
+        "child_exit_code": 1,
+        "launch_exit_code": 0,
+        "no_publishing_started": true,
+        "log": "/tmp/tms_if_input-topics-deep/edge_runtime/invalid_publish_nan/launch.log"
+      },
+      {
+        "name": "invalid_publish_inf",
+        "status": "passed",
+        "child_exit_code": 1,
+        "launch_exit_code": 0,
+        "no_publishing_started": true,
+        "log": "/tmp/tms_if_input-topics-deep/edge_runtime/invalid_publish_inf/launch.log"
+      },
+      {
+        "name": "invalid_state_zero",
+        "status": "passed",
+        "child_exit_code": 1,
+        "launch_exit_code": 0,
+        "no_publishing_started": true,
+        "log": "/tmp/tms_if_input-topics-deep/edge_runtime/invalid_state_zero/launch.log"
+      },
+      {
+        "name": "invalid_state_negative",
+        "status": "passed",
+        "child_exit_code": 1,
+        "launch_exit_code": 0,
+        "no_publishing_started": true,
+        "log": "/tmp/tms_if_input-topics-deep/edge_runtime/invalid_state_negative/launch.log"
+      },
+      {
+        "name": "invalid_state_nan",
+        "status": "passed",
+        "child_exit_code": 1,
+        "launch_exit_code": 0,
+        "no_publishing_started": true,
+        "log": "/tmp/tms_if_input-topics-deep/edge_runtime/invalid_state_nan/launch.log"
+      },
+      {
+        "name": "invalid_state_inf",
+        "status": "passed",
+        "child_exit_code": 1,
+        "launch_exit_code": 0,
+        "no_publishing_started": true,
+        "log": "/tmp/tms_if_input-topics-deep/edge_runtime/invalid_state_inf/launch.log"
+      },
+      {
+        "name": "missing_geo",
+        "status": "passed",
+        "child_exit_code": 1,
+        "launch_exit_code": 0,
+        "no_publishing_started": true,
+        "log": "/tmp/tms_if_input-topics-deep/edge_runtime/missing_geo/launch.log"
+      },
+      {
+        "name": "missing_xml",
+        "status": "passed",
+        "child_exit_code": 1,
+        "launch_exit_code": 0,
+        "no_publishing_started": true,
+        "log": "/tmp/tms_if_input-topics-deep/edge_runtime/missing_xml/launch.log"
+      },
+      {
+        "name": "malformed_xml",
+        "status": "passed",
+        "child_exit_code": 1,
+        "launch_exit_code": 0,
+        "no_publishing_started": true,
+        "log": "/tmp/tms_if_input-topics-deep/edge_runtime/malformed_xml/launch.log"
+      },
+      {
+        "name": "numeric_paths",
+        "count": 12,
+        "areas": 1,
+        "machines": 1,
+        "status": "passed",
+        "invalid_graph_reports_ignored": 3,
+        "all_transmitted_payloads_match_raw_files": true,
+        "state_dynamically_matches_ordered_blocks": true,
+        "all_machine_and_task_acks_required": true,
+        "stopped_graph_and_acknowledged_parameters": true,
+        "shutdown": {
+          "elapsed_seconds": 0.21433086704928428,
+          "exit_code": 0
+        },
+        "child_clean_exit": true,
+        "received_counts": {
+          "graph": 6,
+          "parameters": 7,
+          "state": 15
+        },
+        "read_queries": [
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          }
+        ],
+        "read_query_models_match_xml": true
+      },
+      {
+        "name": "shutdown_double_sigint_graph",
+        "count": 2,
+        "areas": 1,
+        "machines": 1,
+        "status": "passed",
+        "invalid_graph_reports_ignored": 3,
+        "shutdown": {
+          "elapsed_seconds": 0.19392366497777402,
+          "exit_code": 0
+        },
+        "child_clean_exit": true,
+        "received_counts": {
+          "graph": 6,
+          "parameters": 0,
+          "state": 0
+        },
+        "read_queries": [],
+        "read_query_models_match_xml": true
+      },
+      {
+        "name": "shutdown_double_sigint_parameters",
+        "count": 2,
+        "areas": 1,
+        "machines": 1,
+        "status": "passed",
+        "invalid_graph_reports_ignored": 3,
+        "shutdown": {
+          "elapsed_seconds": 0.19418899400625378,
+          "exit_code": 0
+        },
+        "child_clean_exit": true,
+        "received_counts": {
+          "graph": 6,
+          "parameters": 7,
+          "state": 0
+        },
+        "read_queries": [],
+        "read_query_models_match_xml": true
+      },
+      {
+        "name": "shutdown_double_sigint_state",
+        "count": 2,
+        "areas": 1,
+        "machines": 1,
+        "status": "passed",
+        "invalid_graph_reports_ignored": 3,
+        "all_transmitted_payloads_match_raw_files": true,
+        "state_dynamically_matches_ordered_blocks": true,
+        "all_machine_and_task_acks_required": true,
+        "stopped_graph_and_acknowledged_parameters": true,
+        "shutdown": {
+          "elapsed_seconds": 0.19374252203851938,
+          "exit_code": 0
+        },
+        "child_clean_exit": true,
+        "received_counts": {
+          "graph": 6,
+          "parameters": 7,
+          "state": 15
+        },
+        "read_queries": [
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          }
+        ],
+        "read_query_models_match_xml": true
+      },
+      {
+        "name": "shutdown_double_sigint_mongo_slow",
+        "count": 2,
+        "areas": 1,
+        "machines": 1,
+        "status": "passed",
+        "invalid_graph_reports_ignored": 3,
+        "all_transmitted_payloads_match_raw_files": true,
+        "state_dynamically_matches_ordered_blocks": true,
+        "all_machine_and_task_acks_required": true,
+        "stopped_graph_and_acknowledged_parameters": true,
+        "shutdown": {
+          "elapsed_seconds": 1.7977411029860377,
+          "exit_code": 0
+        },
+        "child_clean_exit": true,
+        "received_counts": {
+          "graph": 6,
+          "parameters": 7,
+          "state": 15
+        },
+        "read_queries": [
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          }
+        ],
+        "read_query_models_match_xml": true
+      },
+      {
+        "name": "shutdown_double_timing_10ms",
+        "count": 2,
+        "areas": 1,
+        "machines": 1,
+        "status": "passed",
+        "invalid_graph_reports_ignored": 3,
+        "all_transmitted_payloads_match_raw_files": true,
+        "state_dynamically_matches_ordered_blocks": true,
+        "all_machine_and_task_acks_required": true,
+        "stopped_graph_and_acknowledged_parameters": true,
+        "shutdown": {
+          "elapsed_seconds": 3.1245815299917012,
+          "exit_code": 0,
+          "signals_sent": 2,
+          "second_signal_delay_seconds": 0.01
+        },
+        "child_clean_exit": true,
+        "received_counts": {
+          "graph": 6,
+          "parameters": 7,
+          "state": 15
+        },
+        "read_queries": [
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          }
+        ],
+        "read_query_models_match_xml": true
+      },
+      {
+        "name": "shutdown_double_timing_80ms",
+        "count": 2,
+        "areas": 1,
+        "machines": 1,
+        "status": "passed",
+        "invalid_graph_reports_ignored": 3,
+        "all_transmitted_payloads_match_raw_files": true,
+        "state_dynamically_matches_ordered_blocks": true,
+        "all_machine_and_task_acks_required": true,
+        "stopped_graph_and_acknowledged_parameters": true,
+        "shutdown": {
+          "elapsed_seconds": 1.7970617449609563,
+          "exit_code": 0,
+          "signals_sent": 2,
+          "second_signal_delay_seconds": 0.08
+        },
+        "child_clean_exit": true,
+        "received_counts": {
+          "graph": 6,
+          "parameters": 7,
+          "state": 15
+        },
+        "read_queries": [
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          }
+        ],
+        "read_query_models_match_xml": true
+      },
+      {
+        "name": "shutdown_double_timing_200ms",
+        "count": 2,
+        "areas": 1,
+        "machines": 1,
+        "status": "passed",
+        "invalid_graph_reports_ignored": 3,
+        "all_transmitted_payloads_match_raw_files": true,
+        "state_dynamically_matches_ordered_blocks": true,
+        "all_machine_and_task_acks_required": true,
+        "stopped_graph_and_acknowledged_parameters": true,
+        "shutdown": {
+          "elapsed_seconds": 1.7664203309686854,
+          "exit_code": 0,
+          "signals_sent": 2,
+          "second_signal_delay_seconds": 0.2
+        },
+        "child_clean_exit": true,
+        "received_counts": {
+          "graph": 6,
+          "parameters": 7,
+          "state": 16
+        },
+        "read_queries": [
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          },
+          {
+            "record_name": "SAMPLE_BLACKBOARD_custom-grader-v42",
+            "model_name": "custom-grader-v42",
+            "type": "dynamic"
+          }
+        ],
+        "read_query_models_match_xml": true
+      }
+    ],
+    "verified_child_pids_remaining": [],
+    "source_files_sha256": {
+      "launch/system_topics.launch.py": "c3f503d27bf3c4ca6605c4cafd417b957ab03bdc675f767e20e3194bbc0c966a",
+      "tms_if_input/system_topics.py": "4d5ad710bfadd1ba34a014325d9de2dca116a5fe33ced5751ffbd0dd35e0577c",
+      "tms_if_input/system_topics_data.py": "d97ad5685621cd647acbee4fc58008c4f664a4288a71d3f3c42084b9f226482b",
+      "tms_if_input/system_topics_protocol.py": "7d77e594a952af864adf6fe0f92bd70d7483b47b3b496d7c0f473cec3deb4658"
+    },
+    "limitations": [
+      "Unity client is not connected; acknowledgements use a real ROS2 test peer.",
+      "These boundary cases use a strict read-only MongoClient stub; real MongoDB verification is performed separately."
+    ]
+  },
+  "actual_mongodb_and_ros_changes": {
+    "started_utc": "2026-10-13T08:29:15.321150+00:00",
+    "status": "passed",
+    "test_database": "tms_if_input_topic_audit_303cf785c1ca4ab5b06235aa26618ced",
+    "production_database": "rostmsdb",
+    "oracle": {
+      "task_id": "2600159710",
+      "machinery_id": "machine_4",
+      "model_name": "d37pxi",
+      "blackboard_record_name": "SAMPLE_BLACKBOARD_d37pxi",
+      "block_count": 9,
+      "block_names": [
+        "block_1",
+        "block_2",
+        "block_3",
+        "block_4",
+        "block_5",
+        "block_6",
+        "block_7",
+        "block_8",
+        "block_9"
+      ]
+    },
+    "fixture_driver_operations": [
+      {
+        "operation": "insert",
+        "_id": "6acdebdd9a9354e270fc4769"
+      },
+      {
+        "operation": "insert",
+        "_id": "6acdebe09a9354e270fc476a"
+      },
+      {
+        "operation": "insert",
+        "_id": "6acdebe09a9354e270fc476b"
+      },
+      {
+        "operation": "update",
+        "_id": "6acdebdd9a9354e270fc4769",
+        "changes": {
+          "LEVELED_BLOCK": [
+            "block_1",
+            "block_9"
+          ]
+        }
+      },
+      {
+        "operation": "update",
+        "_id": "6acdebdd9a9354e270fc4769",
+        "changes": {
+          "LEVELED_BLOCK": [
+            "block_2"
+          ]
+        }
+      },
+      {
+        "operation": "update",
+        "_id": "6acdebdd9a9354e270fc4769",
+        "changes": {
+          "LEVELED_BLOCK": []
+        }
+      },
+      {
+        "operation": "insert",
+        "_id": "6acdebe19a9354e270fc476c"
+      },
+      {
+        "operation": "update",
+        "_id": "6acdebe19a9354e270fc476c",
+        "changes": {
+          "timestamps": {
+            "$date": "2026-10-13T08:29:47.208Z"
+          },
+          "LEVELED_BLOCK": [
+            "block_1",
+            "block_9"
+          ]
+        }
+      },
+      {
+        "operation": "update",
+        "_id": "6acdebe19a9354e270fc476c",
+        "changes": {
+          "LEVELED_BLOCK": "not-an-array"
+        }
+      },
+      {
+        "operation": "update",
+        "_id": "6acdebe19a9354e270fc476c",
+        "changes": {
+          "LEVELED_BLOCK": [
+            "block_2"
+          ]
+        }
+      },
+      {
+        "operation": "update",
+        "_id": "6acdebe19a9354e270fc476c",
+        "changes": {
+          "LEVELED_BLOCK": [
+            "block_1",
+            42
+          ]
+        }
+      },
+      {
+        "operation": "update",
+        "_id": "6acdebe19a9354e270fc476c",
+        "changes": {
+          "LEVELED_BLOCK": [
+            "block_2"
+          ]
+        }
+      },
+      {
+        "operation": "delete",
+        "count": 2,
+        "_ids": [
+          "6acdebdd9a9354e270fc4769",
+          "6acdebe19a9354e270fc476c"
+        ]
+      },
+      {
+        "operation": "insert",
+        "_id": "6acdebe39a9354e270fc476d"
+      }
+    ],
+    "checks": [
+      {
+        "label": "initial_empty_RELEACED_wrong_model_and_newer_static_ignored",
+        "expected_block_state": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "actual_message": {
+          "received_monotonic": 1013544.715106858,
+          "task_id": "2600159710",
+          "machinery_id": "machine_4",
+          "block_state": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        "latency_seconds": 0.0028191080782562494,
+        "passed": true
+      },
+      {
+        "label": "Mongo_update_first_and_last_block",
+        "expected_block_state": [
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          true
+        ],
+        "actual_message": {
+          "received_monotonic": 1013544.784862093,
+          "task_id": "2600159710",
+          "machinery_id": "machine_4",
+          "block_state": [
+            true,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            true
+          ]
+        },
+        "latency_seconds": 0.042281509027816355,
+        "passed": true
+      },
+      {
+        "label": "Mongo_replaces_not_accumulates_completed_blocks",
+        "expected_block_state": [
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "actual_message": {
+          "received_monotonic": 1013544.884425184,
+          "task_id": "2600159710",
+          "machinery_id": "machine_4",
+          "block_state": [
+            false,
+            true,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        "latency_seconds": 0.08023420197423548,
+        "passed": true
+      },
+      {
+        "label": "Mongo_clear_to_all_false",
+        "expected_block_state": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "actual_message": {
+          "received_monotonic": 1013544.982191102,
+          "task_id": "2600159710",
+          "machinery_id": "machine_4",
+          "block_state": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        "latency_seconds": 0.08388228702824563,
+        "passed": true
+      },
+      {
+        "label": "older_matching_blackboard_is_ignored",
+        "expected_block_state": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "actual_message": {
+          "received_monotonic": 1013545.084626869,
+          "task_id": "2600159710",
+          "machinery_id": "machine_4",
+          "block_state": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        "latency_seconds": 0.0911787289660424,
+        "passed": true
+      },
+      {
+        "label": "newest_matching_blackboard_wins",
+        "expected_block_state": [
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          true
+        ],
+        "actual_message": {
+          "received_monotonic": 1013545.184393662,
+          "task_id": "2600159710",
+          "machinery_id": "machine_4",
+          "block_state": [
+            true,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            true
+          ]
+        },
+        "latency_seconds": 0.09963572304695845,
+        "passed": true
+      },
+      {
+        "label": "malformed_LEVELED_BLOCK_string_rejected_node_stays_alive",
+        "passed": true,
+        "silence_seconds": 0.3506616560043767
+      },
+      {
+        "label": "recovery_after_malformed_blackboard_string",
+        "expected_block_state": [
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "actual_message": {
+          "received_monotonic": 1013545.884192048,
+          "task_id": "2600159710",
+          "machinery_id": "machine_4",
+          "block_state": [
+            false,
+            true,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        "latency_seconds": 0.07126918702851981,
+        "passed": true
+      },
+      {
+        "label": "malformed_LEVELED_BLOCK_nonstring_entry_rejected_node_stays_alive",
+        "passed": true,
+        "silence_seconds": 0.3505753460340202
+      },
+      {
+        "label": "recovery_after_malformed_blackboard_nonstring_entry",
+        "expected_block_state": [
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "actual_message": {
+          "received_monotonic": 1013546.584383121,
+          "task_id": "2600159710",
+          "machinery_id": "machine_4",
+          "block_state": [
+            false,
+            true,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        "latency_seconds": 0.07421125296968967,
+        "passed": true
+      },
+      {
+        "label": "missing_matching_blackboard_defaults_all_false",
+        "expected_block_state": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "actual_message": {
+          "received_monotonic": 1013546.684315932,
+          "task_id": "2600159710",
+          "machinery_id": "machine_4",
+          "block_state": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        "latency_seconds": 0.08017290697898716,
+        "passed": true
+      },
+      {
+        "label": "new_matching_blackboard_is_detected",
+        "expected_block_state": [
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          true
+        ],
+        "actual_message": {
+          "received_monotonic": 1013546.784442066,
+          "task_id": "2600159710",
+          "machinery_id": "machine_4",
+          "block_state": [
+            true,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            true
+          ]
+        },
+        "latency_seconds": 0.08588699996471405,
+        "passed": true
+      },
+      {
+        "label": "permanent_state_publish_without_more_ACKs_graph_and_params_stopped",
+        "observed_seconds": 1.350646381964907,
+        "received_state_messages": 13,
+        "average_interval_seconds": 0.10019269883438635,
+        "passed": true
+      }
+    ],
+    "installed_code_checks": {
+      "system_topics.py": {
+        "installed_path": "/home/kasahara/SIP_PROJECTS/ros2_tms_ws/install/tms_if_input/lib/python3.10/site-packages/tms_if_input/system_topics.py",
+        "sha256": "4d5ad710bfadd1ba34a014325d9de2dca116a5fe33ced5751ffbd0dd35e0577c",
+        "source_matches": true
+      },
+      "system_topics_data.py": {
+        "installed_path": "/home/kasahara/SIP_PROJECTS/ros2_tms_ws/install/tms_if_input/lib/python3.10/site-packages/tms_if_input/system_topics_data.py",
+        "sha256": "d97ad5685621cd647acbee4fc58008c4f664a4288a71d3f3c42084b9f226482b",
+        "source_matches": true
+      },
+      "system_topics_protocol.py": {
+        "installed_path": "/home/kasahara/SIP_PROJECTS/ros2_tms_ws/install/tms_if_input/lib/python3.10/site-packages/tms_if_input/system_topics_protocol.py",
+        "sha256": "7d77e594a952af864adf6fe0f92bd70d7483b47b3b496d7c0f473cec3deb4658",
+        "source_matches": true
+      }
+    },
+    "actual_launch_command": [
+      "ros2",
+      "launch",
+      "tms_if_input",
+      "system_topics.launch.py",
+      "geojson_path:=261008-kyoto.geojson",
+      "xml_path:=261008-kyoto.xml",
+      "mongo_db:=tms_if_input_topic_audit_303cf785c1ca4ab5b06235aa26618ced",
+      "publish_period:=0.1",
+      "state_poll_period:=0.1"
+    ],
+    "launch_exit_code": 0,
+    "database_profiler_fixture_write_count": 14,
+    "database_profiler_runtime_write_count": 0,
+    "database_profiler_runtime_read_count": 37,
+    "test_database_removed": true,
+    "production_unchanged": true,
+    "production_collection_count": 10,
+    "production_document_count": 756,
+    "finished_utc": "2026-10-13T08:29:27.037227+00:00"
+  },
+  "final_installed_code_sha256": {
+    "system_topics.py": "4d5ad710bfadd1ba34a014325d9de2dca116a5fe33ced5751ffbd0dd35e0577c",
+    "system_topics_data.py": "d97ad5685621cd647acbee4fc58008c4f664a4288a71d3f3c42084b9f226482b",
+    "system_topics_protocol.py": "7d77e594a952af864adf6fe0f92bd70d7483b47b3b496d7c0f473cec3deb4658"
+  },
+  "production_preservation": {
+    "database": "rostmsdb",
+    "collections": 10,
+    "documents": 756,
+    "all_raw_bson_hashes_unchanged": true,
+    "runtime_mongo_write_operations": 0,
+    "runtime_mongo_read_operations": 37
+  },
+  "test_fixture_operations": {
+    "database": "tms_if_input_topic_audit_303cf785c1ca4ab5b06235aa26618ced",
+    "fixture_write_operations": 14,
+    "production_database_writes": 0,
+    "test_database_removed": true
+  },
+  "limits": {
+    "unity_client_connected": false,
+    "actual_ros_receivers_and_acknowledgements_tested": true,
+    "invalid_config_child_exit_code": 1,
+    "sigterm_parent_exit_is_signal_termination": true
+  },
+  "evidence_directories": [
+    "/tmp/tms_if_input-topics-deep",
+    "/tmp/tms_if_input-topic-spec-audit"
+  ]
+}

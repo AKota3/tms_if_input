@@ -1,0 +1,201 @@
+{
+  "status": "passed",
+  "verified_at_utc": "2026-10-13T08:07:53.719910+00:00",
+  "specification": "/home/kasahara/siyousho",
+  "specification_sha256": "eea42c89676812b258db635abaeac1571cd8142e5d4d239a3785bede177f22f8",
+  "existing_file_count_verified_unchanged": 63,
+  "existing_file_changes": [],
+  "existing_file_sha256": {
+    "README.md": "785e568806da3fcd3cfa7212f3749e2fcce6819629d038dc6e365143f703653c",
+    ".gitignore": "920f0675e7549016131d6829ceacb67127066a1cf446ed4220027b4498e6e6e1",
+    "setup.cfg": "cf5599d702e209387387f8cb402a93ba6a127323dd056b44fe2360d1b2426250",
+    "setup.py": "b7d9e353b493fa5b942ae53af8bf4f55a2974974801a6bd7ad5ee5e47c5b943e",
+    "package.xml": "dc6a39d6f9aaa9f79d4601466f2f067f810a22d5fd3fe1d9cd0e0ff8fc4b6f21",
+    "verification/mongodb_verification.json": "6a7ee047ae98b7fd6b82c207a92b1c174d5a01c98d7db8021ff83ef4bf5fefbd",
+    "tms_if_input.egg-info/SOURCES.txt": "1bc6bac45b6ab91aebf1ac2d6e159eb72eea8410c00b4930c75ffc9d15eb929f",
+    "tms_if_input.egg-info/top_level.txt": "0e0399f75a8bb656ef9f9a4f6a3b06263bb220a55aaa373be47f558464443b58",
+    "tms_if_input.egg-info/zip-safe": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "tms_if_input.egg-info/requires.txt": "90cb37f50b3410dc2f9173801119c19953cc02624f8c19f44edb4b56758a4cdd",
+    "tms_if_input.egg-info/entry_points.txt": "79629421e11276e2f56c28acb706b6f40e758d6527a6696696573667f0c3a344",
+    "tms_if_input.egg-info/dependency_links.txt": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "tms_if_input.egg-info/PKG-INFO": "e52949394358094d90718147514cf20c8ec9a78c71ad68200eabbba148a1e532",
+    ".vscode/settings.json": "1da4723afd4c11b74e479412ca77bc16470c5c56cc9bfbfa98f95ed75c0c7ffe",
+    ".vscode/c_cpp_properties.json": "d7b4e35ae828cd6cedaeada31d27ea952ed4aea56b1fff915a31237d9029f2fd",
+    "tms_if_input/behavior_tree.py": "e22b2049bcd0674e15d6b37b2774c6f91fe6eaf161436c79d74042243827fcc8",
+    "tms_if_input/parameters.py": "781c488cd6d0ba5dd98984f1ac53ebf1ac2d02059f609b24dd6fe1d5783fcf88",
+    "tms_if_input/database.py": "4ab17d304c9b5b6148653d6052fffa2b418420d447d797df12ba6797185b750f",
+    "tms_if_input/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tms_if_input/compiler.py": "8cb4faa7d2a5e762e636c3d2c029fcb526a5a244f51e52e3cc19240356fd5ad1",
+    "tms_if_input/routes.py": "84ca4d419cb6d86039454981c9f24b68d5e715457ca57e51a59504c287078be6",
+    "tms_if_input/cli.py": "b128a2dbd0b2b384a88f2df59756e686cd3b690633d47d96cacaabda2a45521c",
+    "tms_if_input/importer.py": "e312ac3b6cb795504ec6e6943b759ce41b41c4040ce093a3218d75833a9900eb",
+    "tms_if_input/model.py": "9ef37f8b39eea41b45e34c37472c966ba2048c0a64a17f9e2d7e7481d87802b2",
+    "resource/tms_if_input": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "launch/tms_if_input.launch.py": "3752abd79563e70363dc21a013d1a960fe3dfcca3a9b459ae9e880272040fd24",
+    "test/test_export.py": "67ca307950ddf8cf394650b81675e3c14bfb2b9ab3d09598e2d3d6572da6a199",
+    "test/test_database.py": "7101c7f38fc8bbfe7cb27cfd69db1fb33b76e0877da5df2d97f57e5857cb2864",
+    "test/test_behavior_tree.py": "ecb0ff92294ade51a9cd4f983531072066f6195991ac62205c10d87472029edd",
+    "test/test_grouped_database.py": "583b6f9313baaa6b7bb414d1a2e2b074844fa7c9d72fba699028eb35e1235c45",
+    "test/test_importer.py": "fc6b589417a2d6b9019f752ac2c12595face7e741cd4219d1b20ca7aaad35022",
+    "test/test_model.py": "3a9185fa87f932e294173191f1e785ef063e0cb570bb4b0a9adfa2990147a228",
+    "test/test_waypoint_spec.py": "3934e70684534c5fd68799964abf84a111590dbcbc385a1c42c3c0520a9e5d9c",
+    "test/test_routes.py": "0024ee5843b1a65682da3d278db73ed96e9c81c7efa52a0a40bff6677fd62ace",
+    "test/test_compilation.py": "cedef16b4136f27751a6896270d2951e0b0cd7f0abf7ccf6dea0a422560c9203",
+    "test/fixtures/requested_tasks.json": "95499258f12ec614dac5c9a2d60c68cb3dcdd75bc8db2c66b000dcfcff72d5c8",
+    "json_samples/261008-kyoto.geojson": "90a0e6daf142da0d1d4843ee00d5075d72cca9f1db14910a1d5c3b8a8390eeee",
+    "json_samples/261008-kyoto.xml": "dce4e7f7e31916d7d915defbe69ece32399147a3dae36e896e4cf1db63fb35b1",
+    "json_samples/261004-kyoto.xml": "e2288cd5018e62c7d80b3a324c8af304687b664b091e7e5bfb72433237778e29",
+    "json_samples/261004-kyoto.geojson": "a85b8abef83a9101f00d58d8a99a239a83db8142bcf12561bc6acf37d2bc1aed",
+    "build/lib/tms_if_input/behavior_tree.py": "418007c1ff104ee0993180eae3cc8ef2d24a4820e7b417f816c823173ac0a9b1",
+    "build/lib/tms_if_input/parameters.py": "01c0714d0e601c830fbaf72eb6210b743ff473da704996ab7943b94f5ddcbe5b",
+    "build/lib/tms_if_input/database.py": "d7fce3e2a53953830de791365c4d80a85a56bf5d5c3d9120ef8142012a052536",
+    "build/lib/tms_if_input/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "build/lib/tms_if_input/compiler.py": "8cb4faa7d2a5e762e636c3d2c029fcb526a5a244f51e52e3cc19240356fd5ad1",
+    "build/lib/tms_if_input/routes.py": "f365478858ee8c11c52168b80577343264cca616cdab42a2dbaa44d71105037d",
+    "build/lib/tms_if_input/cli.py": "57a2fb38583fc8e30103a6bfd68a1eb0a901c4093586937ae99afd1611229ef5",
+    "build/lib/tms_if_input/importer.py": "34f2bc894e59e626b6fa250016ac3531d08306c3d62a60e36682a757e84f1cdf",
+    "build/lib/tms_if_input/model.py": "8c219232340ec95843db91f7edc34c2c134980bd0b477ee6049a6e62ed1c3341",
+    "artifacts/final_verification.json": "fc8bec5bf7aafadb3ba279b0dfa813f2b0c854a3f13f851b0249cd65dbfc4dbf",
+    "artifacts/mongodb_routes.pdf": "31df567dce39cbccea6684dec080312451750f92f8170aa33439431d86733c53",
+    "artifacts/mongodb_primitive_verification.json": "86f9d44084605cf7231b2f5a4eb539cc244a6317b2fae57c0de378135c5020e3",
+    "artifacts/mongodb_execute_subtask_verification.json": "0299d9af52116e576188a786aa76577c1bb60c63abdea39c080f86e172ea5f1d",
+    "artifacts/joint_pose_verification.json": "fb2f06271cd287c5a037404119a2e96d01d36f230abb76b09d41e144ea2e870f",
+    "artifacts/mongodb_verified_task.json": "4be032a76beca636dbbaf91fa12bafa6d27424e1d0531c0b3cffed51cb3cdef2",
+    "artifacts/mongodb_input_type_verification.json": "46fd14d8403321d6c51da93d63c96e87acc01e90efdc3c43fea539a79f640a61",
+    "artifacts/leveling_block_vector_verification.json": "017cef653b75f4b77c0489b9c001bd5ac225a4c74e00e24102fa569865259bf7",
+    "artifacts/initial_move_pose_verification.json": "958c0b0ede43bc154acab03053dee0c955059efa09f45f5ace104c951ae83d78",
+    "artifacts/mongodb_store_verification.json": "f57c9a30bdd0669a012dacdfd9dedb90ae42ddb17b94ff645c52736c63c492df",
+    "artifacts/mongodb_verification.json": "fc8bec5bf7aafadb3ba279b0dfa813f2b0c854a3f13f851b0249cd65dbfc4dbf",
+    "artifacts/mongodb_routes_snapshot.json": "b3516971a9938905ce18fab46c753c4accca11c06c584b386d67cd8ede582e9a",
+    "artifacts/mongodb_verified_parameter.json": "fe2df59998c9caf26987d3f9a9c175f2f997ebcac4a2743eba7777af6b02c7c1",
+    "artifacts/mongodb_initial_position_array_verification.json": "ac553520c47c7a5b719530227d18e89c27e8cfd83cbac230e66103196a04f308"
+  },
+  "unit_tests_passed": 225,
+  "new_topic_tests_passed": 37,
+  "ros_message_package": "machinery_task_msgs",
+  "supplied_message_schemas_match": true,
+  "stage_three_user_clarification": "Continuously publish LevelingStateReport only",
+  "mongo_access": "Read-only: LEVELED_BLOCK from SAMPLE_BLACKBOARD_<XML machine type>",
+  "live_ros_and_mongo_verification": {
+    "status": "passed",
+    "database": "rostmsdb",
+    "mongo_uri": "mongodb://localhost:27017",
+    "database_write_operations": 0,
+    "ros_domain_id": 219,
+    "raw_input_graph_nodes": 42,
+    "raw_input_block_count": 9,
+    "stages": {
+      "graph": {
+        "repeated_messages": 6,
+        "invalid_reports_ignored": 3
+      },
+      "parameters": {
+        "repeated_messages": 7,
+        "graph_stopped": true,
+        "invalid_reports_ignored": 3
+      },
+      "state": {
+        "continuously_published": true,
+        "graph_and_parameters_stopped": true,
+        "messages_during_1_1_seconds": 11,
+        "matches_latest_real_mongo_read": true
+      }
+    },
+    "received_counts": {
+      "graph": 6,
+      "parameters": 7,
+      "state": 19
+    },
+    "blackboard_query": {
+      "record_name": "SAMPLE_BLACKBOARD_d37pxi",
+      "model_name": "d37pxi"
+    },
+    "blackboard_before": null,
+    "blackboard_after": null,
+    "observed_blackboard_unchanged": true,
+    "state_reads": 19,
+    "all_ros_payloads_match_raw_inputs": true,
+    "float32_comparison_tolerance": {
+      "relative": 5e-07,
+      "absolute": 1e-05
+    },
+    "launch_exit_code": 0,
+    "node_exited_cleanly": true
+  },
+  "live_ros_simulated_mongo_changes": {
+    "status": "passed",
+    "mongo_mode": "read-only test double",
+    "actual_ros_transport": true,
+    "real_database_write_operations": 0,
+    "ros_domain_id": 220,
+    "changes": [
+      {
+        "LEVELED_BLOCK": [
+          "block_1",
+          "block_9"
+        ],
+        "received_block_state": [
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          true
+        ],
+        "observed_update_latency_seconds": 0.09907125006429851
+      },
+      {
+        "LEVELED_BLOCK": [
+          "block_2"
+        ],
+        "received_block_state": [
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "observed_update_latency_seconds": 0.049747363897040486
+      },
+      {
+        "LEVELED_BLOCK": [],
+        "received_block_state": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "observed_update_latency_seconds": 0.47559570195153356
+      }
+    ],
+    "received_counts": {
+      "graph": 2,
+      "parameters": 2,
+      "state": 10
+    },
+    "state_reverts_to_incomplete_when_removed": true,
+    "release_state_not_used": true,
+    "node_exit_code": 0
+  },
+  "input_sha256": {
+    "261008-kyoto.geojson": "90a0e6daf142da0d1d4843ee00d5075d72cca9f1db14910a1d5c3b8a8390eeee",
+    "261008-kyoto.xml": "dce4e7f7e31916d7d915defbe69ece32399147a3dae36e896e4cf1db63fb35b1"
+  },
+  "launch_command": "ros2 launch tms_if_input system_topics.launch.py geojson_path:=261008-kyoto.geojson xml_path:=261008-kyoto.xml",
+  "build_command": "colcon build --base-paths src/tms_if_input src/tms_if_input/additional_interfaces/machinery_task_msgs --packages-select machinery_task_msgs tms_if_input",
+  "physical_unity_receiver_executed": false,
+  "test_scope": "Real ROS 2 messages and acknowledgements with an isolated subscriber; actual MongoDB reads plus simulated progress changes; no DB writes",
+  "instructions_file": "SYSTEM_TOPICS.rst"
+}
