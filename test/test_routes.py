@@ -135,7 +135,7 @@ class TransportRouteTests(unittest.TestCase):
                 self.assert_geometry(documents[0], [(0, 1), (0, 2)])
                 self.assertTrue(all(documents[0][f"related_point_{direction}_{label}"] == ""
                                     for direction in ("up", "down") for label in ("main", "sub")))
-                self.assertEqual(leveling_entry_node(plan, graph, plan.tasks["level"]), "entry-0")
+                self.assertEqual(leveling_entry_node(plan, graph, plan.tasks["level"]), "hub")
 
     def test_diagram_assigns_all_thirteen_waypoints_to_exactly_one_section(self):
         plan, _ = branch_scenario(1)
@@ -178,12 +178,33 @@ class TransportRouteTests(unittest.TestCase):
         self.assertEqual(documents["main-1"]["related_point_up_main"], documents["main-2"]["section_id"])
         self.assertEqual(documents["main-3"]["related_point_down_main"], documents["main-2"]["section_id"])
 
-    def test_leveling_entry_retains_xml_order_of_raw_boundary_endpoints(self):
+    def test_leveling_entry_is_the_travel_endpoint_regardless_of_connection_order(self):
         plan, graph = branch_scenario(3)
         plan = replace_task(plan, "level", connection_node=["entry-2", "entry-0", "entry-1"])
-        self.assertEqual(leveling_entry_node(plan, graph, plan.tasks["level"]), "entry-2")
+        self.assertEqual(leveling_entry_node(plan, graph, plan.tasks["level"]), "hub")
         plan = replace_task(plan, "level", connection_node=["load", "entry-0", "entry-1", "entry-2"])
-        self.assertEqual(leveling_entry_node(plan, graph, plan.tasks["level"]), "entry-0")
+        self.assertEqual(leveling_entry_node(plan, graph, plan.tasks["level"]), "hub")
+
+    def test_leveling_entry_ignores_connections_at_interior_travel_nodes(self):
+        plan, graph = passing_scenario(lanes=(), main_count=4)
+        interior = Section("interior-access", "entry-0", "road-1", ((40, 0), (10, 0)))
+        graph = GeoGraph(graph.points, (interior, *graph.sections), ())
+        self.assertEqual(leveling_entry_node(plan, graph, plan.tasks["level"]), "road-3")
+
+    def test_leveling_entry_requires_a_direct_connection_at_the_travel_terminal(self):
+        plan, graph = passing_scenario(lanes=(), main_count=4)
+        sections = tuple(section for section in graph.sections
+                         if section.id not in {"main-4", "reverse-main-4"})
+        interior = Section("interior-access", "entry-0", "road-1", ((40, 0), (10, 0)))
+        graph = GeoGraph(graph.points, (*sections, interior), ())
+        with self.assertRaisesRegex(ValueError, "no terminal transport node"):
+            leveling_entry_node(plan, graph, plan.tasks["level"])
+
+    def test_leveling_entry_uses_terminal_singleton_after_a_passing_lane(self):
+        plan, graph = passing_scenario(lanes=((0, 3, ("P",)),), main_count=4)
+        documents = by_representative(build_route_documents(plan, graph))
+        self.assert_geometry(documents["road-3"], [(30, 0)])
+        self.assertEqual(leveling_entry_node(plan, graph, plan.tasks["level"]), "road-3")
 
     def test_leveling_without_its_own_transport_has_no_fallback(self):
         plan, graph = branch_scenario(1)
@@ -198,7 +219,7 @@ class TransportRouteTests(unittest.TestCase):
         self.assertEqual(set(by_representative(documents)), {"road-0"})
         self.assert_geometry(documents[0], [(0, 0)])
         self.assertEqual(transport_section_ids(plan, graph, plan.tasks["haul"]), [documents[0]["section_id"]])
-        self.assertEqual(leveling_entry_node(plan, graph, plan.tasks["level"]), "entry-0")
+        self.assertEqual(leveling_entry_node(plan, graph, plan.tasks["level"]), "road-0")
 
     def test_empty_sub_array_combines_all_contiguous_main_edges(self):
         plan, graph = passing_scenario(lanes=(), main_count=7)
@@ -217,6 +238,10 @@ class TransportRouteTests(unittest.TestCase):
         self.assertEqual(set(documents), {"road-0", "single-sub"})
         self.assertEqual(documents["single-sub"]["label"], "sub")
         self.assert_geometry(documents["single-sub"], [(0, 2)])
+        # Both one-waypoint routes adjoin this area's connection node. A
+        # shared entry record cannot silently choose between distinct points.
+        with self.assertRaisesRegex(ValueError, "multiple terminal transport nodes"):
+            leveling_entry_node(plan, GeoGraph(points, sections, ()), plan.tasks["level"])
 
     def test_single_sub_node_combines_both_attachment_edges_into_one_lane(self):
         plan, graph = passing_scenario(lanes=((1, 3, ("single",)),))
@@ -338,7 +363,7 @@ class TransportRouteTests(unittest.TestCase):
         self.assert_geometry(documents["second-trunk"], [(100, 51), (100, 52)])
         self.assertEqual(transport_section_ids(plan, graph, plan.tasks["haul"]), [documents["trunk"]["section_id"]])
         self.assertEqual(transport_section_ids(plan, graph, plan.tasks["second-haul"]), [documents["second-trunk"]["section_id"]])
-        self.assertEqual(leveling_entry_node(plan, graph, plan.tasks["second-level"]), "second-entry-0")
+        self.assertEqual(leveling_entry_node(plan, graph, plan.tasks["second-level"]), "second-hub")
 
     def test_duplicate_transports_share_identical_groups_once(self):
         plan, graph = passing_scenario()
@@ -348,6 +373,7 @@ class TransportRouteTests(unittest.TestCase):
         plan = Plan(plan.machines, {**plan.tasks, other.id: other}, ())
         self.assertEqual(build_route_documents(plan, graph), expected)
         self.assertEqual(transport_section_ids(plan, graph, task), transport_section_ids(plan, graph, other))
+        self.assertEqual(leveling_entry_node(plan, graph, plan.tasks["level"]), "road-5")
 
     def test_variable_node_ids_counts_and_curved_vertices(self):
         for main_count, lane_size in ((2, 1), (7, 5), (13, 9)):

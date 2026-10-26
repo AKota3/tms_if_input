@@ -240,18 +240,38 @@ def transport_section_ids(plan: Plan, graph: GeoGraph, task: Task) -> list[str]:
 
 
 def leveling_entry_node(plan: Plan, graph: GeoGraph, task: Task) -> str:
-    """Select an XML connection node ending a road of this leveling area's haul."""
+    """Select the haul's terminal travel node adjoining an XML connection node."""
     transports = [candidate for candidate in plan.tasks.values()
                   if candidate.name == "transport" and
                   identifier(candidate.parameters["leveling_task"]) == task.id]
     if not transports:
         raise ValueError(f"Task {task.id}: leveling entry requires a transport road")
-    endpoints = {section.end for transport in transports
-                 for section in _task_sections(plan, graph, transport)[0]}
-    for node in _nodes(task, "connection_node"):
-        if node in endpoints:
-            return node
-    raise ValueError(f"Task {task.id}: no connection_node is an up-direction transport or passing section endpoint")
+    endpoints = set()
+    for transport in transports:
+        sections = _group_task_sections(plan, graph, transport)
+        starts = defaultdict(set)
+        for section in sections:
+            starts[section.start].add(section.section.id)
+        # Use the same groups as the stored routes. Their logical endpoints
+        # also distinguish the two sides of a one-waypoint junction.
+        endpoints.update(section.section.end for section in sections
+                         if not starts[section.end] - {section.section.id})
+
+    connections = set(_nodes(task, "connection_node"))
+    adjacent = set()
+    for section in graph.sections:
+        # GeoJSON may store either direction, or both, for a connector.
+        if section.start in connections:
+            adjacent.add(section.end)
+        if section.end in connections:
+            adjacent.add(section.start)
+    candidates = endpoints & adjacent
+    if not candidates:
+        raise ValueError(f"Task {task.id}: no terminal transport node connects to a connection_node")
+    if len(candidates) > 1:
+        raise ValueError(f"Task {task.id}: multiple terminal transport nodes connect to connection_node: "
+                         f"{sorted(candidates)}")
+    return candidates.pop()
 
 
 def _neighbor(identifier: str, point: _Endpoint, label: str, direction: str,

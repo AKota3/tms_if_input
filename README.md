@@ -28,6 +28,8 @@ ros2 launch tms_if_input tms_if_input.launch.py \
 
 掘削位置はXMLの `backhoe_node` 順に `excavate_position_1` ～ `excavate_position_n` として登録します。`model_name` は対象バックホウのモデル名を含む配列、`x, y, z, qx, qy, qz, qw` は `follow_waypoints` 用の1要素配列です。XY座標は対応するGeoJSONノード、Zは0、姿勢は同じブロックのXML `rotation` を使用します。同じ機械に複数の掘削積込タスクがある場合は、既存の命名規則に従って末尾にタスクIDを付けます。
 
+ダンプの敷きならしエリア入口 `dumps_entry_point_leveling_area` は、対象の敷きならしタスクを参照する運搬タスクの生成経路から求めます。敷きならし側の末端ノードとXMLの `connection_node` のいずれかがGeoJSONの `startid` / `endid` で直接接続されていることを確認し、その末端ノードのPoint座標をXYに使用します。接続線の向きや `connection_node` の並び順には依存しません。Zは0、姿勢は従来どおり `block_vector` の逆方向です。運搬タスクがない場合、該当点がない場合、または候補の末端ノードが複数ある場合はエラーになります。既存のMongoDBレコードは引き続き自動更新しないため、登録済み入口点の変更は別途必要です。
+
 **追加トピック機能の起動**
 
 ```bash
