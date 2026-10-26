@@ -39,6 +39,7 @@ def _collect_summary(inserted_documents: list[dict]) -> dict:
     joint_angle_param_names = []
     machinery_position_param_names = []
     block_position_param_names = []
+    geo_fence_param_names = []  # 追加
 
     for document in inserted_documents:
         # --------------------------------------------------
@@ -97,11 +98,20 @@ def _collect_summary(inserted_documents: list[dict]) -> dict:
             if record not in machinery_position_param_names:
                 machinery_position_param_names.append(record)
 
+        # --------------------------------------------------
+        # 5. Collect GeoFence parameter names
+        # --------------------------------------------------
+        if record == 'geo_fence' and 'coordinates' in document:
+            if record not in geo_fence_param_names:
+                geo_fence_param_names.append(record)
+
+
     return {
         'machinery_names': machinery_names,
         'joint_angle_param_names': joint_angle_param_names,
         'machinery_position_param_names': machinery_position_param_names,
         'block_position_param_names': block_position_param_names,
+        'geo_fence_param_names': geo_fence_param_names,
     }
 
 
@@ -280,11 +290,14 @@ def write_database(compilation, *, mongo_uri='mongodb://localhost:27017',
             'model_name': 'all',
             'record_name': summary_record_name,
             'machinery_names': summary['machinery_names'],
-            'joint_angle_param_names': summary['joint_angle_param_names'],
+            'joint_angle_param_names':
+                summary['joint_angle_param_names'],
             'machinery_position_param_names':
                 summary['machinery_position_param_names'],
             'block_position_param_names':
                 summary['block_position_param_names'],
+            'geo_fence_param_names':
+                summary['geo_fence_param_names'],  # 追加
         }
 
         operation = f'insert parameter summary {summary_record_name}'
