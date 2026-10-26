@@ -54,7 +54,8 @@ def assert_route_schema(routes):
         assert document["record_name"] == document["section_id"]
         assert document["preferred_direction"] == "up"
         size = len(document["x"])
-        assert size >= 1
+        # A parallel main section may have no waypoints after its junctions
+        # are assigned to the neighboring main sections. Its links still exist.
         for key in ("y", "z", "qx", "qy", "qz", "qw"):
             assert len(document[key]) == size
         for key in ("z", "qx", "qy", "qz"):
@@ -312,17 +313,18 @@ def test_sample_compiles_from_input_values_and_contains_every_route():
     assert_route_schema(routes)
     # These fixture-known paths stop at the XML-listed nodes. Loading and
     # leveling access roads must not appear in the stored navigation groups.
+    # The last value marks lanes whose junctions belong to neighboring groups.
     expected_paths = [
-        ("main", ["7609442", "1755144311"]),
-        ("main", ["1755144311", "365138918"]),
-        ("main", ["365138918", "2943157174", "95297176", "3887281787", "1327926290"]),
-        ("main", ["1327926290", "2357889456"]),
-        ("main", ["2357889456", "758911660"]),
-        ("sub", ["1755144311", "2657600551", "4025910820", "365138918"]),
-        ("sub", ["1327926290", "3813604511", "2995202696", "2357889456"]),
+        ("main", ["7609442", "1755144311"], False),
+        ("main", ["1755144311", "365138918"], True),
+        ("main", ["365138918", "2943157174", "95297176", "3887281787", "1327926290"], False),
+        ("main", ["1327926290", "2357889456"], True),
+        ("main", ["2357889456", "758911660"], False),
+        ("sub", ["1755144311", "2657600551", "4025910820", "365138918"], True),
+        ("sub", ["1327926290", "3813604511", "2995202696", "2357889456"], True),
     ]
-    expected_geometries = set()
-    for label, path in expected_paths:
+    expected_geometries = []
+    for label, path, trim_junctions in expected_paths:
         vertices = []
         for start, end in zip(path, path[1:]):
             section = next(section for section in graph.sections
@@ -331,9 +333,11 @@ def test_sample_compiles_from_input_values_and_contains_every_route():
             if section.start != start:
                 coordinates.reverse()
             vertices.extend(coordinates[1:] if vertices and vertices[-1] == coordinates[0] else coordinates)
-        expected_geometries.add((label, tuple(point[0] for point in vertices),
-                                tuple(point[1] for point in vertices)))
-    assert {route_geometry(document) for document in routes} == expected_geometries
+        if trim_junctions:
+            vertices = vertices[1:-1]
+        expected_geometries.append((label, tuple(point[0] for point in vertices),
+                                   tuple(point[1] for point in vertices)))
+    assert sorted(route_geometry(document) for document in routes) == sorted(expected_geometries)
 
 
 @pytest.mark.parametrize("vector, expected", [
@@ -474,9 +478,9 @@ def test_routes_reverse_all_vertices_and_link_multiple_passing_nodes(tmp_path):
     routes = {route_geometry(document): document for document in documents}
     names = {
         "entry": ("main", (10,), (0,)),
-        "first": ("main", (10, 13, 17, 20), (0, 0, 0, 0)),
+        "first": ("main", (13, 17), (0, 0)),
         "last": ("main", (20, 30), (0, 0)),
-        "passing": ("sub", (10, 10, 15, 20, 20), (0, 3, 4, 3, 0)),
+        "passing": ("sub", (10, 15, 20), (3, 4, 3)),
     }
     assert set(routes) == set(names.values())
     routes = {name: routes[geometry] for name, geometry in names.items()}
@@ -652,12 +656,12 @@ def test_replacing_all_ids_models_coordinates_and_vectors_changes_output(tmp_pat
     assert_parameter_schema(result, plan, graph, {leveling.id: id_map["919561426"]})
     assert {task["model_name"] for task in result.tasks} == set(model_map.values())
     baseline = compile_scenario(SAMPLES / "261004-kyoto.geojson", SAMPLES / "261004-kyoto.xml")
-    routes = {route_geometry(document): document for document in result.parameters if "section_id" in document}
+    routes = {document["section_id"].split("_", 2)[2]: document
+              for document in result.parameters if "section_id" in document}
     previous_routes = [document for document in baseline.parameters if "section_id" in document]
     correspondence = {}
     for previous in previous_routes:
-        changed = routes[(previous["label"], tuple(-y + 1000 for y in previous["y"]),
-                          tuple(x - 700 for x in previous["x"]))]
+        changed = routes[id_map[previous["section_id"].split("_", 2)[2]]]
         correspondence[previous["section_id"]] = changed["section_id"]
         assert changed["section_id"] != previous["section_id"]
         assert changed["x"] == pytest.approx([-y + 1000 for y in previous["y"]])

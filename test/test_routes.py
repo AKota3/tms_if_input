@@ -1,4 +1,4 @@
-"""Logical driving sections follow XML roles/order and preserve source geometry."""
+"""Logical driving sections follow XML roles/order and assign junction waypoints."""
 
 import json
 from pathlib import Path
@@ -137,6 +137,47 @@ class TransportRouteTests(unittest.TestCase):
                                     for direction in ("up", "down") for label in ("main", "sub")))
                 self.assertEqual(leveling_entry_node(plan, graph, plan.tasks["level"]), "entry-0")
 
+    def test_diagram_assigns_all_thirteen_waypoints_to_exactly_one_section(self):
+        plan, _ = branch_scenario(1)
+        main = [str(node) for node in (1, 2, 3, 6, 7, 8, 9, 12, 13)]
+        sub = [str(node) for node in (4, 5, 10, 11)]
+        plan = replace_task(plan, "haul", main_node=main, sub_node=sub)
+        points = {str(node): Point(str(node), node, 2 if str(node) in sub else 0)
+                  for node in range(1, 14)}
+        points.update({"load": Point("load", 0, 0), "entry-0": Point("entry-0", 14, 0)})
+        sections = []
+        for prefix, nodes in (("main", ["load"] + main + ["entry-0"]),
+                              ("first", ["3", "4", "5", "7"]),
+                              ("second", ["9", "10", "11", "13"])):
+            for start, end in zip(nodes, nodes[1:]):
+                coordinates = tuple((points[node].x, points[node].y) for node in (start, end))
+                # Source LineStrings may face either way; XML gives travel order.
+                if len(sections) % 2:
+                    coordinates = tuple(reversed(coordinates))
+                    start, end = end, start
+                sections.append(Section(f"{prefix}-{len(sections)}", start, end, coordinates))
+        documents = build_route_documents(plan, GeoGraph(points, tuple(sections), ()))
+        expected = [("main", [1, 2, 3]), ("main", [6]), ("main", [7, 8, 9]),
+                    ("main", [12]), ("main", [13]), ("sub", [4, 5]), ("sub", [10, 11])]
+        self.assertEqual([(document["label"], document["x"]) for document in documents], expected)
+        self.assertEqual(sorted(node for document in documents for node in document["x"]),
+                         list(range(1, 14)))
+        for document, (_, nodes) in zip(documents, expected):
+            self.assert_geometry(document, [(points[str(node)].x, points[str(node)].y) for node in nodes])
+
+    def test_parallel_main_without_interior_vertices_keeps_its_id_and_links(self):
+        plan, graph = passing_scenario()
+        sections = tuple(Section(section.id, section.start, section.end,
+                                 (section.coordinates[0], section.coordinates[-1]))
+                         if section.id in {"main-2", "reverse-main-2"} else section
+                         for section in graph.sections)
+        documents = by_representative(build_route_documents(plan, GeoGraph(graph.points, sections, ())))
+        self.assert_geometry(documents["main-2"], [])
+        self.assertEqual(documents["main-2"]["related_point_down_main"], documents["main-1"]["section_id"])
+        self.assertEqual(documents["main-2"]["related_point_up_main"], documents["main-3"]["section_id"])
+        self.assertEqual(documents["main-1"]["related_point_up_main"], documents["main-2"]["section_id"])
+        self.assertEqual(documents["main-3"]["related_point_down_main"], documents["main-2"]["section_id"])
+
     def test_leveling_entry_retains_xml_order_of_raw_boundary_endpoints(self):
         plan, graph = branch_scenario(3)
         plan = replace_task(plan, "level", connection_node=["entry-2", "entry-0", "entry-1"])
@@ -181,7 +222,8 @@ class TransportRouteTests(unittest.TestCase):
         plan, graph = passing_scenario(lanes=((1, 3, ("single",)),))
         documents = by_representative(build_route_documents(plan, graph))
         self.assertEqual(set(documents), {"main-1", "main-2", "main-4", "lane-0-0"})
-        self.assert_geometry(documents["lane-0-0"], source_chain(graph, ["road-1", "single", "road-3"]))
+        self.assert_geometry(documents["lane-0-0"], source_chain(graph, ["road-1", "single", "road-3"])[1:-1])
+        self.assert_geometry(documents["main-2"], source_chain(graph, ["road-1", "road-2", "road-3"])[1:-1])
         self.assertEqual(documents["main-1"]["related_point_up_sub"], documents["lane-0-0"]["section_id"])
         self.assertEqual(documents["main-4"]["related_point_down_sub"], documents["lane-0-0"]["section_id"])
         self.assertEqual(documents["main-2"]["related_point_up_sub"], "")
@@ -194,8 +236,8 @@ class TransportRouteTests(unittest.TestCase):
         documents = build_route_documents(plan, graph)
         self.assertEqual(by_representative(documents), by_representative(expected))
         self.assertEqual(len(documents), 7)
-        self.assert_geometry(by_representative(documents)["lane-0-0"], source_chain(graph, ["road-1", "P", "Q", "road-2"]))
-        self.assert_geometry(by_representative(documents)["lane-1-0"], source_chain(graph, ["road-3", "R", "S", "road-4"]))
+        self.assert_geometry(by_representative(documents)["lane-0-0"], source_chain(graph, ["road-1", "P", "Q", "road-2"])[1:-1])
+        self.assert_geometry(by_representative(documents)["lane-1-0"], source_chain(graph, ["road-3", "R", "S", "road-4"])[1:-1])
 
     def test_boundary_and_shared_lane_anchors_have_one_point_main_sections(self):
         plan, graph = passing_scenario(lanes=((0, 1, ("a",)), (1, 2, ("b",))), main_count=3)
@@ -321,10 +363,11 @@ class TransportRouteTests(unittest.TestCase):
                 plan, graph = Plan(plan.machines, tasks, ()), GeoGraph(points, sections, ())
                 documents = build_route_documents(plan, graph)
                 self.assertEqual(len(documents), 4)
-                main = next(document for document in documents if document["label"] == "main" and len(document["x"]) > 1)
+                main = next(document for document in documents if document["label"] == "main"
+                            and document["related_point_down_main"] and document["related_point_up_main"])
                 sub = next(document for document in documents if document["label"] == "sub")
-                self.assert_geometry(main, source_chain(graph, [mapping[f"road-{i}"] for i in range(main_count)]))
-                self.assert_geometry(sub, source_chain(graph, [mapping["road-0"]] + [mapping[node] for node in nodes] + [mapping[f"road-{main_count - 1}"]]))
+                self.assert_geometry(main, source_chain(graph, [mapping[f"road-{i}"] for i in range(main_count)])[1:-1])
+                self.assert_geometry(sub, source_chain(graph, [mapping["road-0"]] + [mapping[node] for node in nodes] + [mapping[f"road-{main_count - 1}"]])[1:-1])
 
     def test_invalid_direction_or_missing_boundary_reachability_remains_an_error(self):
         plan, graph = branch_scenario(1)

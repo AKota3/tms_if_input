@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ConstructionPlan>
+  <machines>
+    <machine id="machine_1" type="d37pxi" />
+  </machines>
+  <procedure>
+    <tasks>
+      <task id="2664655983" name="start" />
+      <task id="2553883148" name="initialize">
+        <parameter name="machine" value="machine_1" />
+        <parameter name="target_node" value="2140874369" />
+        <parameter name="rotation" value="{x:0.0, y:0.0, z:-0.6445907, w:0.7645278}" />
+      </task>
+      <task id="3810288359" name="leveling">
+        <parameter name="machine" value="machine_1" />
+        <parameter name="leveling_height" value="-0.5" />
+        <parameter name="block_size" value="{x:2.0, y:4.0}" />
+        <parameter name="block_center" value="[{x:-18.85485, y:-30.92719, z:-0.5}, {x:-14.93987, y:-30.10691, z:-0.5}, {x:-11.02488, y:-29.28662, z:-0.5}, {x:-10.61474, y:-31.24412, z:-0.5}, {x:-14.52973, y:-32.0644, z:-0.5}, {x:-18.44471, y:-32.88469, z:-0.5}]" />
+        <parameter name="block_vector" value="{x:0.20507, y:-0.9787472, z:0.0}" />
+        <parameter name="soil_volume" value="[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]" />
+        <parameter name="dump_node" value="[962952184, 1056850389, 1010899492, 33735743, 4180895169, 3121778940]" />
+        <parameter name="bulldozer_node" value="[2140874369, 3760437865, 3825091114, 2586657523, 39736586, 2966516746]" />
+        <parameter name="connection_node" value="[229642033, 1815669589, 1155812700]" />
+      </task>
+      <task id="2279321633" name="end" />
+    </tasks>
+    <flow>
+      <edge from="2664655983" to="2553883148" />
+      <edge from="2553883148" to="3810288359" />
+      <edge from="3810288359" to="2279321633" />
+    </flow>
+  </procedure>
+</ConstructionPlan>

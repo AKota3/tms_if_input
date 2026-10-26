@@ -1,4 +1,4 @@
-"""Public output matches the logical sections and all links in waypoint slide 2."""
+"""Junction ownership changes waypoint arrays while preserving section metadata."""
 
 import json
 from pathlib import Path
@@ -48,6 +48,21 @@ def test_public_sections_match_all_source_waypoints_and_spec_connections():
                 edge = list(reversed(edge))
             coordinates.extend(edge[1:] if coordinates and coordinates[-1] == edge[0] else edge)
         document = named[name]
+        if name in {"sec2", "sec4", "sec6", "sec7"}:
+            coordinates = coordinates[1:-1]
+        # These are the existing IDs and all non-waypoint fields. Changing
+        # waypoint ownership must not rename routes or alter their topology.
+        section_id = f"route_e86b16da63ce1bb1_{definitions[name][0]}"
+        waypoint_fields = {"x", "y", "z", "qx", "qy", "qz", "qw"}
+        assert {key: value for key, value in document.items() if key not in waypoint_fields} == {
+            "model_name": ["mst110cr", "mst2200vdr"], "type": "static",
+            "record_name": section_id, "section_id": section_id,
+            "label": label, "preferred_direction": "up",
+            **{f"related_point_{direction}_{role}": (
+                f"route_e86b16da63ce1bb1_{definitions[neighbor][0]}" if neighbor else "")
+               for (direction, role), neighbor in zip(
+                   (("up", "main"), ("up", "sub"), ("down", "main"), ("down", "sub")), expected[name])},
+        }
         assert document["label"] == label
         assert document["x"] == [point[0] for point in coordinates]
         assert document["y"] == [point[1] for point in coordinates]

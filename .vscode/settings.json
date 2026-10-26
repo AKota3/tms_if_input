@@ -87,5 +87,6 @@
         "/opt/ros/humble/lib/python3.10/site-packages",
         "/opt/ros/humble/local/lib/python3.10/dist-packages"
     ],
-    "ros.distro": "humble"
+    "ros.distro": "humble",
+    "cmake.sourceDirectory": "/home/common/SIP_PROJECTS/M2/SIMIZU_PROJECT/ros2_ws/src/tms_if_input/additional_interfaces/machinery_task_msgs"
 }

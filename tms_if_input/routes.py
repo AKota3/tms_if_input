@@ -273,12 +273,19 @@ def build_route_documents(plan: Plan, graph: GeoGraph) -> list[dict]:
         if task.name != "transport":
             continue
         sections = _group_task_sections(plan, graph, task)
+        passing_endpoints = {(section.start, section.end) for section in sections
+                             if section.label == "sub" and section.start != section.end}
         adjacency = defaultdict(list)
         for section in sections:
             adjacency[section.start].append(section)
             adjacency[section.end].append(section)
         for section in sections:
             coordinates = section.section.coordinates
+            if (section.start, section.end) in passing_endpoints:
+                # Junction waypoints belong to the intervening/terminal main
+                # sections, not the passing lane or its parallel main section.
+                # Keep full geometry above for stable IDs and unchanged links.
+                coordinates = coordinates[1:-1]
             size = len(coordinates)
             document = {"model_name": models, "type": "static",
                         "x": [point[0] for point in coordinates],
