@@ -118,9 +118,16 @@ def _excavation_documents(plan: Plan, graph: GeoGraph, task: Task,
                   "block_angle": _angle_radians(_required(task, "block_angle"), f"Task {task.id} block_angle"),
                   "block_vector": vector, "block_center": centers,
                   "backhoe_node": backhoe, "dump_node": dump}]
-    for index, (point, rotation) in enumerate(zip(dump, rotations), 1):
+    for index, (dump_point, backhoe_point, rotation) in enumerate(zip(dump, backhoe, rotations), 1):
+        quaternion = {"q" + axis: rotation[axis] for axis in "xyzw"}
         documents.append(_position(dump_models, record_name(plan, task, f"loading_position_{index}"),
-                                   point, {"q" + axis: rotation[axis] for axis in "xyzw"}))
+                                   dump_point, quaternion))
+        position = _position([plan.model(task)], record_name(plan, task, f"excavate_position_{index}"),
+                             backhoe_point, quaternion)
+        # Excavator follow_waypoints reads indexed coordinate/quaternion arrays.
+        for key in ("x", "y", "z", "qx", "qy", "qz", "qw"):
+            position[key] = [position[key]]
+        documents.append(position)
     return documents
 
 

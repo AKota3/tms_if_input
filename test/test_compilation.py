@@ -125,6 +125,14 @@ def assert_parameter_schema(compilation, plan, graph, entry_nodes):
                 assert area[key] == params[key]
             for key in ("backhoe_node", "dump_node"):
                 assert area[key] == [graph.point(node).xy() for node in params[key]]
+            for index, node in enumerate(params["backhoe_node"], 1):
+                position = record(compilation, record_name(plan, task, f"excavate_position_{index}"))
+                assert position == {
+                    "type": "static", "model_name": [plan.model(task)],
+                    "record_name": record_name(plan, task, f"excavate_position_{index}"),
+                    "x": [graph.point(node).x], "y": [graph.point(node).y], "z": [0.0],
+                    **{"q" + axis: [params["rotation"][index - 1][axis]] for axis in "xyzw"},
+                }
             for index, node in enumerate(params["dump_node"], 1):
                 position = record(compilation, record_name(plan, task, f"loading_position_{index}"))
                 assert position["model_name"] == dump_models
@@ -306,7 +314,7 @@ def test_sample_compiles_from_input_values_and_contains_every_route():
     assert_parameter_schema(result, plan, graph, {"2600159710": "919561426"})
     assert len(result.tasks) == len(plan.machines)
     routes = [document for document in result.parameters if "section_id" in document]
-    assert len(result.parameters) == 54
+    assert len(result.parameters) == 58
     assert len(routes) == 7
     assert sum(document["label"] == "main" for document in routes) == 5
     assert sum(document["label"] == "sub" for document in routes) == 2
@@ -405,6 +413,9 @@ def test_variable_rings_blocks_connections_and_machine_count(tmp_path, connectio
     assert len(result.tasks) == 3
     assert sum(document["record_name"].startswith("loading_position_")
                for document in result.parameters) == blocks
+    assert {document["record_name"] for document in result.parameters
+            if document["record_name"].startswith("excavate_position_")} == {
+                f"excavate_position_{index}" for index in range(1, blocks + 1)}
     assert sum(document["record_name"].startswith("block_")
                for document in result.parameters) == connections
     assert {document["record_name"] for document in result.parameters

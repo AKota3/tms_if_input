@@ -1,13 +1,14 @@
 """MongoDB imports add missing records and preserve every existing document."""
 
 from copy import deepcopy
+from pathlib import Path
 from types import SimpleNamespace
 import unittest
 
 from bson.int64 import Int64
 from pymongo.errors import NetworkTimeout, ServerSelectionTimeoutError
 
-from tms_if_input.compiler import Compilation
+from tms_if_input.compiler import Compilation, compile_scenario
 from tms_if_input.database import parameter_filter, write_database
 
 
@@ -199,6 +200,31 @@ class DatabaseTests(unittest.TestCase):
         if record is not None:
             self.assertIn(record, message)
         self.assertIs(error.__cause__, cause)
+
+    def test_reimport_adds_excavation_waypoints_once_and_preserves_existing_scenario(self):
+        samples = Path(__file__).resolve().parents[1] / "json_samples"
+        compilation = compile_scenario(samples / "261004-kyoto.geojson", samples / "261004-kyoto.xml")
+        positions = [document for document in compilation.parameters
+                     if document["record_name"].startswith("excavate_position_")]
+        self.assertEqual(len(positions), 4)
+        original_parameters = [document for document in compilation.parameters if document not in positions]
+        original_parameters.append({"record_name": "runtime-state", "completed": True})
+        original_tasks = [{**document, "task_id": index}
+                          for index, document in enumerate(compilation.tasks, 1)]
+        database = FakeDatabase(parameters=original_parameters, tasks=original_tasks)
+        factory = ClientFactory(database)
+
+        first = write_database(compilation, client_factory=factory)
+        self.assertEqual((first["inserted_parameters"], first["inserted_tasks"]), (4, 0))
+        self.assertEqual(database["parameter"].documents, original_parameters + positions)
+        self.assertEqual(database["task"].documents, original_tasks)
+
+        second = write_database(compilation, client_factory=factory)
+        self.assertEqual((second["inserted_parameters"], second["inserted_tasks"]), (0, 0))
+        self.assertEqual(second["skipped_parameters"], len(compilation.parameters))
+        self.assertEqual(database["parameter"].documents, original_parameters + positions)
+        self.assertEqual(database["parameter"].insert_calls, positions)
+        self.assertEqual(database["task"].documents, original_tasks)
 
     def test_existing_scalar_array_global_and_other_model_records_are_preserved(self):
         documents = [

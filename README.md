@@ -26,6 +26,8 @@ ros2 launch tms_if_input tms_if_input.launch.py \
 
 登録後は自動終了します。既存データは削除・更新しません。ファイル指定を省略した場合の既定値は `261004-kyoto.geojson` / `261004-kyoto.xml` です。
 
+掘削位置はXMLの `backhoe_node` 順に `excavate_position_1` ～ `excavate_position_n` として登録します。`model_name` は対象バックホウのモデル名を含む配列、`x, y, z, qx, qy, qz, qw` は `follow_waypoints` 用の1要素配列です。XY座標は対応するGeoJSONノード、Zは0、姿勢は同じブロックのXML `rotation` を使用します。同じ機械に複数の掘削積込タスクがある場合は、既存の命名規則に従って末尾にタスクIDを付けます。
+
 **追加トピック機能の起動**
 
 ```bash
