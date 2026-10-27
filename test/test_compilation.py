@@ -76,6 +76,7 @@ def assert_parameter_schema(compilation, plan, graph, entry_nodes):
     dump_models = [model for alias, model in plan.machines.items()
                    if plan.machine_kind(alias) == "crawler_dump"]
     flags = record(compilation, "initialize_flgs")
+    assert flags['type'] == 'dynamic'
     for task in plan.tasks.values():
         params = task.parameters
         if task.name == "initialize":
@@ -315,7 +316,7 @@ def test_sample_compiles_from_input_values_and_contains_every_route():
     assert_parameter_schema(result, plan, graph, {"2600159710": "758911660"})
     assert len(result.tasks) == len(plan.machines)
     routes = [document for document in result.parameters if "section_id" in document]
-    assert len(result.parameters) == 58
+    assert len(result.parameters) == 58 + 1 + len(graph.points)
     assert len(routes) == 7
     assert sum(document["label"] == "main" for document in routes) == 5
     assert sum(document["label"] == "sub" for document in routes) == 2
@@ -444,7 +445,14 @@ def test_explicit_transport_lists_ignore_point_metadata_and_unlisted_roads(tmp_p
          "geometry": {"type": "LineString", "coordinates": [[0, 0], [40, 0]]}},
     ])
     result = compile_scenario(*write_pair(tmp_path, geojson, root))
-    assert result.parameters == baseline.parameters
+    # Unlisted roads still leave existing task/route parameters untouched, but
+    # all GeoJSON Points and connections belong in the additional node graph.
+    assert [document for document in result.parameters if 'graph_id' not in document] == [
+        document for document in baseline.parameters if 'graph_id' not in document]
+    node = next(document for document in result.parameters
+                if document.get('node_id') == 'unlisted')
+    assert node['position'] == {'x': 10, 'y': 6, 'z': 0.0}
+    assert node['connect_node'] == ['road-A']
     assert result.tasks == baseline.tasks
 
 

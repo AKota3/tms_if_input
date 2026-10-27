@@ -26,6 +26,15 @@ ros2 launch tms_if_input tms_if_input.launch.py \
 
 登録後は自動終了します。既存データは削除・更新しません。ファイル指定を省略した場合の既定値は `261004-kyoto.geojson` / `261004-kyoto.xml` です。
 
+GeoJSONの全Pointについて、従来のパラメータに加えて `rostmsdb.parameter` に次のデータを追加します。XMLから参照されないノードや孤立ノードも対象です。
+
+- `geojson_node_ids_<graph_id>`：全ノードIDを文字列配列 `node_ids` にまとめた1件。
+- `geojson_node_<graph_id>_<node_id>`：`node_id`、位置 `position: {x, y, z}`、接続先IDの文字列配列 `connect_node` を持つ、ノードごとに1件。
+
+位置のXYはPoint座標、Zは従来の平面座標モデルに合わせて0です。接続は全LineStringの `startid` / `endid` から求め、方向を区別しません。A→Bだけの場合も、Aの接続先にB、Bの接続先にAを記録します。A→BとB→Aが両方あっても、各ノードの接続先IDは重複しません。孤立ノードの `connect_node` は空配列です。ID一覧と接続先は文字列順で並びます。
+
+一覧と各ノードは共通の `graph_id` を持ちます。ノードID・位置・接続からこのIDを生成するため、同じグラフの再登録では追加データを重複登録しません。位置や接続が変わった場合は別の `graph_id` で一覧と各ノードを追加し、以前のデータを保持します。例えば `261008-kyoto.geojson` では、一覧1件と42ノード分の計43件を追加します。
+
 掘削位置はXMLの `backhoe_node` 順に `excavate_position_1` ～ `excavate_position_n` として登録します。`model_name` は対象バックホウのモデル名を含む配列、`x, y, z, qx, qy, qz, qw` は `follow_waypoints` 用の1要素配列です。XY座標は対応するGeoJSONノード、Zは0、姿勢は同じブロックのXML `rotation` を使用します。同じ機械に複数の掘削積込タスクがある場合は、既存の命名規則に従って末尾にタスクIDを付けます。
 
 ダンプの敷きならしエリア入口 `dumps_entry_point_leveling_area` は、対象の敷きならしタスクを参照する運搬タスクの生成経路から求めます。敷きならし側の末端ノードとXMLの `connection_node` のいずれかがGeoJSONの `startid` / `endid` で直接接続されていることを確認し、その末端ノードのPoint座標をXYに使用します。接続線の向きや `connection_node` の並び順には依存しません。Zは0、姿勢は従来どおり `block_vector` の逆方向です。運搬タスクがない場合、該当点がない場合、または候補の末端ノードが複数ある場合はエラーになります。既存のMongoDBレコードは引き続き自動更新しないため、登録済み入口点の変更は別途必要です。

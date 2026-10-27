@@ -6,6 +6,7 @@ import math
 from typing import Any
 
 from .model import GeoGraph, Plan, Task, record_name
+from .node_graph import build_node_documents
 from .routes import build_route_documents, leveling_entry_node, transport_section_ids
 
 
@@ -248,4 +249,5 @@ def build_parameter_documents(plan: Plan, graph: GeoGraph) -> list[dict]:
     documents.extend(route_documents)
     documents.extend(_context_documents(plan, graph))
     documents.extend(synchronization_documents(plan))
+    documents.extend(build_node_documents(graph))
     return documents

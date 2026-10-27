@@ -1,0 +1,57 @@
+{
+  "verified_at_utc": "2026-10-27T04:47:51.900050+00:00",
+  "database": "rostmsdb",
+  "collection": "parameter",
+  "record_name": "initialize_flgs",
+  "existing_record_count": 2,
+  "inserted_records": 0,
+  "modified_type_fields": 1,
+  "stored_documents": [
+    {
+      "_id": {
+        "$oid": "6ae02ab38a97bc0a5f5b878d"
+      },
+      "type": "dynamic",
+      "record_name": "initialize_flgs",
+      "initialize_flg_zx200": false,
+      "initialize_flg_mst110cr": false,
+      "initialize_flg_mst2200vdr": false,
+      "initialize_flg_d37pxi": false
+    },
+    {
+      "_id": {
+        "$oid": "6ae02bdf3f2bbde0118510b4"
+      },
+      "type": "dynamic",
+      "record_name": "initialize_flgs",
+      "initialize_flg_mst110cr": false,
+      "initialize_flg_zx200": false,
+      "initialize_flg_d37pxi": false,
+      "initialize_flg_mst2200vdr": false
+    }
+  ],
+  "all_other_fields_and_documents_unchanged": true,
+  "repeated_operation_modified_records": 0,
+  "before_counts": {
+    "parameter": 114,
+    "task": 9
+  },
+  "after_counts": {
+    "parameter": 114,
+    "task": 9
+  },
+  "evidence_directory": "/tmp/tms_if_input_initialize_flags_dynamic",
+  "status": "passed",
+  "validation": {
+    "pytest": {
+      "tests": 275,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "ros2_build": "passed",
+    "installed_compiler_dry_run": "passed",
+    "compiled_flags_type": "dynamic",
+    "other_existing_compiled_parameters_and_all_tasks_unchanged": true
+  }
+}

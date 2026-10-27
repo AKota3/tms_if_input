@@ -2,6 +2,7 @@
 
 from copy import deepcopy
 from pathlib import Path
+import re
 from types import SimpleNamespace
 import unittest
 
@@ -188,6 +189,26 @@ def owned(document, key="scenario", generation="old"):
     return {**document, LEGACY_METADATA_FIELD: {"import_key": key, "generation": generation}}
 
 
+def expected_summary(result, *, machinery=(), joints=(), positions=(), blocks=(), fences=()):
+    """Check reported lists and build the exact expected per-run summary.
+
+    Callers provide independent expectations; summaries are not discarded from
+    stored-document or insert-call assertions.
+    """
+    name = result['summary_record_name']
+    assert re.fullmatch(r'parameter_import_summary_\d{8}T\d{12}', name)
+    fields = {
+        'machinery_names': list(machinery),
+        'joint_angle_param_names': list(joints),
+        'machinery_position_param_names': list(positions),
+        'block_position_param_names': list(blocks),
+        'geo_fence_param_names': list(fences),
+    }
+    for key in fields.keys() - {'geo_fence_param_names'}:
+        assert result[key] == fields[key]
+    return {'type': 'static', 'model_name': 'all', 'record_name': name, **fields}
+
+
 class DatabaseTests(unittest.TestCase):
     def assert_no_inserts(self, database):
         self.assertEqual(database["parameter"].insert_calls, [])
@@ -200,6 +221,59 @@ class DatabaseTests(unittest.TestCase):
         if record is not None:
             self.assertIn(record, message)
         self.assertIs(error.__cause__, cause)
+
+    def test_summary_contains_each_category_and_only_new_parameter_names(self):
+        old = {'record_name': 'existing_position', 'model_name': 'legacy',
+               'x': 99, 'y': 100, 'z': 0, 'runtime': {'keep': True}}
+        database = FakeDatabase(parameters=[old])
+        compilation = Compilation([
+            {**old, 'x': 0},
+            {'record_name': 'joints', 'model_name': 'zx200',
+             'waypoints': [{'type': 'joint_values_absolute', 'data': {'boom_joint': 1}}]},
+            {'record_name': 'vessel', 'model_name': ['mst110cr', 'mst2200vdr'], 'target_angle': 0},
+            {'record_name': 'initial_position', 'model_name': 'zx200', 'x': 1, 'y': 2, 'z': 0},
+            {'record_name': 'block_1', 'block_center': {'x': 3, 'y': 4, 'z': 0},
+             'x': 3, 'y': 4, 'z': 0},
+            {'record_name': 'geo_fence', 'coordinates': [[{'x': 1, 'y': 2}]]},
+            {'record_name': 'geojson_node_example', 'node_id': 'example',
+             'position': {'x': 5, 'y': 6, 'z': 0}, 'connect_node': []},
+        ], [])
+        original = deepcopy(compilation)
+        result = write_database(compilation, client_factory=ClientFactory(database))
+        summary = expected_summary(
+            result, machinery=['zx200', 'mst110cr', 'mst2200vdr'],
+            joints=['joints', 'vessel'], positions=['initial_position'],
+            blocks=['block_1'], fences=['geo_fence'])
+        self.assertEqual((result['inserted_parameters'], result['skipped_parameters']), (6, 1))
+        self.assertEqual(database['parameter'].documents,
+                         [old] + original.parameters[1:] + [summary])
+        self.assertEqual(compilation, original)
+
+    def test_summary_response_timeout_preserves_committed_data_and_retry(self):
+        old = {'record_name': 'manual', 'runtime': {'keep': True}}
+        database = FakeDatabase()
+        uncertain = CommittedInsertTimeoutCollection([old], timeout_at=2)
+        database.collections['parameter'] = uncertain
+        factory = ClientFactory(database)
+        compilation = Compilation([{'record_name': 'new', 'model_name': 'zx200'}], [])
+        original = deepcopy(compilation)
+        with self.assertRaises(RuntimeError) as error:
+            write_database(compilation, mongo_db='construction', timeout_ms=5678,
+                           client_factory=factory)
+        self.assert_mongo_diagnostic(error.exception, uncertain.error, 'construction',
+                                     'insert parameter summary')
+        committed = deepcopy(uncertain.documents)
+        self.assertEqual(committed[:2], [old, compilation.parameters[0]])
+        self.assertEqual(committed[-1]['machinery_names'], ['zx200'])
+        self.assertTrue(factory.clients[0].closed)
+
+        result = write_database(compilation, client_factory=factory)
+        summary = expected_summary(result)
+        self.assertEqual((result['inserted_parameters'], result['skipped_parameters']), (0, 1))
+        self.assertEqual(uncertain.documents, committed + [summary])
+        self.assertEqual(uncertain.insert_calls, [compilation.parameters[0], committed[-1], summary])
+        self.assertEqual(compilation, original)
+        self.assertTrue(all(client.closed for client in factory.clients))
 
     def test_reimport_adds_excavation_waypoints_once_and_preserves_existing_scenario(self):
         samples = Path(__file__).resolve().parents[1] / "json_samples"
@@ -215,15 +289,20 @@ class DatabaseTests(unittest.TestCase):
         factory = ClientFactory(database)
 
         first = write_database(compilation, client_factory=factory)
+        first_summary = expected_summary(first, machinery=['zx200'],
+                                         positions=[doc['record_name'] for doc in positions])
         self.assertEqual((first["inserted_parameters"], first["inserted_tasks"]), (4, 0))
-        self.assertEqual(database["parameter"].documents, original_parameters + positions)
+        self.assertEqual(database["parameter"].documents,
+                         original_parameters + positions + [first_summary])
         self.assertEqual(database["task"].documents, original_tasks)
 
         second = write_database(compilation, client_factory=factory)
+        second_summary = expected_summary(second)
         self.assertEqual((second["inserted_parameters"], second["inserted_tasks"]), (0, 0))
         self.assertEqual(second["skipped_parameters"], len(compilation.parameters))
-        self.assertEqual(database["parameter"].documents, original_parameters + positions)
-        self.assertEqual(database["parameter"].insert_calls, positions)
+        self.assertEqual(database["parameter"].documents,
+                         original_parameters + positions + [first_summary, second_summary])
+        self.assertEqual(database["parameter"].insert_calls, positions + [first_summary, second_summary])
         self.assertEqual(database["task"].documents, original_tasks)
 
     def test_existing_scalar_array_global_and_other_model_records_are_preserved(self):
@@ -245,8 +324,10 @@ class DatabaseTests(unittest.TestCase):
         ], [])
         original = deepcopy(compilation)
         result = write_database(compilation, client_factory=factory)
-        self.assertEqual(database["parameter"].documents, documents)
-        self.assert_no_inserts(database)
+        summary = expected_summary(result)
+        self.assertEqual(database["parameter"].documents, documents + [summary])
+        self.assertEqual(database["parameter"].insert_calls, [summary])
+        self.assertEqual(database["task"].insert_calls, [])
         self.assertEqual(result["parameter_count"], 3)
         self.assertEqual(result["inserted_parameters"], 0)
         self.assertEqual(result["skipped_parameters"], 3)
@@ -272,7 +353,8 @@ class DatabaseTests(unittest.TestCase):
         ], [])
         result = write_database(compilation, client_factory=ClientFactory(database))
         self.assertEqual(database["parameter"].documents[0], old)
-        self.assertEqual(len(database["parameter"].documents), 3)
+        summary = expected_summary(result, machinery=['mst110cr', 'zx200'])
+        self.assertEqual(database["parameter"].documents, [old] + compilation.parameters + [summary])
         self.assertEqual(result["inserted_parameters"], 2)
 
     def test_absent_and_null_model_scopes_are_distinct(self):
@@ -286,7 +368,8 @@ class DatabaseTests(unittest.TestCase):
                 database = FakeDatabase(parameters=[existing])
                 result = write_database(Compilation([incoming], []), client_factory=ClientFactory(database))
                 self.assertEqual(database["parameter"].documents[0], existing)
-                self.assertEqual(len(database["parameter"].documents), 2)
+                self.assertEqual(database["parameter"].documents,
+                                 [existing, incoming, expected_summary(result)])
                 self.assertEqual(result["inserted_parameters"], 1)
 
     def test_new_records_are_inserted_once_without_metadata(self):
@@ -299,25 +382,35 @@ class DatabaseTests(unittest.TestCase):
         ], [task("zx200", 99), task("mst110cr", 100)])
         original = deepcopy(compilation)
         first = write_database(compilation, client_factory=factory)
+        first_summary = expected_summary(first, machinery=['zx200', 'mst110cr'])
         self.assertEqual(first, {
             "parameter_count": 3, "task_count": 2, "task_ids": {"zx200": 1, "mst110cr": 2},
             "inserted_parameters": 3, "skipped_parameters": 0, "inserted_tasks": 2, "skipped_tasks": 0,
+            "summary_record_name": first_summary['record_name'],
+            "machinery_names": ['zx200', 'mst110cr'], "joint_angle_param_names": [],
+            "machinery_position_param_names": [], "block_position_param_names": [],
         })
         written = deepcopy(database["parameter"].documents + database["task"].documents)
         for document in written:
             self.assertNotIn(LEGACY_METADATA_FIELD, document)
-        self.assertEqual(database["parameter"].documents, compilation.parameters)
+        self.assertEqual(database["parameter"].documents, compilation.parameters + [first_summary])
         self.assertEqual(database["task"].documents, [
             {**document, "task_id": index}
             for index, document in enumerate(compilation.tasks, 1)])
         second = write_database(compilation, client_factory=factory)
+        second_summary = expected_summary(second)
         self.assertEqual(second["task_ids"], first["task_ids"])
         self.assertEqual(second["inserted_parameters"], 0)
         self.assertEqual(second["skipped_parameters"], 3)
         self.assertEqual(second["inserted_tasks"], 0)
         self.assertEqual(second["skipped_tasks"], 2)
-        self.assertEqual(database["parameter"].documents + database["task"].documents, written)
-        self.assertEqual(len(database["parameter"].insert_calls), 3)
+        self.assertEqual(database["parameter"].documents,
+                         compilation.parameters + [first_summary, second_summary])
+        self.assertEqual(database["task"].documents, [
+            {**document, "task_id": index}
+            for index, document in enumerate(compilation.tasks, 1)])
+        self.assertEqual(database["parameter"].insert_calls,
+                         compilation.parameters + [first_summary, second_summary])
         self.assertEqual(len(database["task"].insert_calls), 2)
         self.assertEqual(compilation, original)
         self.assertTrue(all(client.closed for client in factory.clients))
@@ -331,10 +424,11 @@ class DatabaseTests(unittest.TestCase):
             {"record_name": "route", "model_name": "truck", "points": [[9, 8, 7]]},
         ], [{**task("truck", 99), "task_sequence": "<new />"}]),
             client_factory=ClientFactory(database))
-        self.assertEqual(database["parameter"].documents, [old_parameter])
+        summary = expected_summary(result)
+        self.assertEqual(database["parameter"].documents, [old_parameter, summary])
         new_task = {**task("truck", 1), "task_sequence": "<new />"}
         self.assertEqual(database["task"].documents, [old_task, new_task])
-        self.assertEqual(database["parameter"].insert_calls, [])
+        self.assertEqual(database["parameter"].insert_calls, [summary])
         self.assertEqual(result["task_ids"], {"truck": 1})
         self.assertEqual(result["inserted_tasks"], 1)
         self.assertEqual(result["skipped_tasks"], 0)
@@ -382,8 +476,10 @@ class DatabaseTests(unittest.TestCase):
             {"record_name": "task_flgs", "task_flg_done": False, "task_flg_next": False},
         ]
         result = write_database(Compilation(incoming, []), client_factory=ClientFactory(database))
-        self.assertEqual(database["parameter"].documents, completed)
-        self.assert_no_inserts(database)
+        summary = expected_summary(result)
+        self.assertEqual(database["parameter"].documents, completed + [summary])
+        self.assertEqual(database["parameter"].insert_calls, [summary])
+        self.assertEqual(database["task"].insert_calls, [])
         self.assertEqual(result["skipped_parameters"], 2)
 
     def test_task_ids_use_smallest_unused_positive_id_and_remain_stable(self):
@@ -419,12 +515,17 @@ class DatabaseTests(unittest.TestCase):
         tasks = [owned(task("old", 8)), task("manual", 9)]
         database = FakeDatabase(parameters=parameters, tasks=tasks)
         result = write_database(Compilation([], []), client_factory=ClientFactory(database))
-        self.assertEqual(database["parameter"].documents, parameters)
+        summary = expected_summary(result)
+        self.assertEqual(database["parameter"].documents, parameters + [summary])
         self.assertEqual(database["task"].documents, tasks)
-        self.assert_no_inserts(database)
+        self.assertEqual(database["parameter"].insert_calls, [summary])
+        self.assertEqual(database["task"].insert_calls, [])
         self.assertEqual(result, {
             "parameter_count": 0, "task_count": 0, "task_ids": {},
             "inserted_parameters": 0, "skipped_parameters": 0, "inserted_tasks": 0, "skipped_tasks": 0,
+            "summary_record_name": summary['record_name'],
+            "machinery_names": [], "joint_angle_param_names": [],
+            "machinery_position_param_names": [], "block_position_param_names": [],
         })
 
     def test_parameter_insert_failure_preserves_existing_and_retry_adds_missing_only(self):
@@ -470,7 +571,8 @@ class DatabaseTests(unittest.TestCase):
         self.assertEqual(result["skipped_tasks"], 1)
         self.assertEqual(result["inserted_parameters"], 0)
         self.assertEqual(result["skipped_parameters"], 1)
-        self.assertEqual(database["parameter"].documents, [old_parameter, inserted_parameter])
+        self.assertEqual(database["parameter"].documents,
+                         [old_parameter, inserted_parameter, expected_summary(result)])
         self.assertEqual(database["task"].documents[:2], [old_task, inserted_task])
         self.assertTrue(all(client.closed for client in factory.clients))
 
@@ -514,7 +616,7 @@ class DatabaseTests(unittest.TestCase):
         self.assertEqual(result["task_ids"], {"zx200": 1, "mst110cr": 2})
         self.assertEqual((result["inserted_parameters"], result["skipped_parameters"]), (0, 2))
         self.assertEqual((result["inserted_tasks"], result["skipped_tasks"]), (1, 1))
-        self.assertEqual(database["parameter"].documents, saved_parameters)
+        self.assertEqual(database["parameter"].documents, saved_parameters + [expected_summary(result)])
         self.assertEqual(uncertain_tasks.documents[:2], [old_task, committed_task])
         self.assertEqual(uncertain_tasks.documents[2], {**compilation.tasks[1], "task_id": 2})
         self.assertEqual([document["model_name"] for document in uncertain_tasks.insert_calls],
@@ -550,11 +652,12 @@ class DatabaseTests(unittest.TestCase):
         self.assertEqual((result["inserted_parameters"], result["skipped_parameters"]), (1, 2))
         self.assertEqual((result["inserted_tasks"], result["skipped_tasks"]), (2, 0))
         self.assertEqual(result["task_ids"], {"zx200": 1, "mst110cr": 2})
+        summary = expected_summary(result, machinery=['zx200'])
         self.assertEqual(uncertain_parameters.documents,
-                         [old_flags, committed_parameter, compilation.parameters[2]])
+                         [old_flags, committed_parameter, compilation.parameters[2], summary])
         self.assertEqual(database["task"].documents[0], old_task)
         self.assertEqual([document["record_name"] for document in uncertain_parameters.insert_calls],
-                         ["saved_parameter", "remaining_parameter"])
+                         ["saved_parameter", "remaining_parameter", summary['record_name']])
         self.assertEqual(compilation, original)
         self.assertTrue(all(client.closed for client in factory.clients))
 
@@ -643,12 +746,18 @@ class DatabaseTests(unittest.TestCase):
         self.assertEqual(first["task_ids"], {"zx200": 9})
         self.assertEqual((first["inserted_tasks"], first["skipped_tasks"]), (0, 1))
         self.assertEqual(database["task"].documents, old_tasks)
-        self.assert_no_inserts(database)
+        first_summary = expected_summary(first)
+        self.assertEqual(database["parameter"].documents, [first_summary])
+        self.assertEqual(database["parameter"].insert_calls, [first_summary])
+        self.assertEqual(database["task"].insert_calls, [])
         database["task"].documents.reverse()
         second = write_database(Compilation([], [task("zx200")]), client_factory=factory)
         self.assertEqual(second["task_ids"], first["task_ids"])
         self.assertEqual(database["task"].documents, list(reversed(old_tasks)))
-        self.assert_no_inserts(database)
+        second_summary = expected_summary(second)
+        self.assertEqual(database["parameter"].documents, [first_summary, second_summary])
+        self.assertEqual(database["parameter"].insert_calls, [first_summary, second_summary])
+        self.assertEqual(database["task"].insert_calls, [])
         self.assertTrue(all(client.closed for client in factory.clients))
 
     def test_bson_long_task_ids_are_reserved_and_existing_matching_id_is_reused(self):

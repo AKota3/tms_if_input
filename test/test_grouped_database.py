@@ -4,7 +4,7 @@ from copy import deepcopy
 import json
 from pathlib import Path
 
-from test_database import ClientFactory, FakeDatabase
+from test_database import ClientFactory, FakeDatabase, expected_summary
 
 from tms_if_input.compiler import Compilation, compile_scenario
 from tms_if_input.database import write_database
@@ -92,16 +92,20 @@ def test_grouped_sample_adds_seven_routes_without_modifying_legacy_data():
         LEGACY_MAIN_IDS + LEGACY_SUB_IDS)
 
     first = write_database(compilation, client_factory=factory)
+    first_summary = expected_summary(
+        first, machinery=['mst110cr', 'mst2200vdr'],
+        positions=[document['record_name'] for document in compilation.parameters])
     assert (first["inserted_parameters"], first["skipped_parameters"]) == (7, 0)
     assert first["inserted_tasks"] == 0
-    assert database["parameter"].documents == legacy + original.parameters
+    assert database["parameter"].documents == legacy + original.parameters + [first_summary]
     assert database["task"].documents == []
     stored = deepcopy(database["parameter"].documents)
 
     repeated = write_database(compilation, client_factory=factory)
+    repeated_summary = expected_summary(repeated)
     assert (repeated["inserted_parameters"], repeated["skipped_parameters"]) == (0, 7)
-    assert database["parameter"].documents == stored
-    assert len(database["parameter"].insert_calls) == 7
+    assert database["parameter"].documents == stored + [repeated_summary]
+    assert database["parameter"].insert_calls == original.parameters + [first_summary, repeated_summary]
     assert compilation == original
     assert all(client.closed for client in factory.clients)
     assert GEOJSON.read_bytes() == geojson_before
@@ -116,8 +120,12 @@ def test_same_source_ids_with_changed_geometry_append_a_distinct_route_generatio
     factory = ClientFactory(database)
     first_compilation = grouped_routes()
     first_original = deepcopy(first_compilation)
-    write_database(first_compilation, client_factory=factory)
+    first = write_database(first_compilation, client_factory=factory)
+    first_summary = expected_summary(
+        first, machinery=['mst110cr', 'mst2200vdr'],
+        positions=[document['record_name'] for document in first_compilation.parameters])
     first_stored = deepcopy(database["parameter"].documents)
+    assert first_stored == legacy + first_original.parameters + [first_summary]
 
     changed_source = deepcopy(source)
     feature = next(feature for feature in changed_source["features"]
@@ -143,14 +151,20 @@ def test_same_source_ids_with_changed_geometry_append_a_distinct_route_generatio
         sum(len(document["x"]) for document in first_compilation.parameters) + 1)
 
     appended = write_database(second_compilation, client_factory=factory)
+    appended_summary = expected_summary(
+        appended, machinery=['mst110cr', 'mst2200vdr'],
+        positions=[document['record_name'] for document in second_compilation.parameters])
     assert (appended["inserted_parameters"], appended["skipped_parameters"]) == (7, 0)
-    assert database["parameter"].documents == first_stored + second_original.parameters
+    assert database["parameter"].documents == first_stored + second_original.parameters + [appended_summary]
     stored = deepcopy(database["parameter"].documents)
     repeated = write_database(second_compilation, client_factory=factory)
     assert (repeated["inserted_parameters"], repeated["skipped_parameters"]) == (0, 7)
-    assert database["parameter"].documents == stored
+    repeated_summary = expected_summary(repeated)
+    assert database["parameter"].documents == stored + [repeated_summary]
     assert database["parameter"].documents[:len(legacy)] == legacy
-    assert len(database["parameter"].insert_calls) == 14
+    assert database["parameter"].insert_calls == (
+        first_original.parameters + [first_summary]
+        + second_original.parameters + [appended_summary, repeated_summary])
     assert first_compilation == first_original
     assert second_compilation == second_original
     assert database["task"].documents == []

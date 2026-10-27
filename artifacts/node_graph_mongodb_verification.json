@@ -1,0 +1,81 @@
+{
+  "verified_at_utc": "2026-10-27T04:34:27.191983+00:00",
+  "database": "rostmsdb",
+  "input": "/home/common/SIP_PROJECTS/M2/SIMIZU_PROJECT/ros2_ws/src/tms_if_input/json_samples/261004-kyoto.geojson",
+  "source_sha256": "a85b8abef83a9101f00d58d8a99a239a83db8142bcf12561bc6acf37d2bc1aed",
+  "graph_id": "952724ef03fcddb3",
+  "id_list_record_name": "geojson_node_ids_952724ef03fcddb3",
+  "node_count": 42,
+  "graph_document_count": 43,
+  "source_line_count": 90,
+  "unique_connection_count": 45,
+  "existing_graph_documents": 0,
+  "before_counts": {
+    "parameter": 12,
+    "task": 5
+  },
+  "before_sha256": {
+    "parameter": "e444b61f7ba8de08894782c58cb2dc33c591ef08b156bc5e4fe71169bd75959f",
+    "task": "70c85cdcc6b1988c7434d1dd3214b89c806511c04c4b24d663e7b77bb0de5bd4"
+  },
+  "evidence_directory": "/tmp/tms_if_input_node_graph_mongodb",
+  "write_requested": true,
+  "first_import": {
+    "parameter_count": 43,
+    "task_count": 0,
+    "task_ids": {},
+    "inserted_parameters": 43,
+    "skipped_parameters": 0,
+    "inserted_tasks": 0,
+    "skipped_tasks": 0,
+    "summary_record_name": "parameter_import_summary_20261027T043427212481",
+    "machinery_names": [],
+    "joint_angle_param_names": [],
+    "machinery_position_param_names": [],
+    "block_position_param_names": []
+  },
+  "repeated_import": {
+    "parameter_count": 43,
+    "task_count": 0,
+    "task_ids": {},
+    "inserted_parameters": 0,
+    "skipped_parameters": 43,
+    "inserted_tasks": 0,
+    "skipped_tasks": 0,
+    "summary_record_name": "parameter_import_summary_20261027T043427241489",
+    "machinery_names": [],
+    "joint_angle_param_names": [],
+    "machinery_position_param_names": [],
+    "block_position_param_names": []
+  },
+  "after_first_counts": {
+    "parameter": 56,
+    "task": 5
+  },
+  "after_repeat_counts": {
+    "parameter": 57,
+    "task": 5
+  },
+  "all_existing_documents_unchanged": true,
+  "all_source_nodes_and_connections_verified": true,
+  "repeated_import_added_no_graph_duplicates": true,
+  "task_collection_unchanged": true,
+  "source_file_unchanged": true,
+  "status": "passed",
+  "validation": {
+    "pytest": {
+      "tests": 275,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "pytest_junit": "/tmp/tms_if_input_node_graph_all_tests.xml",
+    "ros2_package_build": "passed",
+    "installed_cli_dry_run": "passed",
+    "installed_ros2_launch_dry_run": "passed",
+    "installed_exports_exactly_match_source_compilation": true,
+    "previous_58_parameter_documents_and_4_tasks_unchanged_for_both_kyoto_samples": true,
+    "earliest_database_snapshot_unchanged": true,
+    "ros2_launch_log": "/tmp/tms_if_input_node_graph_ros_logs/2026-10-27-13-36-06-017484-common-21722/launch.log"
+  }
+}

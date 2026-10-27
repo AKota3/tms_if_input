@@ -118,7 +118,8 @@ def synchronization_documents(plan: Plan) -> list[dict[str, Any]]:
         if task.name != "initialize" and task.id not in required:
             continue
         record, field = completion_flag(plan, task)
-        document = records.setdefault(record, {"type": "static", "record_name": record})
+        record_type = "dynamic" if record == INITIALIZE_FLAGS else "static"
+        document = records.setdefault(record, {"type": record_type, "record_name": record})
         document[field] = False
     return list(records.values())
 
